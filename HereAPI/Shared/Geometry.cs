@@ -4,10 +4,10 @@ using System.Text;
 
 namespace HereAPI.Shared
 {
-    class Geometry
+    public class Geometry
     {
 
-        public class GeoPoint : UrlParameter
+        public class GeoPoint : IUrlParameter
         {
             public double Latitude { get; set; }
             public double Longitude { get; set; }
@@ -20,13 +20,13 @@ namespace HereAPI.Shared
                 Altitude = altitude;
             }
 
-            public string GetAsUrlParameter()
+            public string GetParameterValue()
             {
                 return $"{Latitude},{Longitude}{(Altitude != int.MinValue ? $",{Altitude}" : "")}";
             }
         }
 
-        public class BoundingBox : UrlParameter
+        public class BoundingBox : IUrlParameter
         {
             public GeoPoint TopLeft { get; set; }
             public GeoPoint BottomRight { get; set; }
@@ -37,9 +37,9 @@ namespace HereAPI.Shared
                 BottomRight = bottomRight;
             }
 
-            public string GetAsUrlParameter()
+            public string GetParameterValue()
             {
-                return $"{TopLeft.GetAsUrlParameter()},{BottomRight.GetAsUrlParameter()}";
+                return $"{TopLeft.GetParameterValue()},{BottomRight.GetParameterValue()}";
             }
 
         }

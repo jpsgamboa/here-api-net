@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace HereAPI.Routing
+namespace HereAPI.Routing.ParameterTypes
 {
-    class Shared
+    public class RouteRepresentationOptions
     {
         /// <summary>
         /// Representation formats for instruction texts.<para/>
@@ -45,7 +42,7 @@ namespace HereAPI.Routing
         /// stops:
         ///     Indicates whether stops should be included in the public transport line.<para/>
         /// </summary>
-        public enum PublicTransportLineAttributeType
+        public enum PublicTransportLineAttribute
         {
             [Description("fg")] Foreground,
             [Description("bg")] Background,
@@ -105,7 +102,7 @@ namespace HereAPI.Routing
         ///     Indicates whether the link should include information on energy consumption. If a consumption model is not
         ///    provided, the consumption value in the response is set to 0.<para/>
         /// </summary>
-        public enum RouteLinkAttributeType
+        public enum RouteLinkAttribute
         {
             [Description("sh")] Shape,
             [Description("le")] Length,
@@ -193,7 +190,7 @@ namespace HereAPI.Routing
         /// publicTransportDelays:
         ///    Indicates whether the delay information should be included in the public transport maneuvers.<para/>
         /// </summary>
-        public enum ManeuverAttributeType
+        public enum ManeuverAttribute
         {
             [Description("po")] Position,
             [Description("sh")] Shape,
@@ -255,7 +252,7 @@ namespace HereAPI.Routing
         ///     Indicates whether distance and time summary information should be included in RouteLegs<para/>
         /// 
         /// </summary>
-        public enum RouteLegAttributeType
+        public enum RouteLegAttribute
         {
             [Description("wp")] Waypoint,
             [Description("mn")] Maneuvers,
@@ -308,7 +305,7 @@ namespace HereAPI.Routing
         /// zones:
         ///     Indicates whether crossed zones shall be provided for the route<para/>
         /// </summary>
-        public enum RouteAttributeType
+        public enum RouteAttribute
         {
             [Description("wp")] Waypoints,
             [Description("sm")] Summary,
@@ -353,7 +350,7 @@ namespace HereAPI.Routing
         ///     for navigation excluding any redundancies.
         ///     RouteId will not be calculated in this mode however, unless it is additionally requested.<para/>
         /// </summary>
-        public enum RouteRepresentationModeType
+        public enum RouteRepresentationMode
         {
             [Description("overview")] Overview,
             [Description("display")] Display,

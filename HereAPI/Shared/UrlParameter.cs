@@ -4,8 +4,10 @@ using System.Text;
 
 namespace HereAPI.Shared
 {
-    interface UrlParameter
+    interface IUrlParameter
     {
-        string GetAsUrlParameter();
+        string GetParameterName();
+        string GetParameterValue();
+
     }
 }
