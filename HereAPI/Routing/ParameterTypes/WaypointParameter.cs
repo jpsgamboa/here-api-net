@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using HereAPI.Shared;
+using HereAPI.Shared.Helpers;
 using static HereAPI.Shared.Geometry;
 
 namespace HereAPI.Routing.ParameterTypes
@@ -7,12 +8,12 @@ namespace HereAPI.Routing.ParameterTypes
     public abstract class WaypointParameter : IUrlParameter
     {
 
-        public int Index { get; set; }
-        public int StopOverDuration { get; set; }
-        public WaypointType Type { get; set; }
+        public uint Index { get; set; }
+        public uint? StopOverDuration { get; set; }
+        public WaypointType? Type { get; set; }
         public string UserLabel { get; set; }
 
-        public WaypointParameter(int index, WaypointType waypointType, int stopOverDuration, string userLabel)
+        public WaypointParameter(uint index, WaypointType? waypointType, uint? stopOverDuration, string userLabel)
         {
             Index = index;
             Type = waypointType;
@@ -34,21 +35,17 @@ namespace HereAPI.Routing.ParameterTypes
         /// </summary>
         public enum WaypointType
         {
-            None,
             [Description("stopOver")] StopOver,
             [Description("passThrough")] PassThrough,
         }
 
-        /// <summary>
-        /// The GeoWaypointParameterType defines a waypoint by latitude and longitude coordinates, and an optional radius. Parameter structure:<para/>
-        /// waypoint=[geo!] [Type[, StopOverDuration]!]Position[;TransitRadius[;UserLabel[;Heading]]]
-        /// </summary>
+
         public class GeoWaypointParameter : WaypointParameter
         {
 
             public GeoPoint GeoPoint { get; set; }
-            public int TransitRadius { get; set; }
-            public int Heading { get; set; }
+            public uint? TransitRadius { get; set; }
+            public uint? Heading { get; set; }
 
             /// <summary>
             /// The GeoWaypointParameterType defines a waypoint by latitude and longitude coordinates, and an optional radius. <para/>
@@ -62,7 +59,7 @@ namespace HereAPI.Routing.ParameterTypes
             /// <param name="transitRadius">Matching Links are selected within the specified TransitRadius, in meters. For example to drive past a city without necessarily going into the city center you can specify the coordinates of the center and a TransitRadius of 5000m.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
             /// <param name="heading">Heading in degrees starting at true north and continuing clockwise around the compass. North is 0 degrees, East is 90 degrees, South is 180 degrees, and West is 270 degrees.</param>
-            public GeoWaypointParameter(int waypointIndex, GeoPoint geoPoint, WaypointType waypointType = WaypointType.None, int stopOverDuration = 0, int transitRadius = int.MinValue, string userLabel = null, int heading = int.MinValue)
+            public GeoWaypointParameter(uint waypointIndex, GeoPoint geoPoint, WaypointType? waypointType = null, uint? stopOverDuration = null, uint? transitRadius = null, string userLabel = null, uint? heading = null)
                 :base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 GeoPoint = geoPoint;
@@ -73,13 +70,13 @@ namespace HereAPI.Routing.ParameterTypes
             public override string GetParameterValue()
             {
                 return $"geo!" +
-                    $"{(Type != WaypointType.None ? Enums.GetDescription(Type) : "")}" +
+                    $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
-                    $"{(Type != WaypointType.None ? "!" : "")}" +
+                    $"{(Type != null ? "!" : "")}" +
                     $"{GeoPoint.GetParameterValue()};" +
-                    $"{(TransitRadius != int.MinValue ? $"{TransitRadius}" : "")};" +
+                    $"{(TransitRadius != null ? $"{TransitRadius}" : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{(Heading != int.MinValue ? $"{Heading}" : "")}";
+                    $"{(Heading != null ? $"{Heading}" : "")}";
             }
 
         }
@@ -110,7 +107,7 @@ namespace HereAPI.Routing.ParameterTypes
             /// <param name="stopOverDuration">Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough. </param>
             /// <param name="displayPosition">Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and 180. Altitude in meters.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
-            public NavigationWaypointParameterWithStreetPositions(int waypointIndex, GeoPoint streetPosition, string streetName = null, WaypointType waypointType = WaypointType.None, int stopOverDuration = 0, GeoPoint displayPosition = null, string userLabel = null)
+            public NavigationWaypointParameterWithStreetPositions(uint waypointIndex, GeoPoint streetPosition, string streetName = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoPoint displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 StreetPosition = streetPosition;
@@ -121,9 +118,9 @@ namespace HereAPI.Routing.ParameterTypes
             public override string GetParameterValue()
             {
                 return $"street!" +
-                    $"{(Type != WaypointType.None ? Enums.GetDescription(Type) : "")}" +
+                    $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
-                    $"{(Type != WaypointType.None ? "!" : "")}" +
+                    $"{(Type != null ? "!" : "")}" +
                     $"{(DisplayPosition != null ? DisplayPosition.GetParameterValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
                     $"{StreetPosition.GetParameterValue()};" +
@@ -134,16 +131,9 @@ namespace HereAPI.Routing.ParameterTypes
 
         public class NavigationWaypointParameterWithLinkPositions : WaypointParameter
         {
-            public enum LinkDirectionType
-            {
-                [Description("+")] To,
-                [Description("-")] From,
-                [Description("*")] Any
-            }
 
-            public int LinkId { get; set; }
-            public LinkDirectionType LinkDirection { get; set; }
-            public float Spot { get; set; }
+            public LinkId LinkId { get; set; }
+            public float? Spot { get; set; }
             public GeoPoint DisplayPosition { get; set; }
 
             /// <summary>
@@ -164,11 +154,10 @@ namespace HereAPI.Routing.ParameterTypes
             /// <param name="stopOverDuration">Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough. </param>
             /// <param name="displayPosition">Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and 180. Altitude in meters.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
-            public NavigationWaypointParameterWithLinkPositions(int waypointIndex, int linkId, LinkDirectionType linkDirection, float spot = float.NaN, WaypointType waypointType = WaypointType.None, int stopOverDuration = 0, GeoPoint displayPosition = null, string userLabel = null)
+            public NavigationWaypointParameterWithLinkPositions(uint waypointIndex, LinkId linkId, float? spot = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoPoint displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 LinkId = linkId;
-                LinkDirection = linkDirection;
                 Spot = spot;
                 DisplayPosition = displayPosition;
             }
@@ -176,12 +165,12 @@ namespace HereAPI.Routing.ParameterTypes
             public override string GetParameterValue()
             {
                 return $"link!" +
-                    $"{(Type != WaypointType.None ? Enums.GetDescription(Type) : "")}" +
+                    $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
-                    $"{(Type != WaypointType.None ? "!" : "")}" +
+                    $"{(Type != null ? "!" : "")}" +
                     $"{(DisplayPosition != null ? DisplayPosition.GetParameterValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{Enums.GetDescription(LinkDirection)}{LinkId},{(Spot != float.NaN ? $"{Spot}" : "0.5")}";
+                    $"{LinkId.GetParameterValue()},{(Spot != float.NaN ? $"{Spot}" : "0.5")}";
             }
         }
 

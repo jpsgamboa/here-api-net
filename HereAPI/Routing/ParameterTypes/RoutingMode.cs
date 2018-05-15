@@ -1,4 +1,5 @@
 ﻿using HereAPI.Shared;
+using HereAPI.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ namespace HereAPI.Routing.ParameterTypes
 
         public RoutingType Type { get; set; }
         public TransportMode Transport { get; set; }
-        public TrafficMode Traffic { get; set; }
+        public TrafficMode? Traffic { get; set; }
         public RouteFeature[] Features { get; set; }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace HereAPI.Routing.ParameterTypes
         /// <param name="trafficMode"></param>
         /// <param name="routeFeatures"></param>
         /// 
-        public RoutingMode(RoutingType routingType, TransportMode transportMode = TransportMode.None, TrafficMode trafficMode = TrafficMode.None, params RouteFeature[] routeFeatures)
+        public RoutingMode(RoutingType routingType, TransportMode transportMode, TrafficMode? trafficMode = null, params RouteFeature[] routeFeatures)
         {
             Type = routingType;
             Transport = transportMode;
@@ -41,9 +42,9 @@ namespace HereAPI.Routing.ParameterTypes
 
         public string GetParameterValue()
         {            
-            return $"{Enums.GetDescription(Type)}" +
-                $"{(Transport != TransportMode.None ? $";{Enums.GetDescription(Transport)}" : "")}" +
-                $"{(Traffic != TrafficMode.None ? $";traffic:{Enums.GetDescription(Traffic)}" : "")}" +
+            return $"{EnumHelper.GetDescription(Type)}" +
+                $"{$";{EnumHelper.GetDescription(Transport)}"}" +
+                $"{(Traffic != null ? $";traffic:{EnumHelper.GetDescription(Traffic)}" : "")}" +
                 $"{(Features.Length > 0 ? $";{String.Join(",", Features.Select(f => f.GetParameterValue()).ToArray())}" : "")}";
         }
 
@@ -118,7 +119,6 @@ namespace HereAPI.Routing.ParameterTypes
         /// </summary>
         public enum TrafficMode
         {
-            None,
             [Description("enabled")] Enabled,
             [Description("disabled")] Disabled,
             [Description("default")] Default
@@ -161,7 +161,6 @@ namespace HereAPI.Routing.ParameterTypes
         /// </summary>
         public enum TransportMode
         {
-            None,
             [Description("car")] Car,
             [Description("carHOV")] CarHOV,
             [Description("pedestrian")] Pedestrian,
@@ -189,7 +188,7 @@ namespace HereAPI.Routing.ParameterTypes
 
             public string GetParameterValue()
             {
-                return $"{Enums.GetDescription(FeatureType)}:{Enums.GetDescription(FeatureWeight)}";
+                return $"{EnumHelper.GetDescription(FeatureType)}:{EnumHelper.GetDescription(FeatureWeight)}";
             }
 
             /// <summary>

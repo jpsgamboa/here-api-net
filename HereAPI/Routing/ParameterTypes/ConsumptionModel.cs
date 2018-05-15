@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Linq;
+using HereAPI.Shared.Helpers;
 
 namespace HereAPI.Routing.ParameterTypes
 {
-    class ConsumptionModel : IUrlParameter
+    public class ConsumptionModel : IUrlParameter
     {
 
         public ConsumptionModelType Model { get; set; }
@@ -36,11 +37,12 @@ namespace HereAPI.Routing.ParameterTypes
 
         public string GetParameterValue()
         {
-            return Enums.GetDescription(Model);
+            return EnumHelper.GetDescription(Model);
         }
 
         public enum ConsumptionModelType
         {
+            [Description("default")] Default,
             [Description("standard")] Standard
         }
 
@@ -50,10 +52,10 @@ namespace HereAPI.Routing.ParameterTypes
             public List<SpeedConsumptionPair> SpeedConsumptionPairs { get; set; }
             public float Ascent { get; set; }
             public float Descent { get; set; }
-            public float TimePenalty { get; set; }
-            public float AuxiliaryConsumption { get; set; }
-            public float Acceleration { get; set; }
-            public float Deceleration { get; set; }
+            public float? TimePenalty { get; set; }
+            public float? AuxiliaryConsumption { get; set; }
+            public float? Acceleration { get; set; }
+            public float? Deceleration { get; set; }
 
             /// <summary>
             /// </summary>
@@ -66,14 +68,14 @@ namespace HereAPI.Routing.ParameterTypes
             /// <param name="deceleration">Additional energy gained from deceleration. This parameter indicates the units of additional energy gained per 1 (km/h)^2 of speed change. Value must be non-negative. </param>
             /// <exception cref="ArgumentOutOfRangeException">
             /// </exception>
-            public CustomConsumptionDetails(List<SpeedConsumptionPair> speedConsumptionPairs, float ascent, float descent, float timePenalty = float.NaN, float auxiliaryConsumption = float.NaN, float acceleration = float.NaN, float deceleration = float.NaN)
+            public CustomConsumptionDetails(List<SpeedConsumptionPair> speedConsumptionPairs, float ascent, float descent, float? timePenalty = null, float? auxiliaryConsumption = null, float? acceleration = null, float? deceleration = null)
             {
                 if (ascent < 0) throw new ArgumentOutOfRangeException("Ascent value must be non negative.");
                 if (descent < 0) throw new ArgumentOutOfRangeException("Descent value must be non negative.");
-                if (!float.IsNaN(timePenalty) && timePenalty < 0) throw new ArgumentOutOfRangeException("TimePenalty value must be non negative.");
-                if (!float.IsNaN(auxiliaryConsumption) && auxiliaryConsumption < 0) throw new ArgumentOutOfRangeException("AuxiliaryConsumption value must be non negative.");
-                if (!float.IsNaN(acceleration) && acceleration < 0) throw new ArgumentOutOfRangeException("Acceleration value must be non negative.");
-                if (!float.IsNaN(deceleration) && deceleration < 0) throw new ArgumentOutOfRangeException("Deceleration value must be non negative.");
+                if (timePenalty != null && timePenalty < 0) throw new ArgumentOutOfRangeException("TimePenalty value must be non negative.");
+                if (auxiliaryConsumption != null && auxiliaryConsumption < 0) throw new ArgumentOutOfRangeException("AuxiliaryConsumption value must be non negative.");
+                if (acceleration != null && acceleration < 0) throw new ArgumentOutOfRangeException("Acceleration value must be non negative.");
+                if (deceleration != null && deceleration < 0) throw new ArgumentOutOfRangeException("Deceleration value must be non negative.");
 
                 SpeedConsumptionPairs = speedConsumptionPairs;
                 Ascent = ascent;
@@ -94,10 +96,10 @@ namespace HereAPI.Routing.ParameterTypes
                 return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetParameterValue()).ToArray())}" +
                     $";ascent,{Ascent}" +
                     $";descent,{Descent}" +
-                    $"{(float.IsNaN(TimePenalty) ? "" : $";timePenalty,{TimePenalty}")}" +
-                    $"{(float.IsNaN(AuxiliaryConsumption) ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption}")}" +
-                    $"{(float.IsNaN(Acceleration) ? "" : $";acceleration,{Acceleration}")}" +
-                    $"{(float.IsNaN(Deceleration) ? "" : $";deceleration,{Deceleration}")}";
+                    $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty}")}" +
+                    $"{(AuxiliaryConsumption != null ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption}")}" +
+                    $"{(Acceleration != null ? "" : $";acceleration,{Acceleration}")}" +
+                    $"{(Deceleration != null ? "" : $";deceleration,{Deceleration}")}";
             }
 
             public class SpeedConsumptionPair

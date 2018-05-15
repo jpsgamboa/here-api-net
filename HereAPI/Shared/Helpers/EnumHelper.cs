@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace HereAPI.Shared
+namespace HereAPI.Shared.Helpers
 {
-    class Enums
+    class EnumHelper
     {
         
         public static string GetDescription(Enum value)

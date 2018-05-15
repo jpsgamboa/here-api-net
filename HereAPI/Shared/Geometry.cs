@@ -7,7 +7,7 @@ namespace HereAPI.Shared
     public class Geometry
     {
 
-        public class GeoPoint : IUrlParameter
+        public class GeoPoint
         {
             public double Latitude { get; set; }
             public double Longitude { get; set; }
@@ -26,7 +26,7 @@ namespace HereAPI.Shared
             }
         }
 
-        public class BoundingBox : IUrlParameter
+        public class BoundingBox
         {
             public GeoPoint TopLeft { get; set; }
             public GeoPoint BottomRight { get; set; }

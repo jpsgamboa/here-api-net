@@ -1,4 +1,5 @@
 ﻿using HereAPI.Shared;
+using HereAPI.Shared.Helpers;
 using System.ComponentModel;
 
 namespace HereAPI.Routing.ParameterTypes
@@ -26,7 +27,7 @@ namespace HereAPI.Routing.ParameterTypes
 
         public string GetParameterValue()
         {
-            return $"{Enums.GetDescription(Engine)},{AverageConsumption}";
+            return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption}";
         }
 
         /// <summary>

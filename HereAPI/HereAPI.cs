@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
+using System.Net.Http;
 
 namespace HereAPI
 {
-    class HereAPI
+    public class HereAPI : IDisposable
     {
-
+        [Description("app_id")]
         public string AppId { get; set; } = "bC4fb9WQfCCZfkxspD4z";
+        [Description("app_code")]
         public string AppCode { get; set; } = "K2Cpd_EKDzrZb1tz0zdpeQ";
 
         public bool RunInProdEnv { get; set; } = true;
+
+        public HttpClient HttpClient { get; }
 
         public static void Register(string app_id, string app_code, bool runInProductionEnvironment)
         {
@@ -22,7 +25,10 @@ namespace HereAPI
 
         private static HereAPI instance;
 
-        private HereAPI() { }
+        private HereAPI()
+        {
+            HttpClient = new HttpClient();
+        }
 
         public static HereAPI Instance
         {
@@ -30,11 +36,15 @@ namespace HereAPI
             {
                 if (instance == null)
                 {
-                    instance = new HereAPI();
-                    //TODO throw new Exception("The HereAPI instance must be initialized using the HereAPI.Register() method.");
+                    throw new Exception("The HereAPI instance must be initialized using the HereAPI.Register() method.");
                 }
                 return instance;
             }
+        }
+
+        public void Dispose()
+        {
+            if (HttpClient != null) HttpClient.Dispose();
         }
 
     }
