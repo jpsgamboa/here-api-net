@@ -440,20 +440,20 @@ namespace HereAPI.Routing
             if (MaxNumberOfChanges != null) AddParameter(PropertyHelper.GetDescription(() => MaxNumberOfChanges), MaxNumberOfChanges.ToString());
             if (AvoidTransportTypes != null) AddParameter(PropertyHelper.GetDescription(() => AvoidTransportTypes), string.Join(",", AvoidTransportTypes.Select(tt => EnumHelper.GetDescription(tt))));
 
-            if (WalkTimeMultiplier != null) AddParameter(PropertyHelper.GetDescription(() => WalkTimeMultiplier), WalkTimeMultiplier.ToString());
-            if (WalkSpeed != null) AddParameter(PropertyHelper.GetDescription(() => WalkSpeed), WalkSpeed.ToString());
-            if (WalkRadius != null) AddParameter(PropertyHelper.GetDescription(() => WalkRadius), WalkRadius.ToString());
+            if (WalkTimeMultiplier != null) AddParameter(PropertyHelper.GetDescription(() => WalkTimeMultiplier), WalkTimeMultiplier.Value.ToString(HereAPI.Culture));
+            if (WalkSpeed != null) AddParameter(PropertyHelper.GetDescription(() => WalkSpeed), WalkSpeed.Value.ToString(HereAPI.Culture));
+            if (WalkRadius != null) AddParameter(PropertyHelper.GetDescription(() => WalkRadius), WalkRadius.Value.ToString(HereAPI.Culture));
             if (CombineChange != null) AddParameter(PropertyHelper.GetDescription(() => CombineChange), CombineChange.ToString().ToLower());
             if (TruckType != null) AddParameter(PropertyHelper.GetDescription(() => TruckType), EnumHelper.GetDescription(TruckType));
             if (TrailersCount != null) AddParameter(PropertyHelper.GetDescription(() => TrailersCount), TrailersCount.ToString());
 
             if (ShippedHazardousGoods != null) AddParameter(PropertyHelper.GetDescription(() => ShippedHazardousGoods), string.Join(",", ShippedHazardousGoods.Select(sg => EnumHelper.GetDescription(sg))));
 
-            if (LimitedWeight != null) AddParameter(PropertyHelper.GetDescription(() => LimitedWeight), LimitedWeight.ToString());
-            if (WeightPerAxle != null) AddParameter(PropertyHelper.GetDescription(() => WeightPerAxle), WeightPerAxle.ToString());
-            if (Height != null) AddParameter(PropertyHelper.GetDescription(() => Height), Height.ToString());
-            if (Width != null) AddParameter(PropertyHelper.GetDescription(() => Width), Width.ToString());
-            if (Length != null) AddParameter(PropertyHelper.GetDescription(() => Length), Length.ToString());
+            if (LimitedWeight != null) AddParameter(PropertyHelper.GetDescription(() => LimitedWeight), LimitedWeight.Value.ToString(HereAPI.Culture));
+            if (WeightPerAxle != null) AddParameter(PropertyHelper.GetDescription(() => WeightPerAxle), WeightPerAxle.Value.ToString(HereAPI.Culture));
+            if (Height != null) AddParameter(PropertyHelper.GetDescription(() => Height), Height.Value.ToString(HereAPI.Culture));
+            if (Width != null) AddParameter(PropertyHelper.GetDescription(() => Width), Width.Value.ToString(HereAPI.Culture));
+            if (Length != null) AddParameter(PropertyHelper.GetDescription(() => Length), Length.Value.ToString(HereAPI.Culture));
 
             if (TunnelCategory != null) AddParameter(PropertyHelper.GetDescription(() => TunnelCategory), EnumHelper.GetDescription(TunnelCategory));
             if (TruckRestrictionPenalty != null) AddParameter(PropertyHelper.GetDescription(() => TruckRestrictionPenalty), EnumHelper.GetDescription(TruckRestrictionPenalty));

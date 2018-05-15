@@ -27,7 +27,7 @@ namespace HereAPI.Routing.ParameterTypes
 
         public string GetParameterValue()
         {
-            return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption}";
+            return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption.ToString(HereAPI.Culture)}";
         }
 
         /// <summary>

@@ -170,7 +170,7 @@ namespace HereAPI.Routing.ParameterTypes
                     $"{(Type != null ? "!" : "")}" +
                     $"{(DisplayPosition != null ? DisplayPosition.GetParameterValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{LinkId.GetParameterValue()},{(Spot != float.NaN ? $"{Spot}" : "0.5")}";
+                    $"{LinkId.GetParameterValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPI.Culture)}" : "0.5")}";
             }
         }
 

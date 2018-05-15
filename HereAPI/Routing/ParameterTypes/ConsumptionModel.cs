@@ -94,12 +94,12 @@ namespace HereAPI.Routing.ParameterTypes
             public string GetParameterValue()
             {
                 return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetParameterValue()).ToArray())}" +
-                    $";ascent,{Ascent}" +
-                    $";descent,{Descent}" +
-                    $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty}")}" +
-                    $"{(AuxiliaryConsumption != null ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption}")}" +
-                    $"{(Acceleration != null ? "" : $";acceleration,{Acceleration}")}" +
-                    $"{(Deceleration != null ? "" : $";deceleration,{Deceleration}")}";
+                    $";ascent,{Ascent.ToString(HereAPI.Culture)}" +
+                    $";descent,{Descent.ToString(HereAPI.Culture)}" +
+                    $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty.Value.ToString(HereAPI.Culture)}")}" +
+                    $"{(AuxiliaryConsumption != null ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption.Value.ToString(HereAPI.Culture)}")}" +
+                    $"{(Acceleration != null ? "" : $";acceleration,{Acceleration.Value.ToString(HereAPI.Culture)}")}" +
+                    $"{(Deceleration != null ? "" : $";deceleration,{Deceleration.Value.ToString(HereAPI.Culture)}")}";
             }
 
             public class SpeedConsumptionPair
@@ -118,7 +118,7 @@ namespace HereAPI.Routing.ParameterTypes
 
                 public string GetParameterValue()
                 {
-                    return $"{Speed},{Consumption}";
+                    return $"{Speed},{Consumption.ToString(HereAPI.Culture)}";
                 }
 
             }

@@ -24,7 +24,7 @@ namespace HereAPI.Routing.ParameterTypes
 
         public string GetParameterValue()
         {
-            return $"{LatitudeTolerance},{LongitudeTolerance}";
+            return $"{LatitudeTolerance.ToString(HereAPI.Culture)},{LongitudeTolerance.ToString(HereAPI.Culture)}";
         }
     }
 }

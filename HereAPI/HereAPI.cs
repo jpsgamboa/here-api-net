@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Net.Http;
 
 namespace HereAPI
@@ -14,6 +15,8 @@ namespace HereAPI
         public bool RunInProdEnv { get; set; } = true;
 
         public HttpClient HttpClient { get; }
+
+        public static CultureInfo Culture = CultureInfo.InvariantCulture;
 
         public static void Register(string app_id, string app_code, bool runInProductionEnvironment)
         {

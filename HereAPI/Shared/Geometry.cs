@@ -22,7 +22,12 @@ namespace HereAPI.Shared
 
             public string GetParameterValue()
             {
-                return $"{Latitude},{Longitude}{(Altitude != int.MinValue ? $",{Altitude}" : "")}";
+                return $"{Latitude.ToString(HereAPI.Culture)},{Longitude.ToString(HereAPI.Culture)}{(Altitude != int.MinValue ? $",{Altitude.ToString(HereAPI.Culture)}" : "")}";
+            }
+
+            public override string ToString()
+            {
+                return base.ToString();
             }
         }
 
