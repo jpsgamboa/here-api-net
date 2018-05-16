@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace HereAPI.Shared.Helpers
+namespace HereAPI.Shared.Requests.Helpers
 {
     class EnumHelper
     {

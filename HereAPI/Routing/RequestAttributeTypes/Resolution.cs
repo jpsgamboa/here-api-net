@@ -1,11 +1,11 @@
-﻿using HereAPI.Shared;
+﻿using HereAPI.Shared.Requests;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public class Resolution: IUrlParameter
+    public class Resolution: IRequestAttribute
     {
         public uint ViewResolution { get; set; }
         public uint? SnapResolution { get; set; }
@@ -16,12 +16,12 @@ namespace HereAPI.Routing.ParameterTypes
             SnapResolution = snapResolution;
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return "resolution";
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {
             return $"{ViewResolution}{(SnapResolution != null ? $",{SnapResolution}" : "")}";
         }

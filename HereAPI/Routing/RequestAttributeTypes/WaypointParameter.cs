@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
-using HereAPI.Shared;
-using HereAPI.Shared.Helpers;
+using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using static HereAPI.Shared.Geometry;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public abstract class WaypointParameter : IUrlParameter
+    public abstract class WaypointParameter : IRequestAttribute
     {
 
         public uint Index { get; set; }
@@ -21,12 +21,12 @@ namespace HereAPI.Routing.ParameterTypes
             UserLabel = userLabel;
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return $"waypoint{Index}";
         }
 
-        public abstract string GetParameterValue();
+        public abstract string GetAttributeValue();
 
         /// <summary>
         /// 180 degree turns are allowed for stopOver but not for passThrough. 
@@ -67,7 +67,7 @@ namespace HereAPI.Routing.ParameterTypes
                 Heading = heading;
             }
 
-            public override string GetParameterValue()
+            public override string GetAttributeValue()
             {
                 return $"geo!" +
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
@@ -115,7 +115,7 @@ namespace HereAPI.Routing.ParameterTypes
                 StreetName = streetName;
             }
 
-            public override string GetParameterValue()
+            public override string GetAttributeValue()
             {
                 return $"street!" +
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
@@ -162,7 +162,7 @@ namespace HereAPI.Routing.ParameterTypes
                 DisplayPosition = displayPosition;
             }
 
-            public override string GetParameterValue()
+            public override string GetAttributeValue()
             {
                 return $"link!" +
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +

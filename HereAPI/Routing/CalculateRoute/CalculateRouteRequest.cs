@@ -1,18 +1,20 @@
-﻿using HereAPI.Routing.ParameterTypes;
-using HereAPI.Shared;
-using HereAPI.Shared.Helpers;
+﻿using HereAPI.Routing.RequestAttributeTypes;
+using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using static HereAPI.Routing.ParameterTypes.EnumTypes;
-using static HereAPI.Routing.ParameterTypes.RouteRepresentationOptions;
+using static HereAPI.Routing.RequestAttributeTypes.EnumTypes;
+using static HereAPI.Routing.RequestAttributeTypes.RouteRepresentationOptions;
 using static HereAPI.Shared.Geometry;
+using static HereAPI.Routing.RequestAttributeTypes.JsonRepresentation;
+using HereAPI.Shared;
 
-namespace HereAPI.Routing
+namespace HereAPI.Routing.CalculateRoute
 {
 
-    public class CalculateRoute : Request
+    public class CalculateRouteRequest : Request
     {
 
         // #### Required parameters
@@ -27,7 +29,7 @@ namespace HereAPI.Routing
         /// The first element marks the start, the last the end point. 
         /// Waypoints in between are interpreted as via points.
         /// </summary>
-        public List<WaypointParameter> Waypoints { get; set; }
+        public WaypointParameter[] Waypoints { get; set; }
 
         // #### Optional parameters
 
@@ -84,13 +86,13 @@ namespace HereAPI.Routing
         /// Areas which the route must not cross.
         /// </summary>
         [Description("avoidAreas")]
-        public List<BoundingBox> AvoidAreas { get; set; }
+        public BoundingBox[] AvoidAreas { get; set; }
 
         /// <summary>
         /// Links which the route must not cross. 
         /// </summary>
         [Description("avoidLinks")]
-        public List<LinkId> AvoidLinks { get; set; }
+        public LinkId[] AvoidLinks { get; set; }
 
         /// <summary>
         /// The optional avoid seasonal closures boolean flag can be specified to avoid usage of seasonally closed links
@@ -105,20 +107,20 @@ namespace HereAPI.Routing
         /// The route always avoids trivial u-turns, also when you don't specify the avoidTurns parameter. 
         /// </summary>
         [Description("avoidTurns")]
-        public List<TurnType> AvoidTurns { get; set; }
+        public TurnType[] AvoidTurns { get; set; }
 
         /// <summary>
         /// Identifiers of zones which the route must not cross at any circumstances.
         /// </summary>
         [Description("excludeZones")]
-        public List<ulong> ExcludeZones { get; set; }
+        public ulong[] ExcludeZones { get; set; }
 
         /// <summary>
         /// Countries that must be excluded from route calculation. <para/>
         /// Country code according to ISO 3166-1-alpha-3
         /// </summary>
         [Description("excludeCountries")]
-        public List<String> ExcludeCountries { get; set; }
+        public String[] ExcludeCountries { get; set; }
 
         /// <summary>
         /// Time when travel is expected to start. 
@@ -170,7 +172,7 @@ namespace HereAPI.Routing
         /// If there are no matching supported languages the response is an error. Defaults to en-us.
         /// </summary>
         [Description("language")]
-        public Language? Language { get; set; }
+        public LanguageCode? Language { get; set; }
 
         /// <summary>
         /// Name of a user-defined function used to wrap the JSON response. 
@@ -189,34 +191,34 @@ namespace HereAPI.Routing
         /// Defaults to waypoints, summary, legs and additionally lines if publicTransport or publicTransportTimeTable mode is used.
         /// </summary>
         [Description("routeAttributes")]
-        public List<RouteAttribute> RouteAttributes { get; set; }
+        public RouteAttribute[] RouteAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route legs. 
         /// Defaults to maneuvers, waypoint, length, travelTime. 
         /// </summary>
         [Description("legAttributes")]
-        public List<RouteLegAttribute> LegAttributes { get; set; }
+        public RouteLegAttribute[] LegAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route maneuvers. 
         /// Defaults to position, length, travelTime.
         /// </summary>
         [Description("maneuverAttributes")]
-        public List<ManeuverAttribute> ManeuverAttributes { get; set; }
+        public ManeuverAttribute[] ManeuverAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route links. Defaults to shape, speedLimit. 
         /// </summary>
         [Description("linkAttributes")]
-        public List<RouteLinkAttribute> LinkAttributes { get; set; }
+        public RouteLinkAttribute[] LinkAttributes { get; set; }
 
         /// <summary>
         /// Sequence of attribute keys of the fields that are included in public transport line elements. 
         /// If not specified, defaults to lineForeground, lineBackground.
         /// </summary>
         [Description("lineAttributes")]
-        public List<PublicTransportLineAttribute> LineAttributes { get; set; }
+        public PublicTransportLineAttribute[] LineAttributes { get; set; }
 
         /// <summary>
         /// Restricts number of changes in a public transport route to a given value. 
@@ -231,7 +233,7 @@ namespace HereAPI.Routing
         /// Public transport types that shall not be included in the response route. 
         /// </summary>
         [Description("avoidTransportTypes")]
-        public List<PublicTransportType> AvoidTransportTypes { get; set; }
+        public PublicTransportType[] AvoidTransportTypes { get; set; }
 
         /// <summary>
         /// Allows to prefer or avoid public transport routes with longer walking distances. 
@@ -287,7 +289,7 @@ namespace HereAPI.Routing
         /// Please refer to the enumeration type HazardousGoodTypeType for available values. 
         /// </summary>
         [Description("shippedHazardousGoods")]
-        public List<HazardousGoodType> ShippedHazardousGoods { get; set; }
+        public HazardousGoodType[] ShippedHazardousGoods { get; set; }
 
         /// <summary>
         /// Truck routing only, vehicle weight including trailers and shipped goods, in tons. 
@@ -354,9 +356,9 @@ namespace HereAPI.Routing
         /// 
         /// <see href="https://developer.here.com/documentation/routing/topics/resource-calculate-route.html">API</see>
         /// </summary>
-        public CalculateRoute() : base("route", "routing/7.2", "calculateroute") { }
+        public CalculateRouteRequest() : base("route", "routing/7.2", "calculateroute") { }
 
-        protected override void ValidateParameters()
+        protected override void ValidateRequestAttributes()
         {
             if (RoutingMode == null) throw new ArgumentException("RoutingMode is mandatory.");
 
@@ -402,63 +404,65 @@ namespace HereAPI.Routing
             
         }
 
-        protected override void AddSpecifiedParameters()
+        protected override void AddSpecifiedAttributes()
         {
             //Add IUrlType parameters
-            AddIUrlParameter(RoutingMode);
-            Waypoints.ForEach(wp => AddIUrlParameter(wp));
-            if (Resolution != null) AddIUrlParameter(Resolution);
-            if (JsonAttributes != null) AddIUrlParameter(JsonAttributes);
-            if (GeneralizationTolerances != null) AddIUrlParameter(GeneralizationTolerances);
-            if (VehicleType != null) AddIUrlParameter(VehicleType);
-            if (ConsumptionModel != null) AddIUrlParameter(ConsumptionModel);
-            if (CustomConsumptionDetails != null) AddIUrlParameter(CustomConsumptionDetails);
+            AddIRequestAttribute(RoutingMode);
+            foreach (var wp in Waypoints) { AddIRequestAttribute(wp); }
+            if (Resolution != null) AddIRequestAttribute(Resolution);
+            if (JsonAttributes != null) AddIRequestAttribute(JsonAttributes);
+            if (GeneralizationTolerances != null) AddIRequestAttribute(GeneralizationTolerances);
+            if (VehicleType != null) AddIRequestAttribute(VehicleType);
+            if (ConsumptionModel != null) AddIRequestAttribute(ConsumptionModel);
+            if (CustomConsumptionDetails != null) AddIRequestAttribute(CustomConsumptionDetails);
+
+            AddIRequestAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections));
 
             //Other parameters
-            if (RequestId != null) AddParameter(PropertyHelper.GetDescription(() => RequestId), RequestId);
-            if (AvoidAreas != null) AddParameter(PropertyHelper.GetDescription(() => AvoidAreas), string.Join("!", AvoidAreas.Select(aa => aa.GetParameterValue()).ToArray()));
-            if (AvoidLinks != null) AddParameter(PropertyHelper.GetDescription(() => AvoidLinks), string.Join(",", AvoidLinks.Select(al => al.GetParameterValue()).ToArray()));
-            if (AvoidSeasonalClosures != null) AddParameter(PropertyHelper.GetDescription(() => AvoidSeasonalClosures), AvoidSeasonalClosures.ToString().ToLower());
-            if (AvoidTurns != null) AddParameter(PropertyHelper.GetDescription(() => AvoidTurns), string.Join(",", AvoidTurns.Select(at => EnumHelper.GetDescription(at))));
-            if (ExcludeZones != null) AddParameter(PropertyHelper.GetDescription(() => ExcludeZones), string.Join(",", ExcludeZones));
-            if (ExcludeCountries != null) AddParameter(PropertyHelper.GetDescription(() => ExcludeCountries), string.Join(",", ExcludeCountries));
-            if (Departure != null) AddParameter(PropertyHelper.GetDescription(() => Departure), ((DateTime) Departure).ToString("s"));
-            if (Arrival != null) AddParameter(PropertyHelper.GetDescription(() => Arrival), ((DateTime)Arrival).ToString("s"));
-            if (Alternatives != null) AddParameter(PropertyHelper.GetDescription(() => Alternatives), Alternatives.ToString());
-            if (UnitSystem != null) AddParameter(PropertyHelper.GetDescription(() => UnitSystem), EnumHelper.GetDescription(UnitSystem));
-            if (ViewBounds != null) AddParameter(PropertyHelper.GetDescription(() => ViewBounds), ViewBounds.GetParameterValue());
-            if (InstructionFormat != null) AddParameter(PropertyHelper.GetDescription(() => InstructionFormat), EnumHelper.GetDescription(InstructionFormat));
-            if (Language != null) AddParameter(PropertyHelper.GetDescription(() => Language), EnumHelper.GetDescription(Language));
-            if (JsonCallback != null) AddParameter(PropertyHelper.GetDescription(() => JsonCallback), JsonCallback);
-            if (Representation != null) AddParameter(PropertyHelper.GetDescription(() => Representation), EnumHelper.GetDescription(Representation));
-            if (RouteAttributes != null) AddParameter(PropertyHelper.GetDescription(() => RouteAttributes), string.Join(",", RouteAttributes.Select(ra => EnumHelper.GetDescription(ra))));
-            if (LegAttributes != null) AddParameter(PropertyHelper.GetDescription(() => LegAttributes), string.Join(",", LegAttributes.Select(la => EnumHelper.GetDescription(la))));
-            if (ManeuverAttributes != null) AddParameter(PropertyHelper.GetDescription(() => ManeuverAttributes), string.Join(",", ManeuverAttributes.Select(ma => EnumHelper.GetDescription(ma))));
-            if (LinkAttributes != null) AddParameter(PropertyHelper.GetDescription(() => LinkAttributes), string.Join(",", LinkAttributes.Select(la => EnumHelper.GetDescription(la))));
-            if (LineAttributes != null) AddParameter(PropertyHelper.GetDescription(() => LineAttributes), string.Join(",", LineAttributes.Select(la => EnumHelper.GetDescription(la))));
+            if (RequestId != null) AddAttribute(PropertyHelper.GetDescription(() => RequestId), RequestId);
+            if (AvoidAreas != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidAreas), string.Join("!", AvoidAreas.Select(aa => aa.GetParameterValue()).ToArray()));
+            if (AvoidLinks != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidLinks), string.Join(",", AvoidLinks.Select(al => al.GetParameterValue()).ToArray()));
+            if (AvoidSeasonalClosures != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidSeasonalClosures), AvoidSeasonalClosures.ToString().ToLower());
+            if (AvoidTurns != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidTurns), string.Join(",", AvoidTurns.Select(at => EnumHelper.GetDescription(at))));
+            if (ExcludeZones != null) AddAttribute(PropertyHelper.GetDescription(() => ExcludeZones), string.Join(",", ExcludeZones));
+            if (ExcludeCountries != null) AddAttribute(PropertyHelper.GetDescription(() => ExcludeCountries), string.Join(",", ExcludeCountries));
+            if (Departure != null) AddAttribute(PropertyHelper.GetDescription(() => Departure), ((DateTime) Departure).ToString("s"));
+            if (Arrival != null) AddAttribute(PropertyHelper.GetDescription(() => Arrival), ((DateTime)Arrival).ToString("s"));
+            if (Alternatives != null) AddAttribute(PropertyHelper.GetDescription(() => Alternatives), Alternatives.ToString());
+            if (UnitSystem != null) AddAttribute(PropertyHelper.GetDescription(() => UnitSystem), EnumHelper.GetDescription(UnitSystem));
+            if (ViewBounds != null) AddAttribute(PropertyHelper.GetDescription(() => ViewBounds), ViewBounds.GetParameterValue());
+            if (InstructionFormat != null) AddAttribute(PropertyHelper.GetDescription(() => InstructionFormat), EnumHelper.GetDescription(InstructionFormat));
+            if (Language != null) AddAttribute(PropertyHelper.GetDescription(() => Language), EnumHelper.GetDescription(Language));
+            if (JsonCallback != null) AddAttribute(PropertyHelper.GetDescription(() => JsonCallback), JsonCallback);
+            if (Representation != null) AddAttribute(PropertyHelper.GetDescription(() => Representation), EnumHelper.GetDescription(Representation));
+            if (RouteAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => RouteAttributes), string.Join(",", RouteAttributes.Select(ra => EnumHelper.GetDescription(ra))));
+            if (LegAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => LegAttributes), string.Join(",", LegAttributes.Select(la => EnumHelper.GetDescription(la))));
+            if (ManeuverAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => ManeuverAttributes), string.Join(",", ManeuverAttributes.Select(ma => EnumHelper.GetDescription(ma))));
+            if (LinkAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => LinkAttributes), string.Join(",", LinkAttributes.Select(la => EnumHelper.GetDescription(la))));
+            if (LineAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => LineAttributes), string.Join(",", LineAttributes.Select(la => EnumHelper.GetDescription(la))));
 
-            if (MaxNumberOfChanges != null) AddParameter(PropertyHelper.GetDescription(() => MaxNumberOfChanges), MaxNumberOfChanges.ToString());
-            if (AvoidTransportTypes != null) AddParameter(PropertyHelper.GetDescription(() => AvoidTransportTypes), string.Join(",", AvoidTransportTypes.Select(tt => EnumHelper.GetDescription(tt))));
+            if (MaxNumberOfChanges != null) AddAttribute(PropertyHelper.GetDescription(() => MaxNumberOfChanges), MaxNumberOfChanges.ToString());
+            if (AvoidTransportTypes != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidTransportTypes), string.Join(",", AvoidTransportTypes.Select(tt => EnumHelper.GetDescription(tt))));
 
-            if (WalkTimeMultiplier != null) AddParameter(PropertyHelper.GetDescription(() => WalkTimeMultiplier), WalkTimeMultiplier.Value.ToString(HereAPI.Culture));
-            if (WalkSpeed != null) AddParameter(PropertyHelper.GetDescription(() => WalkSpeed), WalkSpeed.Value.ToString(HereAPI.Culture));
-            if (WalkRadius != null) AddParameter(PropertyHelper.GetDescription(() => WalkRadius), WalkRadius.Value.ToString(HereAPI.Culture));
-            if (CombineChange != null) AddParameter(PropertyHelper.GetDescription(() => CombineChange), CombineChange.ToString().ToLower());
-            if (TruckType != null) AddParameter(PropertyHelper.GetDescription(() => TruckType), EnumHelper.GetDescription(TruckType));
-            if (TrailersCount != null) AddParameter(PropertyHelper.GetDescription(() => TrailersCount), TrailersCount.ToString());
+            if (WalkTimeMultiplier != null) AddAttribute(PropertyHelper.GetDescription(() => WalkTimeMultiplier), WalkTimeMultiplier.Value.ToString(HereAPI.Culture));
+            if (WalkSpeed != null) AddAttribute(PropertyHelper.GetDescription(() => WalkSpeed), WalkSpeed.Value.ToString(HereAPI.Culture));
+            if (WalkRadius != null) AddAttribute(PropertyHelper.GetDescription(() => WalkRadius), WalkRadius.Value.ToString(HereAPI.Culture));
+            if (CombineChange != null) AddAttribute(PropertyHelper.GetDescription(() => CombineChange), CombineChange.ToString().ToLower());
+            if (TruckType != null) AddAttribute(PropertyHelper.GetDescription(() => TruckType), EnumHelper.GetDescription(TruckType));
+            if (TrailersCount != null) AddAttribute(PropertyHelper.GetDescription(() => TrailersCount), TrailersCount.ToString());
 
-            if (ShippedHazardousGoods != null) AddParameter(PropertyHelper.GetDescription(() => ShippedHazardousGoods), string.Join(",", ShippedHazardousGoods.Select(sg => EnumHelper.GetDescription(sg))));
+            if (ShippedHazardousGoods != null) AddAttribute(PropertyHelper.GetDescription(() => ShippedHazardousGoods), string.Join(",", ShippedHazardousGoods.Select(sg => EnumHelper.GetDescription(sg))));
 
-            if (LimitedWeight != null) AddParameter(PropertyHelper.GetDescription(() => LimitedWeight), LimitedWeight.Value.ToString(HereAPI.Culture));
-            if (WeightPerAxle != null) AddParameter(PropertyHelper.GetDescription(() => WeightPerAxle), WeightPerAxle.Value.ToString(HereAPI.Culture));
-            if (Height != null) AddParameter(PropertyHelper.GetDescription(() => Height), Height.Value.ToString(HereAPI.Culture));
-            if (Width != null) AddParameter(PropertyHelper.GetDescription(() => Width), Width.Value.ToString(HereAPI.Culture));
-            if (Length != null) AddParameter(PropertyHelper.GetDescription(() => Length), Length.Value.ToString(HereAPI.Culture));
+            if (LimitedWeight != null) AddAttribute(PropertyHelper.GetDescription(() => LimitedWeight), LimitedWeight.Value.ToString(HereAPI.Culture));
+            if (WeightPerAxle != null) AddAttribute(PropertyHelper.GetDescription(() => WeightPerAxle), WeightPerAxle.Value.ToString(HereAPI.Culture));
+            if (Height != null) AddAttribute(PropertyHelper.GetDescription(() => Height), Height.Value.ToString(HereAPI.Culture));
+            if (Width != null) AddAttribute(PropertyHelper.GetDescription(() => Width), Width.Value.ToString(HereAPI.Culture));
+            if (Length != null) AddAttribute(PropertyHelper.GetDescription(() => Length), Length.Value.ToString(HereAPI.Culture));
 
-            if (TunnelCategory != null) AddParameter(PropertyHelper.GetDescription(() => TunnelCategory), EnumHelper.GetDescription(TunnelCategory));
-            if (TruckRestrictionPenalty != null) AddParameter(PropertyHelper.GetDescription(() => TruckRestrictionPenalty), EnumHelper.GetDescription(TruckRestrictionPenalty));
+            if (TunnelCategory != null) AddAttribute(PropertyHelper.GetDescription(() => TunnelCategory), EnumHelper.GetDescription(TunnelCategory));
+            if (TruckRestrictionPenalty != null) AddAttribute(PropertyHelper.GetDescription(() => TruckRestrictionPenalty), EnumHelper.GetDescription(TruckRestrictionPenalty));
 
-            if (ReturnElevation != null) AddParameter(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
+            if (ReturnElevation != null) AddAttribute(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
 
         }
         

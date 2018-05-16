@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace HereAPI.Shared.Helpers
+namespace HereAPI.Shared.Requests.Helpers
 {
     public class PropertyHelper
     {

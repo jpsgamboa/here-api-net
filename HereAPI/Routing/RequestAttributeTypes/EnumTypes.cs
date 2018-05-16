@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
     public class EnumTypes
     {

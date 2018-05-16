@@ -1,4 +1,6 @@
 using HereAPI.Routing;
+using HereAPI.Routing.CalculateRoute;
+using HereAPI.Routing.RequestAttributeTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static HereAPI.Routing.ParameterTypes.WaypointParameter;
+using static HereAPI.Routing.RequestAttributeTypes.WaypointParameter;
 
 namespace Trials
 {
@@ -19,20 +21,25 @@ namespace Trials
         
         static void Main(string[] args)
         {
+
+            VehicleType vt = new VehicleType(~VehicleType.EngineType.Diesel, 5.28f);
+
+
             HereAPI.HereAPI.Register(appId, appCode, true);
 
-            CalculateRoute cr = new CalculateRoute()
+            CalculateRouteRequest cr = new CalculateRouteRequest()
             {
-                RoutingMode = new HereAPI.Routing.ParameterTypes.RoutingMode(HereAPI.Routing.ParameterTypes.RoutingMode.RoutingType.Fastest, HereAPI.Routing.ParameterTypes.RoutingMode.TransportMode.Car),
-                Waypoints = new List<HereAPI.Routing.ParameterTypes.WaypointParameter>()
+                RoutingMode = new HereAPI.Routing.RequestAttributeTypes.RoutingMode(HereAPI.Routing.RequestAttributeTypes.RoutingMode.RoutingType.Fastest, HereAPI.Routing.RequestAttributeTypes.RoutingMode.TransportMode.Car),
+                Waypoints = new HereAPI.Routing.RequestAttributeTypes.WaypointParameter[]
                 {
                     new GeoWaypointParameter(0, new HereAPI.Shared.Geometry.GeoPoint(38.711428, -9.240167)),
                     new GeoWaypointParameter(1, new HereAPI.Shared.Geometry.GeoPoint(38.857363, -9.165800))
                 },
-                Departure = new DateTime(2018,05,15,19,00,00)
+                Departure = new DateTime(2018,05,15,19,00,00),
+                RouteAttributes = new RouteRepresentationOptions.RouteAttribute[] { RouteRepresentationOptions.RouteAttribute.Shape}
             };
 
-            Console.WriteLine(cr.GetFinalUrl());
+            Console.WriteLine(cr.GetCompiledUrl());
 
             Console.ReadKey();
         }

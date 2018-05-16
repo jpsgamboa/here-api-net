@@ -1,14 +1,14 @@
-﻿using HereAPI.Shared;
+﻿using HereAPI.Shared.Requests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Linq;
-using HereAPI.Shared.Helpers;
+using HereAPI.Shared.Requests.Helpers;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public class ConsumptionModel : IUrlParameter
+    public class ConsumptionModel : IRequestAttribute
     {
 
         public ConsumptionModelType Model { get; set; }
@@ -30,12 +30,12 @@ namespace HereAPI.Routing.ParameterTypes
             Model = consumptionModelType;
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return "consumptionmodel";
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {
             return EnumHelper.GetDescription(Model);
         }
@@ -46,7 +46,7 @@ namespace HereAPI.Routing.ParameterTypes
             [Description("standard")] Standard
         }
 
-        public class CustomConsumptionDetails : IUrlParameter
+        public class CustomConsumptionDetails : IRequestAttribute
         {
 
             public List<SpeedConsumptionPair> SpeedConsumptionPairs { get; set; }
@@ -86,12 +86,12 @@ namespace HereAPI.Routing.ParameterTypes
                 Deceleration = deceleration;
             }
 
-            public string GetParameterName()
+            public string GetAttributeName()
             {
                 return "customConsumptionDetails";
             }
 
-            public string GetParameterValue()
+            public string GetAttributeValue()
             {
                 return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetParameterValue()).ToArray())}" +
                     $";ascent,{Ascent.ToString(HereAPI.Culture)}" +

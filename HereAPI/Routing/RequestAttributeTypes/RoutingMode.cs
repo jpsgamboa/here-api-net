@@ -1,13 +1,13 @@
-﻿using HereAPI.Shared;
-using HereAPI.Shared.Helpers;
+﻿using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public class RoutingMode : IUrlParameter
+    public class RoutingMode : IRequestAttribute
     {
 
         public RoutingType Type { get; set; }
@@ -40,7 +40,7 @@ namespace HereAPI.Routing.ParameterTypes
 
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {            
             return $"{EnumHelper.GetDescription(Type)}" +
                 $"{$";{EnumHelper.GetDescription(Transport)}"}" +
@@ -48,7 +48,7 @@ namespace HereAPI.Routing.ParameterTypes
                 $"{(Features.Length > 0 ? $";{String.Join(",", Features.Select(f => f.GetParameterValue()).ToArray())}" : "")}";
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return "mode";
         }

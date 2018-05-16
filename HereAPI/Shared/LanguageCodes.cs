@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HereAPI.Shared
 {
-    public enum Language
+    public enum LanguageCode
     {
         [Description("af")] Afrikaans,
         [Description("sq")] Albanian,

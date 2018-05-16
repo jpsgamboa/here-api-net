@@ -1,10 +1,10 @@
-﻿using HereAPI.Shared;
-using HereAPI.Shared.Helpers;
+﻿using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using System.ComponentModel;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public class VehicleType : IUrlParameter
+    public class VehicleType : IRequestAttribute
     {
         public EngineType Engine { get; set; }
         public float AverageConsumption { get; set; }
@@ -20,12 +20,12 @@ namespace HereAPI.Routing.ParameterTypes
             AverageConsumption = averageConsumption;
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return "vehicletype";
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {
             return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption.ToString(HereAPI.Culture)}";
         }

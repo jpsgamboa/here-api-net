@@ -1,11 +1,11 @@
-﻿using HereAPI.Shared;
+﻿using HereAPI.Shared.Requests;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
-    public class GeneralizationTolerance : IUrlParameter
+    public class GeneralizationTolerance : IRequestAttribute
     {
 
         public double LatitudeTolerance { get; set; }
@@ -17,12 +17,12 @@ namespace HereAPI.Routing.ParameterTypes
             LongitudeTolerance = longitudeTolerance;
         }
 
-        public string GetParameterName()
+        public string GetAttributeName()
         {
             return "generalizationTolerances";
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {
             return $"{LatitudeTolerance.ToString(HereAPI.Culture)},{LongitudeTolerance.ToString(HereAPI.Culture)}";
         }

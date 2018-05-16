@@ -1,11 +1,11 @@
-﻿using HereAPI.Shared;
-using HereAPI.Shared.Helpers;
+﻿using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace HereAPI.Routing.ParameterTypes
+namespace HereAPI.Routing.RequestAttributeTypes
 {
     public class LinkId
     {

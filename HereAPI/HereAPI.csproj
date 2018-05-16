@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Routing\ResponseTypes\RouteResponseMetaInfo.cs~RF5cdbf9f.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
   </ItemGroup>
 
