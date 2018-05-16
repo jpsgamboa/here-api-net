@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace HereAPI.Shared.Types
+namespace HereAPI.Shared.TypeEnums
 {
-    public enum LanguageCode
+    public enum LanguageCodeType
     {
         [Description("af")] Afrikaans,
         [Description("sq")] Albanian,

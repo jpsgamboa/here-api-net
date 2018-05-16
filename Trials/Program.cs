@@ -1,6 +1,7 @@
 using HereAPI.Routing.Services.CalculateRoute;
+using HereAPI.Routing.TypesEnum;
 using HereAPI.Routing.TypesRequest;
-using HereAPI.Shared.Types;
+using HereAPI.Shared.TypeObjects;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -17,21 +18,21 @@ namespace Trials
         static void Main(string[] args)
         {
 
-            VehicleType vt = new VehicleType(~VehicleType.EngineType.Diesel, 5.28f);
+            VehicleType vt = new VehicleType(EngineType.Diesel, 5.28f);
 
 
             HereAPI.HereAPI.Register(appId, appCode, true);
 
             CalculateRouteRequest cr = new CalculateRouteRequest()
             {
-                RoutingMode = new RoutingMode(RoutingMode.RoutingType.Fastest, RoutingMode.TransportMode.Car),
+                RoutingMode = new RoutingMode(RoutingType.Fastest, TransportModeType.Car),
                 Waypoints = new WaypointParameter[]
                 {
-                    new GeoWaypointParameter(0, new GeoPoint(38.711428, -9.240167)),
-                    new GeoWaypointParameter(1, new GeoPoint(38.857363, -9.165800))
+                    new GeoWaypointParameter(0, new GeoCoordinate(38.711428, -9.240167)),
+                    new GeoWaypointParameter(1, new GeoCoordinate(38.857363, -9.165800))
                 },
                 Departure = new DateTime(2018,05,15,19,00,00),
-                RouteAttributes = new RouteRepresentationOptions.RouteAttribute[] { RouteRepresentationOptions.RouteAttribute.Shape}
+                RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape}
             };
 
             Console.WriteLine(cr.GetCompiledUrl());

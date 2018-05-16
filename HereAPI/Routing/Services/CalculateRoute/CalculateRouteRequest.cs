@@ -1,14 +1,15 @@
-﻿using HereAPI.Routing.TypesRequest;
-using HereAPI.Shared.Requests;
-using HereAPI.Shared.Requests.Helpers;
-using System;
+﻿using System;
 using System.Linq;
 using System.ComponentModel;
-using static HereAPI.Routing.TypesRequest.EnumTypes;
-using static HereAPI.Routing.TypesRequest.RouteRepresentationOptions;
-using static HereAPI.Routing.TypesRequest.JsonRepresentation;
+using HereAPI.Routing.TypesRequest;
+using HereAPI.Shared.Requests;
+using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Routing.TypesCommon;
-using HereAPI.Shared.Types;
+using HereAPI.Shared.TypeObjects;
+using HereAPI.Routing.TypesEnum;
+using HereAPI.Shared.TypeEnums;
+using static HereAPI.Routing.TypesEnum.EnumTypes;
+using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
@@ -149,7 +150,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// units used are based on the language specified in the request. Defaults to metric when not specified. 
         /// </summary>
         [Description("metricSystem")]
-        public UnitSystem? UnitSystem { get; set; }
+        public UnitSystemType? UnitSystem { get; set; }
 
         /// <summary>
         /// If the view bounds are given in the request then only route shape points which fit into these bounds will be returned. 
@@ -171,7 +172,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// If there are no matching supported languages the response is an error. Defaults to en-us.
         /// </summary>
         [Description("language")]
-        public LanguageCode? Language { get; set; }
+        public LanguageCodeType? Language { get; set; }
 
         /// <summary>
         /// Name of a user-defined function used to wrap the JSON response. 
@@ -183,41 +184,41 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// Define which elements are included in the response as part of the data representation of the route.
         /// </summary>
         [Description("representation")]
-        public RouteRepresentationMode? Representation { get; set; }
+        public RouteRepresentationModeType? Representation { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route. 
         /// Defaults to waypoints, summary, legs and additionally lines if publicTransport or publicTransportTimeTable mode is used.
         /// </summary>
         [Description("routeAttributes")]
-        public RouteAttribute[] RouteAttributes { get; set; }
+        public RouteAttributeType[] RouteAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route legs. 
         /// Defaults to maneuvers, waypoint, length, travelTime. 
         /// </summary>
         [Description("legAttributes")]
-        public RouteLegAttribute[] LegAttributes { get; set; }
+        public RouteLegAttributeType[] LegAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route maneuvers. 
         /// Defaults to position, length, travelTime.
         /// </summary>
         [Description("maneuverAttributes")]
-        public ManeuverAttribute[] ManeuverAttributes { get; set; }
+        public ManeuverAttributeType[] ManeuverAttributes { get; set; }
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation of the route links. Defaults to shape, speedLimit. 
         /// </summary>
         [Description("linkAttributes")]
-        public RouteLinkAttribute[] LinkAttributes { get; set; }
+        public RouteLinkAttributeType[] LinkAttributes { get; set; }
 
         /// <summary>
         /// Sequence of attribute keys of the fields that are included in public transport line elements. 
         /// If not specified, defaults to lineForeground, lineBackground.
         /// </summary>
         [Description("lineAttributes")]
-        public PublicTransportLineAttribute[] LineAttributes { get; set; }
+        public PublicTransportLineAttributeType[] LineAttributes { get; set; }
 
         /// <summary>
         /// Restricts number of changes in a public transport route to a given value. 
@@ -326,7 +327,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// The route will pass only through tunnels of a less strict category.
         /// </summary>
         [Description("tunnelCategory")]
-        public TunnelCategory? TunnelCategory { get; set; }
+        public TunnelCategoryType? TunnelCategory { get; set; }
 
         /// <summary>
         /// Truck routing only, specifies the penalty type on violated truck restrictions. 
@@ -335,7 +336,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// The route violating truck restrictions is then indicated with dedicated route and maneuver notes in the response
         /// </summary>
         [Description("truckRestrictionPenalty")]
-        public TruckRestrictionPenalty? TruckRestrictionPenalty { get; set; }
+        public TruckRestrictionPenaltyType? TruckRestrictionPenalty { get; set; }
 
         /// <summary>
         /// If set to true, all shapes inside routing response will consist of 3 values instead of 2. Third value will be elevation. 
@@ -363,7 +364,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
 
             if (Waypoints == null) throw new ArgumentException("Waypoints are mandatory.");
 
-            if (AvoidTurns != null && RoutingMode.Transport != RoutingMode.TransportMode.Truck)
+            if (AvoidTurns != null && RoutingMode.Transport != TransportModeType.Truck)
                 throw new ArgumentException("Currently, truck routing is the only mode that supports the avoidTurns option.");
 
             if (Departure != null && Arrival != null) throw new ArgumentException("Specify either departure or arrival, not both.");
@@ -371,7 +372,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (ConsumptionModel != null && ConsumptionModel.Model == ConsumptionModel.ConsumptionModelType.Standard)
                 if (CustomConsumptionDetails == null) throw new ArgumentException("When you specify the value standard, you must provide additional information with CustomConsumptionDetails");
 
-            if (RoutingMode.Transport != RoutingMode.TransportMode.PublicTransport && RoutingMode.Transport != RoutingMode.TransportMode.PublicTransportTimeTable && LineAttributes != null)
+            if (RoutingMode.Transport != TransportModeType.PublicTransport && RoutingMode.Transport != TransportModeType.PublicTransportTimeTable && LineAttributes != null)
                 throw new ArgumentException("Public Transport Line Attributes are only available for Public Transport modes.");
 
             if (MaxNumberOfChanges != null && MaxNumberOfChanges > 10) throw new ArgumentException("Max Number of Changes should be an int between 0 and 10");
@@ -380,7 +381,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (WalkSpeed != null && (WalkSpeed < 0.5 || WalkSpeed > 2)) throw new ArgumentException("Walk Speed should be a float between 0.5 and 2");
             if (WalkRadius != null && (WalkRadius < 0 || WalkRadius > 6000)) throw new ArgumentException("Walk Radius should be a float between 0 and 6000");
 
-            if (RoutingMode.Transport != RoutingMode.TransportMode.Truck)
+            if (RoutingMode.Transport != TransportModeType.Truck)
             {
                 if (TruckType != null) throw new ArgumentException("TruckType attribute is only available for Truck routing mode");
                 if (TrailersCount != null) throw new ArgumentException("TrailersCount attribute is only available for Truck routing mode");

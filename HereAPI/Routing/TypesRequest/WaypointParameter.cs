@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
-using HereAPI.Routing.TypesCommon;
+﻿using HereAPI.Routing.TypesCommon;
+using HereAPI.Routing.TypesEnum;
 using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
-using HereAPI.Shared.Types;
+using HereAPI.Shared.TypeObjects;
 
 namespace HereAPI.Routing.TypesRequest
 {
@@ -29,22 +29,10 @@ namespace HereAPI.Routing.TypesRequest
 
         public abstract string GetAttributeValue();
 
-        /// <summary>
-        /// 180 degree turns are allowed for stopOver but not for passThrough. 
-        /// Waypoints defined through a drag-n-drop action should be marked as pass-through. 
-        /// PassThrough waypoints will not appear in the list of maneuvers. 
-        /// </summary>
-        public enum WaypointType
-        {
-            [Description("stopOver")] StopOver,
-            [Description("passThrough")] PassThrough,
-        }
-
-
         public class GeoWaypointParameter : WaypointParameter
         {
 
-            public GeoPoint GeoPoint { get; set; }
+            public GeoCoordinate GeoPoint { get; set; }
             public uint? TransitRadius { get; set; }
             public uint? Heading { get; set; }
 
@@ -60,7 +48,7 @@ namespace HereAPI.Routing.TypesRequest
             /// <param name="transitRadius">Matching Links are selected within the specified TransitRadius, in meters. For example to drive past a city without necessarily going into the city center you can specify the coordinates of the center and a TransitRadius of 5000m.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
             /// <param name="heading">Heading in degrees starting at true north and continuing clockwise around the compass. North is 0 degrees, East is 90 degrees, South is 180 degrees, and West is 270 degrees.</param>
-            public GeoWaypointParameter(uint waypointIndex, GeoPoint geoPoint, WaypointType? waypointType = null, uint? stopOverDuration = null, uint? transitRadius = null, string userLabel = null, uint? heading = null)
+            public GeoWaypointParameter(uint waypointIndex, GeoCoordinate geoPoint, WaypointType? waypointType = null, uint? stopOverDuration = null, uint? transitRadius = null, string userLabel = null, uint? heading = null)
                 :base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 GeoPoint = geoPoint;
@@ -84,8 +72,8 @@ namespace HereAPI.Routing.TypesRequest
 
         public class NavigationWaypointParameterWithStreetPositions : WaypointParameter
         {
-            public GeoPoint StreetPosition { get; set; }
-            public GeoPoint DisplayPosition { get; set; }
+            public GeoCoordinate StreetPosition { get; set; }
+            public GeoCoordinate DisplayPosition { get; set; }
             public string StreetName { get; set; }
 
             /// <summary>
@@ -108,7 +96,7 @@ namespace HereAPI.Routing.TypesRequest
             /// <param name="stopOverDuration">Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough. </param>
             /// <param name="displayPosition">Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and 180. Altitude in meters.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
-            public NavigationWaypointParameterWithStreetPositions(uint waypointIndex, GeoPoint streetPosition, string streetName = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoPoint displayPosition = null, string userLabel = null)
+            public NavigationWaypointParameterWithStreetPositions(uint waypointIndex, GeoCoordinate streetPosition, string streetName = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoCoordinate displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 StreetPosition = streetPosition;
@@ -135,7 +123,7 @@ namespace HereAPI.Routing.TypesRequest
 
             public LinkId LinkId { get; set; }
             public float? Spot { get; set; }
-            public GeoPoint DisplayPosition { get; set; }
+            public GeoCoordinate DisplayPosition { get; set; }
 
             /// <summary>
             /// The NavigationWaypointParameter defines a waypoint by LinkId and optional Spot value. 
@@ -155,7 +143,7 @@ namespace HereAPI.Routing.TypesRequest
             /// <param name="stopOverDuration">Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough. </param>
             /// <param name="displayPosition">Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and 180. Altitude in meters.</param>
             /// <param name="userLabel">Custom label identifying this waypoint.</param>
-            public NavigationWaypointParameterWithLinkPositions(uint waypointIndex, LinkId linkId, float? spot = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoPoint displayPosition = null, string userLabel = null)
+            public NavigationWaypointParameterWithLinkPositions(uint waypointIndex, LinkId linkId, float? spot = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoCoordinate displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
                 LinkId = linkId;

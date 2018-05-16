@@ -1,15 +1,15 @@
 ﻿using HereAPI.Shared.Structure;
 using System;
 
-namespace HereAPI.Shared.Types
+namespace HereAPI.Shared.TypeObjects
 {
-    public class GeoPoint : IAttribute
+    public class GeoCoordinate : IAttribute
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double? Altitude { get; set; }
 
-        public GeoPoint(double latitude, double longitude, double? altitude = null)
+        public GeoCoordinate(double latitude, double longitude, double? altitude = null)
         {
             if (latitude < -90 || latitude > 90) throw new ArgumentOutOfRangeException("Latitude must be between -90 and 90");
             if (longitude < -180 || longitude > 180) throw new ArgumentOutOfRangeException("Longitude must be between -90 and 90");

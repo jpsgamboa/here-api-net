@@ -1,5 +1,5 @@
 ﻿using HereAPI.Routing.TypesResponse;
-using HereAPI.Shared.Types;
+using HereAPI.Shared.TypeEnums;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
@@ -28,7 +28,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// and this is unavailable, the service returns the response using American English instead(en-us). 
         /// </summary>
         /// <see cref="https://developer.here.com/documentation/routing/topics/resource-param-type-languages.html#languages"/>
-        public LanguageCode Language { get; set; }
+        public LanguageCodeType Language { get; set; }
 
         /// <summary>
         /// Contains copyright information intended for the end user when route uses data provided by outside companies. 

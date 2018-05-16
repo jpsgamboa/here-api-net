@@ -1,4 +1,5 @@
 ﻿using HereAPI.Routing.TypesCommon;
+using HereAPI.Routing.TypesEnum;
 using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace HereAPI.Routing.Conversions
         public  static Dictionary<Type, Func<string, object>> CONVERSIONS = new Dictionary<Type, Func<string, object>>
         {
             { typeof(LinkId), (s) => ConvertLinkId(s) },
-
+            { typeof(WaypointType?), (s) => ConvertWaypointType(s) },
         };
 
 
@@ -34,6 +35,18 @@ namespace HereAPI.Routing.Conversions
             {
                 return null;
             }              
+        }
+
+        public static WaypointType? ConvertWaypointType(string s)
+        {
+            try
+            {
+                return EnumHelper.GetValue<WaypointType>(s);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
 

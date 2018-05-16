@@ -1,4 +1,4 @@
-﻿using HereAPI.Shared.Types;
+﻿using HereAPI.Shared.TypeObjects;
 using NUnit.Framework;
 using System;
 
@@ -17,7 +17,7 @@ namespace HereAPI.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                GeoPoint gp = new GeoPoint(lat, lon);
+                GeoCoordinate gp = new GeoCoordinate(lat, lon);
             });
         }
 
@@ -30,7 +30,7 @@ namespace HereAPI.Tests
         {
             Assert.DoesNotThrow(() =>
             {
-                GeoPoint gp = new GeoPoint(lat, lon);
+                GeoCoordinate gp = new GeoCoordinate(lat, lon);
             });
         }
 
@@ -40,7 +40,7 @@ namespace HereAPI.Tests
         [TestCase("38.12345,-8.12345,50", 38.12345, -8.12345, 50)]
         public void ParameterValueFormat(string expected, double lat, double lon, double? alt = null)
         {
-            GeoPoint gp = new GeoPoint(lat, lon, alt);
+            GeoCoordinate gp = new GeoCoordinate(lat, lon, alt);
             Assert.AreEqual(expected, gp.GetAttributeValue());
         }
 

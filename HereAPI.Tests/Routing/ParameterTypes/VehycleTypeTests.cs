@@ -1,6 +1,6 @@
-﻿using HereAPI.Routing.TypesRequest;
+﻿using HereAPI.Routing.TypesEnum;
+using HereAPI.Routing.TypesRequest;
 using NUnit.Framework;
-using static HereAPI.Routing.TypesRequest.VehicleType;
 
 namespace HereAPI.Tests.Routing.ParameterTypes
 {

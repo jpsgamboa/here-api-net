@@ -1,13 +1,13 @@
 ﻿using HereAPI.Shared.Structure;
 
-namespace HereAPI.Shared.Types
+namespace HereAPI.Shared.TypeObjects
 {
     public class BoundingBox : IAttribute
     {
-        public GeoPoint TopLeft { get; set; }
-        public GeoPoint BottomRight { get; set; }
+        public GeoCoordinate TopLeft { get; set; }
+        public GeoCoordinate BottomRight { get; set; }
 
-        public BoundingBox(GeoPoint topLeft, GeoPoint bottomRight)
+        public BoundingBox(GeoCoordinate topLeft, GeoCoordinate bottomRight)
         {
             TopLeft = topLeft;
             BottomRight = bottomRight;
