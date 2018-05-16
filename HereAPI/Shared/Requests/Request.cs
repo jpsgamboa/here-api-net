@@ -1,5 +1,5 @@
 ﻿using HereAPI.Routing.Conversions;
-using HereAPI.Shared.Json;
+using HereAPI.Shared.Conversions;
 using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
 using Newtonsoft.Json;
@@ -99,7 +99,7 @@ namespace HereAPI.Shared.Requests
                 _serializerSettings = new JsonSerializerSettings
                 {
                     Converters = new List<JsonConverter> {
-                        new JsonTypesConverter(RoutingJsonTypeConversions.CONVERSIONS),
+                        new JsonTypesConverter(new RoutingJsonTypeConversions().GetConversions()),
 
                     }
                 };

@@ -1,5 +1,6 @@
 ﻿using HereAPI.Routing.TypesCommon;
 using HereAPI.Routing.TypesEnum;
+using HereAPI.Shared.Conversions;
 using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Collections.Generic;
@@ -8,17 +9,19 @@ using System.Text;
 
 namespace HereAPI.Routing.Conversions
 {
-    public static class RoutingJsonTypeConversions
+    public class RoutingJsonTypeConversions : ITypeConversions
     {
 
-        public  static Dictionary<Type, Func<string, object>> CONVERSIONS = new Dictionary<Type, Func<string, object>>
+        public Dictionary<Type, Func<string, object>> GetConversions()
         {
-            { typeof(LinkId), (s) => ConvertLinkId(s) },
-            { typeof(WaypointType?), (s) => ConvertWaypointType(s) },
-        };
+            return new Dictionary<Type, Func<string, object>>
+                        {
+                            { typeof(LinkId), (s) => ConvertLinkId(s) },
+                            { typeof(Enum), (s) => ConvertEnumType<Enum>(s) },
+                        };
+        }
 
-
-        public static LinkId ConvertLinkId(string s)
+        public LinkId ConvertLinkId(string s)
         {
             try
             {
@@ -37,9 +40,7 @@ namespace HereAPI.Routing.Conversions
             }              
         }
 
-        //TODO TENTAR CONVERTER TODOS OS ENUM TYPES GENERICAMENTE
-
-        public static T ConvertEnumType<T>(string s)
+        public T ConvertEnumType<T>(string s)
         {
             try
             {
@@ -47,35 +48,10 @@ namespace HereAPI.Routing.Conversions
             }
             catch
             {
-                return null;
+                return default(T);
             }
         }
-
-        public static WaypointType? ConvertWaypointType(string s)
-        {
-            try
-            {
-                return EnumHelper.GetValue<WaypointType>(s);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static SideOfStreetType ConvertSideOfStreetType(string s)
-        {
-            try
-            {
-                return EnumHelper.GetValue<SideOfStreetType>(s);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-
+        
 
     }
 }

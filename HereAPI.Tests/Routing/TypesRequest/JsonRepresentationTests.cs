@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 
-namespace HereAPI.Tests.Routing.ParameterTypes
+namespace HereAPI.Tests.Routing.TypesRequest
 {
     [TestFixture]
     class JsonRepresentationTests

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HereAPI.Tests.Routing.ParameterTypes
+namespace HereAPI.Tests.Routing.TypesRequest
 {
     [TestFixture]
     class WayPointParameterTests

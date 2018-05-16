@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HereAPI.Shared.Json
+namespace HereAPI.Shared.Conversions
 {
-    class JsonTypesConverter : JsonConverter
+    public class JsonTypesConverter : JsonConverter
     {
         private Dictionary<Type, Func<string, object>> _conversions;
 

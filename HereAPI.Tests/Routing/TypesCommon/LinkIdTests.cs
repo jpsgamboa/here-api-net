@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Linq;
 using static HereAPI.Routing.TypesCommon.LinkId;
 
-namespace HereAPI.Tests.Routing.ParameterTypes
+namespace HereAPI.Tests.Routing.TypesCommon
 {
     [TestFixture]
     class LinkIdTests

@@ -2,7 +2,7 @@
 using HereAPI.Routing.TypesRequest;
 using NUnit.Framework;
 
-namespace HereAPI.Tests.Routing.ParameterTypes
+namespace HereAPI.Tests.Routing.TypesRequest
 {
     [TestFixture]
     class VehycleTypeTests

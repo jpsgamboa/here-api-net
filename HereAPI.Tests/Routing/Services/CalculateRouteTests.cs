@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HereAPI.Tests.Routing
+namespace HereAPI.Tests.Routing.Services
 {
 
 }

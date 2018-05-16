@@ -32,7 +32,8 @@ namespace Trials
                     new GeoWaypointParameter(1, new GeoCoordinate(38.857363, -9.165800))
                 },
                 Departure = new DateTime(2018,05,15,19,00,00),
-                RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape}
+                RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape, RouteAttributeType.Legs},
+                LegAttributes = new RouteLegAttributeType[] {RouteLegAttributeType.Links}
             };
 
             Console.WriteLine(cr.GetCompiledUrl());
