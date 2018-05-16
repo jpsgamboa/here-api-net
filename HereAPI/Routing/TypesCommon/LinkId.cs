@@ -1,14 +1,16 @@
 ﻿using HereAPI.Shared.Requests;
 using HereAPI.Shared.Requests.Helpers;
+using HereAPI.Shared.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesCommon
 {
-    public class LinkId
+    public class LinkId : IAttribute
     {
+        public static char[] DIRECTION_SYMBOLS = { '+', '-', '*' };
 
         public enum LinkDirection
         {
@@ -27,7 +29,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
             Direction = linkDirection;
         }
 
-        public string GetParameterValue()
+        public string GetAttributeValue()
         {
             return $"{EnumHelper.GetDescription(Direction)}{Id}";
         }

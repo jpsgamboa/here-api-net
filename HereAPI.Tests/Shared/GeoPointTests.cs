@@ -1,10 +1,6 @@
-﻿using NUnit.Framework;
+﻿using HereAPI.Shared.Types;
+using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static HereAPI.Shared.Geometry;
 
 namespace HereAPI.Tests
 {
@@ -45,7 +41,7 @@ namespace HereAPI.Tests
         public void ParameterValueFormat(string expected, double lat, double lon, double? alt = null)
         {
             GeoPoint gp = new GeoPoint(lat, lon, alt);
-            Assert.AreEqual(expected, gp.GetParameterValue());
+            Assert.AreEqual(expected, gp.GetAttributeValue());
         }
 
 

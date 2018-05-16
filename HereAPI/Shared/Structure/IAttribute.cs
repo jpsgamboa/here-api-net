@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HereAPI.Shared.Requests
+namespace HereAPI.Shared.Structure
 {
-    public interface IRequestAttribute
+    public interface IAttribute
     {
-        string GetAttributeName();
         string GetAttributeValue();
-
     }
 }

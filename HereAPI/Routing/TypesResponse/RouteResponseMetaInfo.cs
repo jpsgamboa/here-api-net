@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HereAPI.Routing.ResponseTypes
+namespace HereAPI.Routing.TypesResponse
 {
     public class RouteResponseMetaInfo
     {

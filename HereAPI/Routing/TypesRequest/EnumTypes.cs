@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class EnumTypes
     {

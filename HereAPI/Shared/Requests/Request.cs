@@ -1,4 +1,7 @@
-﻿using HereAPI.Shared.Requests.Helpers;
+﻿using HereAPI.Routing.Conversions;
+using HereAPI.Shared.Json;
+using HereAPI.Shared.Requests.Helpers;
+using HereAPI.Shared.Structure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,14 +12,11 @@ namespace HereAPI.Shared.Requests
 {
     public abstract class Request
     {
-        JsonSerializerSettings settings = null;
-        //JsonSerializerSettings settings = new JsonSerializerSettings
-        //{
-        //    Converters = new List<JsonConverter> { new JsonEnumTypeConverter(), new JsonLocationConverter() }
-        //};
 
         private string baseUrl { get; set; } = "";
         private string urlAttributes { get; set; } = "";
+
+        private static JsonSerializerSettings _serializerSettings;
 
         /// <summary>
         /// Creates the base URL for the api service, appends the App ID and App Code defined in HereAPI.Register()
@@ -70,7 +70,7 @@ namespace HereAPI.Shared.Requests
 
             var uri = new Uri(baseUrl + urlAttributes);
             var json = await HereAPI.Instance.HttpClient.GetStringAsync(uri).ConfigureAwait(false);
-            var result = JsonConvert.DeserializeObject<T>(json, settings);
+            var result = JsonConvert.DeserializeObject<T>(json, GetJsonSerializerSettings());
             return result;
         }
 
@@ -92,7 +92,21 @@ namespace HereAPI.Shared.Requests
             return GetStreamAsync().GetAwaiter().GetResult();
         }
 
+        private JsonSerializerSettings GetJsonSerializerSettings()
+        {
+            if (_serializerSettings == null)
+            {
+                _serializerSettings = new JsonSerializerSettings
+                {
+                    Converters = new List<JsonConverter> {
+                        new JsonTypesConverter(RoutingJsonTypeConversions.CONVERSIONS),
 
+                    }
+                };
+            }
+            return _serializerSettings;
+        }
+        
 
     }
 }

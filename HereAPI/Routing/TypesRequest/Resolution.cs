@@ -1,9 +1,6 @@
-﻿using HereAPI.Shared.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HereAPI.Shared.Structure;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class Resolution: IRequestAttribute
     {

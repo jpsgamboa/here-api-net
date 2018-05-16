@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Routing\ResponseTypes\RouteResponseMetaInfo.cs~RF5cdbf9f.TMP" />
+    <PackageReference Include="newtonsoft.json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="newtonsoft.json" Version="11.0.2" />
+    <Folder Include="Routing\Services\GetRoute\" />
+    <Folder Include="Routing\Services\CalculateIsoline\" />
+    <Folder Include="Routing\Services\CalculateMatrix\" />
   </ItemGroup>
 
 </Project>

@@ -1,17 +1,16 @@
-﻿using HereAPI.Routing.RequestAttributeTypes;
+﻿using HereAPI.Routing.TypesRequest;
 using HereAPI.Shared.Requests;
 using HereAPI.Shared.Requests.Helpers;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.ComponentModel;
-using static HereAPI.Routing.RequestAttributeTypes.EnumTypes;
-using static HereAPI.Routing.RequestAttributeTypes.RouteRepresentationOptions;
-using static HereAPI.Shared.Geometry;
-using static HereAPI.Routing.RequestAttributeTypes.JsonRepresentation;
-using HereAPI.Shared;
+using static HereAPI.Routing.TypesRequest.EnumTypes;
+using static HereAPI.Routing.TypesRequest.RouteRepresentationOptions;
+using static HereAPI.Routing.TypesRequest.JsonRepresentation;
+using HereAPI.Routing.TypesCommon;
+using HereAPI.Shared.Types;
 
-namespace HereAPI.Routing.CalculateRoute
+namespace HereAPI.Routing.Services.CalculateRoute
 {
 
     public class CalculateRouteRequest : Request
@@ -420,8 +419,8 @@ namespace HereAPI.Routing.CalculateRoute
 
             //Other parameters
             if (RequestId != null) AddAttribute(PropertyHelper.GetDescription(() => RequestId), RequestId);
-            if (AvoidAreas != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidAreas), string.Join("!", AvoidAreas.Select(aa => aa.GetParameterValue()).ToArray()));
-            if (AvoidLinks != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidLinks), string.Join(",", AvoidLinks.Select(al => al.GetParameterValue()).ToArray()));
+            if (AvoidAreas != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidAreas), string.Join("!", AvoidAreas.Select(aa => aa.GetAttributeValue()).ToArray()));
+            if (AvoidLinks != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidLinks), string.Join(",", AvoidLinks.Select(al => al.GetAttributeValue()).ToArray()));
             if (AvoidSeasonalClosures != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidSeasonalClosures), AvoidSeasonalClosures.ToString().ToLower());
             if (AvoidTurns != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidTurns), string.Join(",", AvoidTurns.Select(at => EnumHelper.GetDescription(at))));
             if (ExcludeZones != null) AddAttribute(PropertyHelper.GetDescription(() => ExcludeZones), string.Join(",", ExcludeZones));
@@ -430,7 +429,7 @@ namespace HereAPI.Routing.CalculateRoute
             if (Arrival != null) AddAttribute(PropertyHelper.GetDescription(() => Arrival), ((DateTime)Arrival).ToString("s"));
             if (Alternatives != null) AddAttribute(PropertyHelper.GetDescription(() => Alternatives), Alternatives.ToString());
             if (UnitSystem != null) AddAttribute(PropertyHelper.GetDescription(() => UnitSystem), EnumHelper.GetDescription(UnitSystem));
-            if (ViewBounds != null) AddAttribute(PropertyHelper.GetDescription(() => ViewBounds), ViewBounds.GetParameterValue());
+            if (ViewBounds != null) AddAttribute(PropertyHelper.GetDescription(() => ViewBounds), ViewBounds.GetAttributeValue());
             if (InstructionFormat != null) AddAttribute(PropertyHelper.GetDescription(() => InstructionFormat), EnumHelper.GetDescription(InstructionFormat));
             if (Language != null) AddAttribute(PropertyHelper.GetDescription(() => Language), EnumHelper.GetDescription(Language));
             if (JsonCallback != null) AddAttribute(PropertyHelper.GetDescription(() => JsonCallback), JsonCallback);

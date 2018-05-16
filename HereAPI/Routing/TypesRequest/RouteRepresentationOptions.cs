@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class RouteRepresentationOptions
     {

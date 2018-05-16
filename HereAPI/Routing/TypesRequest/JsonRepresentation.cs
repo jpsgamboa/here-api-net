@@ -1,10 +1,7 @@
-﻿using HereAPI.Shared.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using System.Linq;
+using HereAPI.Shared.Structure;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class JsonRepresentation : IRequestAttribute
     {

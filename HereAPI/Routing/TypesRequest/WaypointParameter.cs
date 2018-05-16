@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
-using HereAPI.Shared.Requests;
+using HereAPI.Routing.TypesCommon;
 using HereAPI.Shared.Requests.Helpers;
-using static HereAPI.Shared.Geometry;
+using HereAPI.Shared.Structure;
+using HereAPI.Shared.Types;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public abstract class WaypointParameter : IRequestAttribute
     {
@@ -73,7 +74,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
                     $"{(Type != null ? "!" : "")}" +
-                    $"{GeoPoint.GetParameterValue()};" +
+                    $"{GeoPoint.GetAttributeValue()};" +
                     $"{(TransitRadius != null ? $"{TransitRadius}" : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
                     $"{(Heading != null ? $"{Heading}" : "")}";
@@ -121,9 +122,9 @@ namespace HereAPI.Routing.RequestAttributeTypes
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
                     $"{(Type != null ? "!" : "")}" +
-                    $"{(DisplayPosition != null ? DisplayPosition.GetParameterValue() : "")};" +
+                    $"{(DisplayPosition != null ? DisplayPosition.GetAttributeValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{StreetPosition.GetParameterValue()};" +
+                    $"{StreetPosition.GetAttributeValue()};" +
                     $"{(StreetName != null ? $"{StreetName}" : "")}";
             }
 
@@ -168,9 +169,9 @@ namespace HereAPI.Routing.RequestAttributeTypes
                     $"{(Type != null ? EnumHelper.GetDescription(Type) : "")}" +
                     $"{(Type == WaypointType.StopOver ? $",{StopOverDuration}" : "")}" +
                     $"{(Type != null ? "!" : "")}" +
-                    $"{(DisplayPosition != null ? DisplayPosition.GetParameterValue() : "")};" +
+                    $"{(DisplayPosition != null ? DisplayPosition.GetAttributeValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{LinkId.GetParameterValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPI.Culture)}" : "0.5")}";
+                    $"{LinkId.GetAttributeValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPI.Culture)}" : "0.5")}";
             }
         }
 

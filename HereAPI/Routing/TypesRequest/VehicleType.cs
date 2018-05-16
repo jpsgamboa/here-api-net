@@ -1,8 +1,8 @@
-﻿using HereAPI.Shared.Requests;
-using HereAPI.Shared.Requests.Helpers;
+﻿using HereAPI.Shared.Requests.Helpers;
+using HereAPI.Shared.Structure;
 using System.ComponentModel;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class VehicleType : IRequestAttribute
     {

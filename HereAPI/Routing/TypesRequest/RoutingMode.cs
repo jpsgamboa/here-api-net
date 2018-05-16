@@ -1,11 +1,10 @@
-﻿using HereAPI.Shared.Requests;
-using HereAPI.Shared.Requests.Helpers;
+﻿using HereAPI.Shared.Requests.Helpers;
+using HereAPI.Shared.Structure;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class RoutingMode : IRequestAttribute
     {
@@ -45,7 +44,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
             return $"{EnumHelper.GetDescription(Type)}" +
                 $"{$";{EnumHelper.GetDescription(Transport)}"}" +
                 $"{(Traffic != null ? $";traffic:{EnumHelper.GetDescription(Traffic)}" : "")}" +
-                $"{(Features.Length > 0 ? $";{String.Join(",", Features.Select(f => f.GetParameterValue()).ToArray())}" : "")}";
+                $"{(Features.Length > 0 ? $";{String.Join(",", Features.Select(f => f.GetAttributeValue()).ToArray())}" : "")}";
         }
 
         public string GetAttributeName()
@@ -170,7 +169,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
             [Description("bicycle")] Bicycle
         }
 
-        public class RouteFeature
+        public class RouteFeature : IAttribute
         {
 
             public RouteFeatureType FeatureType { get; set; }
@@ -186,7 +185,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
                 FeatureWeight = routeFeatureWeight;
             }
 
-            public string GetParameterValue()
+            public string GetAttributeValue()
             {
                 return $"{EnumHelper.GetDescription(FeatureType)}:{EnumHelper.GetDescription(FeatureWeight)}";
             }

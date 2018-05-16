@@ -1,11 +1,7 @@
-﻿using HereAPI.Routing.ResponseTypes;
-using HereAPI.Shared;
-using HereAPI.Shared.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HereAPI.Routing.TypesResponse;
+using HereAPI.Shared.Types;
 
-namespace HereAPI.Routing.CalculateRoute
+namespace HereAPI.Routing.Services.CalculateRoute
 {
     class CalculateRouteResponse
     {

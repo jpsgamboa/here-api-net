@@ -1,11 +1,7 @@
-﻿using HereAPI.Routing.RequestAttributeTypes;
+﻿using HereAPI.Routing.TypesCommon;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static HereAPI.Routing.RequestAttributeTypes.LinkId;
+using static HereAPI.Routing.TypesCommon.LinkId;
 
 namespace HereAPI.Tests.Routing.ParameterTypes
 {
@@ -20,7 +16,7 @@ namespace HereAPI.Tests.Routing.ParameterTypes
         public void ParameterValueFormat(int id, LinkDirection dir, string expected)
         {
             LinkId l = new LinkId(id, dir);
-            Assert.AreEqual(expected, l.GetParameterValue());
+            Assert.AreEqual(expected, l.GetAttributeValue());
         }
 
 

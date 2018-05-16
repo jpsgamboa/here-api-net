@@ -1,12 +1,11 @@
-﻿using HereAPI.Shared.Requests;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Linq;
 using HereAPI.Shared.Requests.Helpers;
+using HereAPI.Shared.Structure;
 
-namespace HereAPI.Routing.RequestAttributeTypes
+namespace HereAPI.Routing.TypesRequest
 {
     public class ConsumptionModel : IRequestAttribute
     {
@@ -93,7 +92,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
 
             public string GetAttributeValue()
             {
-                return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetParameterValue()).ToArray())}" +
+                return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetAttributeValue()).ToArray())}" +
                     $";ascent,{Ascent.ToString(HereAPI.Culture)}" +
                     $";descent,{Descent.ToString(HereAPI.Culture)}" +
                     $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty.Value.ToString(HereAPI.Culture)}")}" +
@@ -102,7 +101,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
                     $"{(Deceleration != null ? "" : $";deceleration,{Deceleration.Value.ToString(HereAPI.Culture)}")}";
             }
 
-            public class SpeedConsumptionPair
+            public class SpeedConsumptionPair : IAttribute
             {
                 public int Speed { get; }
                 public float Consumption { get; }
@@ -116,7 +115,7 @@ namespace HereAPI.Routing.RequestAttributeTypes
                     Consumption = consumption;
                 }
 
-                public string GetParameterValue()
+                public string GetAttributeValue()
                 {
                     return $"{Speed},{Consumption.ToString(HereAPI.Culture)}";
                 }
