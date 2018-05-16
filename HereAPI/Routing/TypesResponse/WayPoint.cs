@@ -48,7 +48,11 @@ namespace HereAPI.Routing.TypesResponse
         /// </summary>
         public double Stop { get; set; }
 
-
+        /// <summary>
+        /// Indicates whether the waypoint is on the left or right side of the link, 
+        /// hen heading from the reference node to the non-reference node. 
+        /// </summary>
+        public SideOfStreetType SideOfStreet { get; set; }
 
     }
 }

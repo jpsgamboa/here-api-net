@@ -37,11 +37,37 @@ namespace HereAPI.Routing.Conversions
             }              
         }
 
+        //TODO TENTAR CONVERTER TODOS OS ENUM TYPES GENERICAMENTE
+
+        public static T ConvertEnumType<T>(string s)
+        {
+            try
+            {
+                return EnumHelper.GetValue<T>(s);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public static WaypointType? ConvertWaypointType(string s)
         {
             try
             {
                 return EnumHelper.GetValue<WaypointType>(s);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static SideOfStreetType ConvertSideOfStreetType(string s)
+        {
+            try
+            {
+                return EnumHelper.GetValue<SideOfStreetType>(s);
             }
             catch
             {
