@@ -10,6 +10,7 @@ using HereAPI.Routing.TypesEnum;
 using HereAPI.Shared.TypeEnums;
 using static HereAPI.Routing.TypesEnum.EnumTypes;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
+using System.ComponentModel.DataAnnotations;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
@@ -274,6 +275,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// (for example &truckType=tractorTruck&trailersCount=1). <para/>
         /// The truck type is irrelevant in case of restrictions common for all types of trucks. 
         /// </summary>
+        [RequiredIf()]
         [Description("truckType")]
         public TruckType? TruckType { get; set; }
 

@@ -6,6 +6,7 @@ using HereAPI.Shared.TypeObjects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static HereAPI.Routing.TypesRequest.WaypointParameter;
 
 namespace Trials
@@ -19,6 +20,14 @@ namespace Trials
         static void Main(string[] args)
         {
 
+            var t = new TestC()
+            {
+                A = 11
+            };
+            t.A = 11;
+            t.A = -45;
+            
+
             HereAPI.HereAPI.Register(appId, appCode, true);
 
             CalculateRouteRequest cr = new CalculateRouteRequest()
@@ -30,9 +39,10 @@ namespace Trials
                     new GeoWaypointParameter(1, new GeoCoordinate(38.857363, -9.165800))
                 },
                 Departure = new DateTime(2018,05,15,19,00,00),
-                RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape, RouteAttributeType.Legs, RouteAttributeType.Boundingbox},
+                RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape, RouteAttributeType.Legs, RouteAttributeType.Incidents, RouteAttributeType.Groups},
                 LegAttributes = new RouteLegAttributeType[] {RouteLegAttributeType.Links},
-                ManeuverAttributes = new ManeuverAttributeType[] {ManeuverAttributeType.Time, ManeuverAttributeType.TrafficTime, ManeuverAttributeType.BaseTime, ManeuverAttributeType.Notes}
+                ManeuverAttributes = new ManeuverAttributeType[] {ManeuverAttributeType.Time, ManeuverAttributeType.TrafficTime, ManeuverAttributeType.BaseTime, ManeuverAttributeType.Notes},
+                
             };
 
             Console.WriteLine(cr.GetCompiledUrl());
@@ -40,6 +50,11 @@ namespace Trials
             Console.ReadKey();
         }
 
+        class TestC
+        {
+            [RangeAttribute(1, 10, ErrorMessage = "Ikh")]
+            public int A { get; set; }
+        }
             //static string GetDescription<T>(Expression<Func<T>> expr)
             //{
             //    try

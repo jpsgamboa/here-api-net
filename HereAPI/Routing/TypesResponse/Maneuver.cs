@@ -1,6 +1,7 @@
 ﻿using HereAPI.Routing.TypesCommon;
 using HereAPI.Routing.TypesEnum;
 using HereAPI.Shared.TypeObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,8 @@ namespace HereAPI.Routing.TypesResponse
         /// <summary>
         /// Key that identifies this element uniquely within the response.
         /// </summary>
-        public string id { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Position where the maneuver starts.
@@ -80,7 +82,7 @@ namespace HereAPI.Routing.TypesResponse
         /// <summary>
         /// Additional information about the route segment following the maneuver, such as "sharp curve ahead", "accessing toll road", etc. 
         /// </summary>
-        public RouteNote Note { get; set; }
+        public RouteNote[] Note { get; set; }
 
         /// <summary>
         /// Reference to the next maneuver on the recommended route. 

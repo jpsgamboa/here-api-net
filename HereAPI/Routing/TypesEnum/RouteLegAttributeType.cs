@@ -4,45 +4,63 @@ namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
     /// Define which attributes are included in the response as part of the data representation of the route legs.<para/>
-    /// 
-    /// waypoint:
-    ///     Indicates whether the waypoint shall be included in the route leg.<para/>
-    /// maneuvers:
-    ///     Indicates whether the maneuvers of the route leg shall be provided.<para/>
-    /// links:
-    ///     Indicates whether the links along the route leg shall be provided.<para/>
-    /// length:
-    ///     Indicates whether the route leg should include its length<para/>
-    /// travelTime:
-    ///     Indicates whether the route leg should include its duration<para/>
-    /// shape:
-    ///     Indicates whether the shape of the segment to the next maneuver
-    ///     should be included in the maneuvers.<para/>
-    /// indices:
-    ///     Indicates whether shape index information (FirstPoint, LastPoint)
-    ///     should be included in the maneuvers instead of copying shape points to the maneuver.<para/>
-    /// boundingBox:
-    ///     Indicates whether the bounding box of the maneuver shall be provided.<para/>
-    /// baseTime:
-    ///     Indicates whether the BaseTime information should be provided in RouteLegs.<para/>
-    /// trafficTime:
-    ///     Indicates whether the TrafficTime information should be included in RouteLegs.<para/>
-    /// summary:
-    ///     Indicates whether distance and time summary information should be included in RouteLegs<para/>
-    /// 
     /// </summary>
     public enum RouteLegAttributeType
     {
+        /// <summary>
+        /// Indicates Whether The Waypoint Shall Be Included In The Route Leg.
+        /// </summary>
         [Description("wp")] Waypoint,
+
+        /// <summary>
+        /// Indicates Whether The Maneuvers Of The Route Leg Shall Be Provided.
+        /// </summary>
         [Description("mn")] Maneuvers,
+
+        /// <summary>
+        /// Indicates Whether The Links Along The Route Leg Shall Be Provided.
+        /// </summary>
         [Description("li")] Links,
+
+        /// <summary>
+        /// Indicates Whether The Route Leg Should Include Its Length
+        /// </summary>
         [Description("le")] Length,
-        [Description("tt")] Traveltime,
+
+        /// <summary>
+        /// Indicates Whether The Route Leg Should Include Its Duration
+        /// </summary>
+        [Description("tt")] TravelTime,
+
+        /// <summary>
+        /// Indicates Whether The Shape Of The Segment To The Next Maneuver Should Be Included In The Maneuvers.
+        /// </summary>
         [Description("sh")] Shape,
+
+        /// <summary>
+        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In The Maneuvers Instead Of Copying Shape Points To The Maneuver.
+        /// </summary>
         [Description("ix")] Indices,
-        [Description("bb")] Boundingbox,
-        [Description("bt")] Basetime,
-        [Description("tm")] Traffictime,
-        [Description("sm")] Summary
+
+        /// <summary>
+        /// Indicates Whether The Bounding Box Of The Maneuver Shall Be Provided.
+        /// </summary>
+        [Description("bb")] BoundingBox,
+
+        /// <summary>
+        /// Indicates Whether The Basetime Information Should Be Provided In Routelegs.
+        /// </summary>
+        [Description("bt")] BaseTime,
+
+        /// <summary>
+        /// Indicates Whether The Traffictime Information Should Be Included In Routelegs.
+        /// </summary>
+        [Description("tm")] TrafficTime,
+
+        /// <summary>
+        /// Indicates Whether Distance And Time Summary Information Should Be Included In Routelegs.
+        /// </summary>
+        [Description("sm")] Summary,
+
     }
 }

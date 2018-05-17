@@ -105,7 +105,7 @@ namespace HereAPI.Routing.TypesResponse
         /// <summary>
         /// Flags that describe special characteristics of the link, such as "motorway", "tollroad", "ferry", etc. 
         /// </summary>
-        public RouteLinkFlagType? MyProperty { get; set; }
+        public RouteLinkFlagType[] Flags { get; set; }
 
         /// <summary>
         /// The functional class is used to classify roads depending on the speed, importance and connectivity of the road.<para/>

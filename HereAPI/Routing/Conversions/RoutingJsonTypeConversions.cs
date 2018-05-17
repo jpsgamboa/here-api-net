@@ -21,6 +21,7 @@ namespace HereAPI.Routing.Conversions
                             { typeof(RouteFeature), (s) => ConvertRouteFeature((string) s) },
                             { typeof(Maneuver), (t) => ConvertAbstractObject((JToken) t) },
                             { typeof(Link), (t) => ConvertAbstractObject((JToken) t) },
+                            { typeof(RouteSummary), (t) => ConvertAbstractObject((JToken) t) },
                         };
         }
 
@@ -36,6 +37,9 @@ namespace HereAPI.Routing.Conversions
 
                 if (_type == "PublicTransportLinkType") return token.ToObject<PublicTransportLink>();
                 if (_type == "PrivateTransportLinkType") return token.ToObject<PrivateTransportLink>();
+
+                if (_type == "RouteSummaryType") return token.ToObject<RouteSummary>();
+                if (_type == "PublicTransportRouteSummaryType") return token.ToObject<PublicTransportRouteSummary>();
 
                 return null;
             }

@@ -46,7 +46,24 @@ namespace HereAPI.Routing.TypesResponse
         /// </summary>
         public double Co2Emission { get; set; }
 
+    }
 
+    /// <summary>
+    /// This type provides summary information for the entire public transport route. This type is derived from RouteSummaryType.
+    /// </summary>
+    public class PublicTransportRouteSummary : RouteSummary
+    {
+        /// <summary>
+        /// Start date and time of the route.
+        /// </summary>
+        public DateTime Departure { get; set; }
+
+        /// <summary>
+        /// Summarizes special characteristics of the public transport sections of this route. 
+        /// </summary>
+        public PublicTransportFlagType[] PublicTransportFlags { get; set; }
 
     }
+
+
 }

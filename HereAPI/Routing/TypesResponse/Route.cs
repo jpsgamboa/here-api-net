@@ -1,4 +1,5 @@
 ﻿using HereAPI.Shared.TypeObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace HereAPI.Routing.TypesResponse
         /// Can be used to reproduce any previously calculated route.<para/>
         /// If a RouteId is requested, but fails to be calculated for any reason(e.g. public transport enabled), 
         /// then the RouteId element is not available in the response.The rest of the route is intact.
+        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-route.html"/>
         /// </summary>
         public string RouteId { get; set; }
 
@@ -46,16 +48,56 @@ namespace HereAPI.Routing.TypesResponse
         public Leg[] Legs { get; set; }
 
 
-        public PublicTransportLine[] PublicTransportLines     { get; set; }
-        public PublicTransportTicket[] PublicTransportTickets  { get; set; }
-        public RouteNote Note                    { get; set; }
-        public RouteSummary Summary                 { get; set; }
-        public RouteSummaryByCountry SummaryByCountry        { get; set; }
-        public _____ Generalizations         { get; set; }
-        public _____ ManueverGroup           { get; set; }
-        public _____ Incident                { get; set; }
-        public string Label                   { get; set; }
-        public _____ Zone { get; set; }
+        /// <summary>
+        /// List of all public transport lines which are used by public transport links and maneuvers of the route. 
+        /// </summary>
+        public PublicTransportLine[] PublicTransportLines { get; set; }
+
+        /// <summary>
+        /// For public transport routes, a list of ticketing options for the provided route. Each option is a list of tickets covering those parts of the route for which ticketing information is supported. 
+        /// </summary>
+        [JsonProperty("PublicTransportTicketss")] // I know..
+        public PublicTransportTickets[] PublicTransportTickets { get; set; }
+        
+        /// <summary>
+        /// Notes that are either related to the calculation (violated routing options) or that refer the route as a whole. In addition to these notes additional notes can be attached to maneuvers. The maneuver notes are usually related to the route segment following the maneuver and would be of interest when passing this segment. 
+        /// </summary>
+        public RouteNote[] Note { get; set; }
+
+        /// <summary>
+        /// Overall route distance and time summary. 
+        /// </summary>
+        public RouteSummary Summary { get; set; }
+
+        /// <summary>
+        /// Route distance and time summary per traversed country. 
+        /// </summary>
+        public RouteSummaryByCountry[] SummaryByCountry { get; set; }
+
+        /// <summary>
+        /// A simplified base polyline with a given tolerance parameter used to reduce the number of points. The points in the base polyline are implicitly referenced by index. 
+        /// </summary>
+        public Generalization[] Generalizations { get; set; }
+
+        /// <summary>
+        /// Maneuvers organized into sections based on TransportModeType. It provides the user grouped itinerary summary and brief route instructions. 
+        /// </summary>
+        public ManeuverGroup ManueverGroup { get; set; }
+
+        /// <summary>
+        /// An incident describes a temporary event on a route. It typically refers to a real world incident (accident, road construction, etc.) spanning on one or several subsequent links. 
+        /// </summary>
+        public Incident Incident { get; set; }
+
+        /// <summary>
+        /// Unique names within a route used to distinguish between alternative routes. They can be city names, road names or something else that makes the distinction possible. 
+        /// </summary>
+        public string Label { get; set; }
+
+        /// <summary>
+        /// A list of routing zones crossed by the route. 
+        /// </summary>
+        public RoutingZone Zone { get; set; }
 
     }
 }

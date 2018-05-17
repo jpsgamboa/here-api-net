@@ -3,69 +3,99 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Define which attributes are included in the response as part of the data representation of the route links.<para/>
-    /// 
-    /// shape:
-    ///     Indicates whether the link should include its geometry<para/>
-    /// length:
-    ///     Indicates whether the link should include its length<para/>
-    /// speedLimit:
-    ///     Indicates whether the link should include SpeedLimit<para/>
-    /// dynamicSpeedInfo:
-    ///     Indicates whether the link should include dynamic speed information<para/>
-    /// truckRestrictions:
-    ///     Indicates whether the link should include truck restrictions<para/>
-    /// flags:
-    ///     Indicates whether the link should include link flags<para/>
-    /// roadNumber:
-    ///     Indicates whether the link should include the link's road number<para/>
-    /// roadName:
-    ///     Indicates whether the link should include the link's road number<para/>
-    /// timezone:
-    ///     Indicates whether the link should include the timezone.
-    ///     Note: Requesting timezone information is known to slow down responses.<para/>
-    /// nextLink:
-    ///     Indicates whether the link should include the link which will be next when following the route<para/>
-    /// publicTransportLine:
-    ///     Indicates whether the link should include information about the public transport line.<para/>
-    /// remainTime:
-    ///     Indicates whether the link should include information about the remaining time until the destination is
-    ///     reached.<para/>
-    /// remainDistance:
-    ///     Indicates whether the link should include information about the remaining distance until the destination
-    ///     is reached.<para/>
-    /// maneuver:
-    ///     Indicates whether the link should include information about the associated maneuver.<para/>
-    /// functionalClass:
-    ///     Indicates whether the link should include information about the functional class.<para/>
-    /// nextStopName:
-    ///     Indicates whether the link should include information about the next stop.<para/>
-    /// indices:
-    ///     Indicates whether shape index information(FirstPoint, LastPoint) should be included in links instead of
-    ///    copying shape points.<para/>
-    /// consumption:
-    ///     Indicates whether the link should include information on energy consumption. If a consumption model is not
-    ///    provided, the consumption value in the response is set to 0.<para/>
+    /// Define which attributes are included in the response as part of the data representation of the route links.<para/>   
     /// </summary>
     public enum RouteLinkAttributeType
     {
+        /// <summary>
+        /// Indicates Whether The Link Should Include Its Geometry
+        /// </summary>
         [Description("sh")] Shape,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Its Length
+        /// </summary>
         [Description("le")] Length,
-        [Description("sl")] Speedlimit,
-        [Description("ds")] Dynamicspeedinfo,
-        [Description("tr")] Truckrestrictions,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Speedlimit
+        /// </summary>
+        [Description("sl")] SpeedLimit,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Dynamic Speed Information
+        /// </summary>
+        [Description("ds")] DynamicSpeedInfo,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Truck Restrictions
+        /// </summary>
+        [Description("tr")] TruckRestrictions,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Link Flags
+        /// </summary>
         [Description("fl")] Flags,
-        [Description("rn")] Roadnumber,
-        [Description("ro")] Roadname,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include The Link'S Road Number
+        /// </summary>
+        [Description("rn")] RoadNumber,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include The Link'S Road Number
+        /// </summary>
+        [Description("ro")] RoadName,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include The Timezone. Note: Requesting Timezone Information Is Known To Slow Down Responses.
+        /// </summary>
         [Description("tz")] Timezone,
-        [Description("nl")] Nextlink,
-        [Description("pt")] Publictransportline,
-        [Description("rt")] Remaintime,
-        [Description("rd")] Remaindistance,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include The Link Which Will Be Next When Following The Route
+        /// </summary>
+        [Description("nl")] NextLink,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Public Transport Line.
+        /// </summary>
+        [Description("pt")] PublicTransportLine,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Remaining Time Until The Destination Is Reached.
+        /// </summary>
+        [Description("rt")] RemainTime,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Remaining Distance Until The Destination Is Reached.
+        /// </summary>
+        [Description("rd")] RemainDistance,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Associated Maneuver.
+        /// </summary>
         [Description("ma")] Maneuver,
-        [Description("fc")] Functionalclass,
-        [Description("ns")] Nextstopname,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Functional Class.
+        /// </summary>
+        [Description("fc")] FunctionalClass,
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information About The Next Stop.
+        /// </summary>
+        [Description("ns")] NextStopName,
+
+        /// <summary>
+        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In Links Instead Of Copying Shape Points.
+        /// </summary>
         [Description("ix")] Indices,
-        [Description("cn")] Consumption
+
+        /// <summary>
+        /// Indicates Whether The Link Should Include Information On Energy Consumption. If A Consumption Model Is Not Provided, The Consumption Value In The Response Is Set To 0.
+        /// </summary>
+        [Description("cn")] Consumption,
+
     }
 }

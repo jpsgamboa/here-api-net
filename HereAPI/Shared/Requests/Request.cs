@@ -12,8 +12,10 @@ namespace HereAPI.Shared.Requests
     public abstract class Request
     {
 
-        private string BaseUrl { get; set; } = "";
-        private string UrlAttributes { get; set; } = "";
+        private List<string> ValidationErrors = new List<string>();
+
+        private string BaseUrl = "";
+        private string UrlAttributes = "";
 
         protected ITypeConversions Conversions { get; set; }
 
@@ -47,7 +49,16 @@ namespace HereAPI.Shared.Requests
         /// Each request should implement a validation of the value of it's attributes where necessary,
         /// and validate the compatibility of each attribute with the rest.
         /// </summary>
-        protected abstract void ValidateRequestAttributes();
+        protected void ValidatetAttributes() {
+            ValidationErrors.AddRange(AttributeValidator.Validate(this));
+        }
+
+        public bool IsValid()
+        {
+
+        }
+
+        public string[] GetValidationErrors
 
         /// <summary>
         /// Each request must implement this method where AddAttribute() or AddIRequestAttribute() are called 
@@ -63,7 +74,7 @@ namespace HereAPI.Shared.Requests
 
         public string GetCompiledUrl()
         {
-            ValidateRequestAttributes();
+            ValidatetAttributes();
             AddSpecifiedAttributes();
             return BaseUrl + UrlAttributes;
         }
@@ -95,7 +106,6 @@ namespace HereAPI.Shared.Requests
         {
             return GetStreamAsync().GetAwaiter().GetResult();
         }
-
 
         /// <summary>
         /// Convert some of the json response items to a more complex class
