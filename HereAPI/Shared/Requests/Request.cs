@@ -1,5 +1,4 @@
-﻿using HereAPI.Routing.Conversions;
-using HereAPI.Shared.Conversions;
+﻿using HereAPI.Shared.Conversions;
 using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
 using Newtonsoft.Json;
@@ -13,10 +12,10 @@ namespace HereAPI.Shared.Requests
     public abstract class Request
     {
 
-        private string baseUrl { get; set; } = "";
-        private string urlAttributes { get; set; } = "";
+        private string BaseUrl { get; set; } = "";
+        private string UrlAttributes { get; set; } = "";
 
-        private static JsonSerializerSettings _serializerSettings;
+        protected ITypeConversions Conversions { get; set; }
 
         /// <summary>
         /// Creates the base URL for the api service, appends the App ID and App Code defined in HereAPI.Register()
@@ -28,7 +27,7 @@ namespace HereAPI.Shared.Requests
         /// <param name="resource">The </param>
         public Request(string service, string path, string resource)
         {
-            baseUrl = $"https://{service}{(HereAPI.Instance.RunInProdEnv ? "" : ".cit")}.api.here.com/{path}/{resource}.json?";
+            BaseUrl = $"https://{service}{(HereAPI.Instance.RunInProdEnv ? "" : ".cit")}.api.here.com/{path}/{resource}.json?";
 
             AddAttribute(PropertyHelper.GetDescription(() => HereAPI.Instance.AppId), HereAPI.Instance.AppId);
             AddAttribute(PropertyHelper.GetDescription(() => HereAPI.Instance.AppCode), HereAPI.Instance.AppCode);
@@ -36,12 +35,12 @@ namespace HereAPI.Shared.Requests
 
         protected void AddAttribute(string attribute, string value)
         {
-            urlAttributes += $"&{attribute}={value}";
+            UrlAttributes += $"&{attribute}={value}";
         }
 
         protected void AddIRequestAttribute(IRequestAttribute attribute)
         {
-            urlAttributes += $"&{attribute.GetAttributeName()}={attribute.GetAttributeValue()}";
+            UrlAttributes += $"&{attribute.GetAttributeName()}={attribute.GetAttributeValue()}";
         }
 
         /// <summary>
@@ -56,19 +55,24 @@ namespace HereAPI.Shared.Requests
         /// </summary>
         protected abstract void AddSpecifiedAttributes();
 
+        /// <summary>
+        /// Each service (Routing, Geocoding, etc) must provide their own type conversions.
+        /// Conversions for shared types can live in SharedJsonTypeConversions.cs
+        /// </summary>
+        protected abstract void SetConversions();
 
         public string GetCompiledUrl()
         {
             ValidateRequestAttributes();
             AddSpecifiedAttributes();
-            return baseUrl + urlAttributes;
+            return BaseUrl + UrlAttributes;
         }
 
         protected async Task<T> GetAsync<T>() where T : class
         {
             string finalUrl = GetCompiledUrl();
 
-            var uri = new Uri(baseUrl + urlAttributes);
+            var uri = new Uri(BaseUrl + UrlAttributes);
             var json = await HereAPI.Instance.HttpClient.GetStringAsync(uri).ConfigureAwait(false);
             var result = JsonConvert.DeserializeObject<T>(json, GetJsonSerializerSettings());
             return result;
@@ -83,7 +87,7 @@ namespace HereAPI.Shared.Requests
         {
             string finalUrl = GetCompiledUrl();
 
-            var uri = new Uri(baseUrl + urlAttributes);
+            var uri = new Uri(BaseUrl + UrlAttributes);
             return await HereAPI.Instance.HttpClient.GetStreamAsync(uri).ConfigureAwait(false);
         }
 
@@ -92,19 +96,20 @@ namespace HereAPI.Shared.Requests
             return GetStreamAsync().GetAwaiter().GetResult();
         }
 
+
+        /// <summary>
+        /// Convert some of the json response items to a more complex class
+        /// </summary>
+        /// <returns></returns>
         private JsonSerializerSettings GetJsonSerializerSettings()
         {
-            if (_serializerSettings == null)
+            return  new JsonSerializerSettings
             {
-                _serializerSettings = new JsonSerializerSettings
-                {
-                    Converters = new List<JsonConverter> {
-                        new JsonTypesConverter(new RoutingJsonTypeConversions().GetConversions()),
-
-                    }
-                };
-            }
-            return _serializerSettings;
+                Converters = new List<JsonConverter> {
+                    new JsonTypesConverter(new SharedJsonTypeConversions().GetConversions()), // Conversions for shared types
+                    new JsonTypesConverter(Conversions.GetConversions()) // Conversions for the service making this request
+                }
+            };
         }
         
 

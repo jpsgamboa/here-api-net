@@ -3,11 +3,18 @@ using HereAPI.Shared.TypeEnums;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
+
+    /// <summary>
+    /// CalculateRouteResponseType contains response data, structured to match a particular request for the CalculateRoute operation. 
+    /// The Route element may appear more than once in the response if multiple routes are available between the start and end points. 
+    /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-calculate-route.html"/>
+    /// </summary>
     class CalculateRouteResponse
     {
         /// <summary>
         /// Provides details about the request itself, such as the time at which it was processed, 
         /// a request id, or the map version on which the calculation was based. 
+        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-route-response-meta-info.html#resource-type-route-response-meta-info"/>
         /// </summary>
         public RouteResponseMetaInfo MetaInfo { get; set; }
 
@@ -17,6 +24,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// and route legs (sections of the route between waypoints). Each response may also include 
         /// information about the route itself, such as its overall shape, map location, or a summary 
         /// description. 
+        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-route.html"/>
         /// </summary>
         public Route[] Routes { get; set; }
 
@@ -27,12 +35,13 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// of the requested language, if available.For example, if the request specifies British English(en-uk), 
         /// and this is unavailable, the service returns the response using American English instead(en-us). 
         /// </summary>
-        /// <see cref="https://developer.here.com/documentation/routing/topics/resource-param-type-languages.html#languages"/>
+        /// <see href'="https://developer.here.com/documentation/routing/topics/resource-param-type-languages.html#languages"/>
         public LanguageCodeType Language { get; set; }
 
         /// <summary>
         /// Contains copyright information intended for the end user when route uses data provided by outside companies. 
         /// Source attribution must be displayed together with a route according to terms and conditions of the API. 
+        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-source-attribution.html"/>
         /// </summary>
         public SourceAttribution SourceAttribution { get; set; }
 

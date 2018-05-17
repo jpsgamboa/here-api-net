@@ -37,6 +37,15 @@ namespace HereAPI.Tests.Shared.Conversions
         }
 
         [Test]
+        [TestCase("38.7114429,-9.2402852", "{\"Shape\":[\"38.7114429,-9.2402852\",\"38.7114751,-9.2405963\",\"38.7116575,-9.2408967\",\"38.7116683,-9.2409396\"]}")]
+        [TestCase("38.7114429,-9.2402852,0", "{\"Shape\":[\"38.7114429,-9.2402852,0\",\"38.7114751,-9.2405963,55.5\",\"38.7116575,-9.2408967,0.7\",\"38.7116683,-9.2409396,0\"]}")]
+        public void ConvertShape(string expected, string json)
+        {
+            var testClassResult = DeserializeJson(json);
+            Assert.AreEqual(expected, testClassResult.Shape.Coordinates[0].GetAttributeValue());
+        }
+
+        [Test]
         public void NotPresentEnumTypeIsNull()
         {
             string json = "{LinkId: \"123456\", RoutingType: \"fastest\"}";
@@ -50,7 +59,7 @@ namespace HereAPI.Tests.Shared.Conversions
             return JsonConvert.DeserializeObject<TestClass>(json, settings);
         }
 
-        public JsonSerializerSettings GetSettingsFor(Dictionary<Type, Func<string, object>> conversions)
+        public JsonSerializerSettings GetSettingsFor(Dictionary<Type, Func<object, object>> conversions)
         {
             return new JsonSerializerSettings { Converters = new List<JsonConverter> { new JsonTypesConverter(conversions) } };            
         }
@@ -66,6 +75,7 @@ namespace HereAPI.Tests.Shared.Conversions
             public WaypointType? WaypointType { get; set; }
             public RoutingType RoutingType { get; set; }
             public GeoCoordinate MappedPosition { get; set; }
+            public GeoPolyline Shape { get; set; }
         }
     }
 }

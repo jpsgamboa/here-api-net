@@ -1,15 +1,17 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CSharp;
 
 namespace HereAPI.Shared.Conversions
 {
     public class JsonTypesConverter : JsonConverter
     {
-        private Dictionary<Type, Func<string, object>> _conversions;
+        private Dictionary<Type, Func<object, object>> _conversions;
 
-        public JsonTypesConverter(Dictionary<Type, Func<string, object>> conversions)
+        public JsonTypesConverter(Dictionary<Type, Func<object, object>> conversions)
         {
             _conversions = conversions;
         }
@@ -21,14 +23,29 @@ namespace HereAPI.Shared.Conversions
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return _conversions[objectType](reader.Value.ToString());
+            if (reader.TokenType == JsonToken.StartArray)
+            {
+                JToken token = JToken.Load(reader);
+                var items = token.ToObject<string[]>();
+                return _conversions[objectType](items);
+            }
+            else if (reader.TokenType == JsonToken.StartObject)
+            {
+                JToken token = JToken.Load(reader);
+                string _type = token.Value<string>("_type");
+
+                return _conversions[objectType](token);
+            }
+            else
+            {
+                return _conversions[objectType](reader.Value.ToString());
+            }
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
-
-
+        
     }
 }

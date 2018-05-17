@@ -4,10 +4,8 @@ using System.Text;
 
 namespace HereAPI.Shared.Conversions
 {
-    interface ITypeConversions
+    public interface ITypeConversions
     {
-
-        Dictionary<Type, Func<string, object>> GetConversions();
-
+        Dictionary<Type, Func<object, object>> GetConversions();
     }
 }

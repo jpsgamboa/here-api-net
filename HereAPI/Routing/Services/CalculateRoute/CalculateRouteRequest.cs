@@ -14,7 +14,7 @@ using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 namespace HereAPI.Routing.Services.CalculateRoute
 {
 
-    public class CalculateRouteRequest : Request
+    public class CalculateRouteRequest : RoutingRequest
     {
 
         // #### Required parameters
@@ -22,7 +22,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// <summary>
         /// The routing mode determines how the route is calculated. 
         /// </summary>
-        public RoutingMode RoutingMode { get; set; }
+        public RequestRoutingMode RoutingMode { get; set; }
 
         /// <summary>
         /// List of waypoints that define a route. 
@@ -86,7 +86,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// Areas which the route must not cross.
         /// </summary>
         [Description("avoidAreas")]
-        public BoundingBox[] AvoidAreas { get; set; }
+        public GeoBoundingBox[] AvoidAreas { get; set; }
 
         /// <summary>
         /// Links which the route must not cross. 
@@ -159,7 +159,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// update of the route in the currently visible bounds.
         /// </summary>
         [Description("viewBounds")]
-        public BoundingBox ViewBounds { get; set; }
+        public GeoBoundingBox ViewBounds { get; set; }
 
         /// <summary>
         /// Defines the representation format of the maneuver's instruction text. 
@@ -364,7 +364,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
 
             if (Waypoints == null) throw new ArgumentException("Waypoints are mandatory.");
 
-            if (AvoidTurns != null && RoutingMode.Transport != TransportModeType.Truck)
+            if (AvoidTurns != null && RoutingMode.Mode !=TransportModeType.Truck)
                 throw new ArgumentException("Currently, truck routing is the only mode that supports the avoidTurns option.");
 
             if (Departure != null && Arrival != null) throw new ArgumentException("Specify either departure or arrival, not both.");
@@ -372,7 +372,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (ConsumptionModel != null && ConsumptionModel.Model == ConsumptionModel.ConsumptionModelType.Standard)
                 if (CustomConsumptionDetails == null) throw new ArgumentException("When you specify the value standard, you must provide additional information with CustomConsumptionDetails");
 
-            if (RoutingMode.Transport != TransportModeType.PublicTransport && RoutingMode.Transport != TransportModeType.PublicTransportTimeTable && LineAttributes != null)
+            if (RoutingMode.Mode != TransportModeType.PublicTransport && RoutingMode.Mode != TransportModeType.PublicTransportTimeTable && LineAttributes != null)
                 throw new ArgumentException("Public Transport Line Attributes are only available for Public Transport modes.");
 
             if (MaxNumberOfChanges != null && MaxNumberOfChanges > 10) throw new ArgumentException("Max Number of Changes should be an int between 0 and 10");
@@ -381,7 +381,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (WalkSpeed != null && (WalkSpeed < 0.5 || WalkSpeed > 2)) throw new ArgumentException("Walk Speed should be a float between 0.5 and 2");
             if (WalkRadius != null && (WalkRadius < 0 || WalkRadius > 6000)) throw new ArgumentException("Walk Radius should be a float between 0 and 6000");
 
-            if (RoutingMode.Transport != TransportModeType.Truck)
+            if (RoutingMode.Mode != TransportModeType.Truck)
             {
                 if (TruckType != null) throw new ArgumentException("TruckType attribute is only available for Truck routing mode");
                 if (TrailersCount != null) throw new ArgumentException("TrailersCount attribute is only available for Truck routing mode");

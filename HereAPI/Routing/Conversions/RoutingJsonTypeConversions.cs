@@ -1,24 +1,48 @@
 ﻿using HereAPI.Routing.TypesCommon;
 using HereAPI.Routing.TypesEnum;
+using HereAPI.Routing.TypesResponse;
 using HereAPI.Shared.Conversions;
 using HereAPI.Shared.Requests.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HereAPI.Routing.Conversions
 {
     public class RoutingJsonTypeConversions : ITypeConversions
     {
 
-        public Dictionary<Type, Func<string, object>> GetConversions()
+        public Dictionary<Type, Func<object, object>> GetConversions()
         {
-            return new Dictionary<Type, Func<string, object>>
+            return new Dictionary<Type, Func<object, object>>
                         {
-                            { typeof(LinkId), (s) => ConvertLinkId(s) },
-                            { typeof(Enum), (s) => ConvertEnumType<Enum>(s) },
+                            { typeof(LinkId), (s) => ConvertLinkId((string) s) },
+                            { typeof(RouteFeature), (s) => ConvertRouteFeature((string) s) },
+                            { typeof(Maneuver), (t) => ConvertAbstractObject((JToken) t) },
+                            { typeof(Link), (t) => ConvertAbstractObject((JToken) t) },
                         };
+        }
+
+        // TODO Must test this...
+        public object ConvertAbstractObject(JToken token)
+        {
+            try
+            {
+                string _type = token.Value<string>("_type");
+
+                if (_type == "PublicTransportManeuverType") return token.ToObject<PublicTransportManeuver>();
+                if (_type == "PrivateTransportManeuverType") return token.ToObject<PrivateTransportManeuver>();
+
+                if (_type == "PublicTransportLinkType") return token.ToObject<PublicTransportLink>();
+                if (_type == "PrivateTransportLinkType") return token.ToObject<PrivateTransportLink>();
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public LinkId ConvertLinkId(string s)
@@ -40,18 +64,22 @@ namespace HereAPI.Routing.Conversions
             }              
         }
 
-        public T ConvertEnumType<T>(string s)
+        public RouteFeature ConvertRouteFeature(string s)
         {
             try
             {
-                return EnumHelper.GetValue<T>(s);
+                RouteFeatureType type = EnumHelper.GetValue<RouteFeatureType>(s.Split(':')[0]);
+                RouteFeatureWeightType weight = EnumHelper.GetValue<RouteFeatureWeightType>(s.Split(':')[1]);
+
+                return new RouteFeature(type, weight);
             }
             catch
             {
-                return default(T);
+                return null;
             }
         }
-        
 
+
+        
     }
 }
