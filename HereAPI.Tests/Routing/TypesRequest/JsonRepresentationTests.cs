@@ -5,9 +5,8 @@ using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 namespace HereAPI.Tests.Routing.TypesRequest
 {
     [TestFixture]
-    class JsonRepresentationTests
+    internal class JsonRepresentationTests
     {
-
         [Test]
         [TestCase("249", JsonAttribute.FlattenListOfShapesToDoubleArraysLatLon, JsonAttribute.FlattenListOfShapesToDoubleArraysLatLonAlt, JsonAttribute.Include_TypeElement, JsonAttribute.LowerCaseFirstCharIdentifiers, JsonAttribute.SupressJsonResponseObjectWrapper, JsonAttribute.UsePluralNamingForCollections)]
         [TestCase("24", JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections)]
@@ -17,6 +16,5 @@ namespace HereAPI.Tests.Routing.TypesRequest
             JsonRepresentation jr = new JsonRepresentation(jsonAttributes);
             Assert.AreEqual(expected, jr.GetAttributeValue());
         }
-
     }
 }

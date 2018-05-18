@@ -1,18 +1,13 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HereAPI.Tests.Shared.Conversions
 {
     [TestFixture]
-    class DateTimeParseTest
+    internal class DateTimeParseTest
     {
-
-        class TestC
+        private class TestC
         {
             public DateTime Time { get; set; }
         }
@@ -24,7 +19,5 @@ namespace HereAPI.Tests.Shared.Conversions
             var tc = JsonConvert.DeserializeObject<TestC>(json);
             Assert.AreEqual(expected, tc.Time.ToString("yyyy-MM-ddTHH:mm:ss"));
         }
-
-
     }
 }

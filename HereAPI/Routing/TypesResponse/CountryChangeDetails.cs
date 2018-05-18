@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HereAPI.Routing.TypesResponse
+﻿namespace HereAPI.Routing.TypesResponse
 {
     /// <summary>
     /// This type complements maneuver notes with extra information on country change when applicable.

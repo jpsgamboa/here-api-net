@@ -3,7 +3,9 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Define which attributes are included in the response as part of the data representation of the route links.<para/>   
+    /// Define which attributes are included in the response as part of the data representation of
+    /// the route links.
+    /// <para/>
     /// </summary>
     public enum RouteLinkAttributeType
     {
@@ -48,7 +50,8 @@ namespace HereAPI.Routing.TypesEnum
         [Description("ro")] RoadName,
 
         /// <summary>
-        /// Indicates Whether The Link Should Include The Timezone. Note: Requesting Timezone Information Is Known To Slow Down Responses.
+        /// Indicates Whether The Link Should Include The Timezone. Note: Requesting Timezone
+        /// Information Is Known To Slow Down Responses.
         /// </summary>
         [Description("tz")] Timezone,
 
@@ -63,12 +66,14 @@ namespace HereAPI.Routing.TypesEnum
         [Description("pt")] PublicTransportLine,
 
         /// <summary>
-        /// Indicates Whether The Link Should Include Information About The Remaining Time Until The Destination Is Reached.
+        /// Indicates Whether The Link Should Include Information About The Remaining Time Until The
+        /// Destination Is Reached.
         /// </summary>
         [Description("rt")] RemainTime,
 
         /// <summary>
-        /// Indicates Whether The Link Should Include Information About The Remaining Distance Until The Destination Is Reached.
+        /// Indicates Whether The Link Should Include Information About The Remaining Distance Until
+        /// The Destination Is Reached.
         /// </summary>
         [Description("rd")] RemainDistance,
 
@@ -88,14 +93,15 @@ namespace HereAPI.Routing.TypesEnum
         [Description("ns")] NextStopName,
 
         /// <summary>
-        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In Links Instead Of Copying Shape Points.
+        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In
+        /// Links Instead Of Copying Shape Points.
         /// </summary>
         [Description("ix")] Indices,
 
         /// <summary>
-        /// Indicates Whether The Link Should Include Information On Energy Consumption. If A Consumption Model Is Not Provided, The Consumption Value In The Response Is Set To 0.
+        /// Indicates Whether The Link Should Include Information On Energy Consumption. If A
+        /// Consumption Model Is Not Provided, The Consumption Value In The Response Is Set To 0.
         /// </summary>
         [Description("cn")] Consumption,
-
     }
 }

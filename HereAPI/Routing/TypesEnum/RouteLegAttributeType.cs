@@ -3,7 +3,9 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Define which attributes are included in the response as part of the data representation of the route legs.<para/>
+    /// Define which attributes are included in the response as part of the data representation of
+    /// the route legs.
+    /// <para/>
     /// </summary>
     public enum RouteLegAttributeType
     {
@@ -38,7 +40,8 @@ namespace HereAPI.Routing.TypesEnum
         [Description("sh")] Shape,
 
         /// <summary>
-        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In The Maneuvers Instead Of Copying Shape Points To The Maneuver.
+        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In
+        /// The Maneuvers Instead Of Copying Shape Points To The Maneuver.
         /// </summary>
         [Description("ix")] Indices,
 
@@ -61,6 +64,5 @@ namespace HereAPI.Routing.TypesEnum
         /// Indicates Whether Distance And Time Summary Information Should Be Included In Routelegs.
         /// </summary>
         [Description("sm")] Summary,
-
     }
 }

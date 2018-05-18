@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
-using HereAPI.Shared.Structure;
+﻿using HereAPI.Shared.Structure;
+using System.Collections.Generic;
 
 namespace HereAPI.Shared.Requests
 {
     /// <summary>
-    /// This class means to isolate the logic to validate the service request
-    /// and avoid bloating the ServieRequest class
+    /// This class means to isolate the logic to validate the service request and avoid bloating the
+    /// ServieRequest class
     /// </summary>
     public class HereApiRequestValidation
     {
@@ -45,6 +42,5 @@ namespace HereAPI.Shared.Requests
             Validate();
             return Errors.Count == 0;
         }
-
     }
 }

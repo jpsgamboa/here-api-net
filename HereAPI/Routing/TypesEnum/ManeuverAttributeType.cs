@@ -2,9 +2,10 @@
 
 namespace HereAPI.Routing.TypesEnum
 {
-
     /// <summary>
-    /// Define which attributes are included in the response as part of the data representation of the route maneuvers.<para/>
+    /// Define which attributes are included in the response as part of the data representation of
+    /// the route maneuvers.
+    /// <para/>
     /// </summary>
     public enum ManeuverAttributeType
     {
@@ -29,7 +30,8 @@ namespace HereAPI.Routing.TypesEnum
         [Description("le")] Length,
 
         /// <summary>
-        /// Indicates Whether The Point In Time When The Maneuver Will Take Place Should Be Included In The Maneuvers.
+        /// Indicates Whether The Point In Time When The Maneuver Will Take Place Should Be Included
+        /// In The Maneuvers.
         /// </summary>
         [Description("ti")] Time,
 
@@ -39,17 +41,20 @@ namespace HereAPI.Routing.TypesEnum
         [Description("li")] Link,
 
         /// <summary>
-        /// Indicates Whether The Information About The Public Transport Line Should Be Included In The Maneuvers.
+        /// Indicates Whether The Information About The Public Transport Line Should Be Included In
+        /// The Maneuvers.
         /// </summary>
         [Description("pt")] PublicTransportLine,
 
         /// <summary>
-        /// Indicates Whether The Information About The Public Transport Tickets Should Be Included In The Maneuvers.
+        /// Indicates Whether The Information About The Public Transport Tickets Should Be Included
+        /// In The Maneuvers.
         /// </summary>
         [Description("tx")] PublicTransportTickets,
 
         /// <summary>
-        /// Indicates Whether The Platform Information For A Public Transport Line Should Be Included In The Maneuvers.
+        /// Indicates Whether The Platform Information For A Public Transport Line Should Be Included
+        /// In The Maneuvers.
         /// </summary>
         [Description("pl")] Platform,
 
@@ -109,17 +114,20 @@ namespace HereAPI.Routing.TypesEnum
         [Description("fj")] FreewayJunction,
 
         /// <summary>
-        /// Indicates Whether The Basetime Information Should Be Included In The Maneuvers. By Default, Basetime Information Is Not Included In The Maneuvers.
+        /// Indicates Whether The Basetime Information Should Be Included In The Maneuvers. By
+        /// Default, Basetime Information Is Not Included In The Maneuvers.
         /// </summary>
         [Description("bt")] BaseTime,
 
         /// <summary>
-        /// Indicates Whether The Traffictime Information Should Be Included In The Maneuvers. By Default, Traffictime Information Is Not Included In The Maneuvers.
+        /// Indicates Whether The Traffictime Information Should Be Included In The Maneuvers. By
+        /// Default, Traffictime Information Is Not Included In The Maneuvers.
         /// </summary>
         [Description("tm")] TrafficTime,
 
         /// <summary>
-        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In The Maneuvers Instead Of Copying Shape Points To The Maneuver.
+        /// Indicates Whether Shape Index Information (Firstpoint, Lastpoint) Should Be Included In
+        /// The Maneuvers Instead Of Copying Shape Points To The Maneuver.
         /// </summary>
         [Description("ix")] Indices,
 
@@ -152,6 +160,5 @@ namespace HereAPI.Routing.TypesEnum
         /// Indicates Whether The Delay Information Should Be Included In The Public Transport Maneuvers.
         /// </summary>
         [Description("td")] PublicTransportDelays,
-
     }
 }

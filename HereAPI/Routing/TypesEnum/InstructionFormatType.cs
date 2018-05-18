@@ -3,7 +3,8 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Representation formats for instruction texts.<para/>
+    /// Representation formats for instruction texts.
+    /// <para/>
     /// </summary>
     public enum InstructionFormatType
     {
@@ -13,7 +14,8 @@ namespace HereAPI.Routing.TypesEnum
         [Description("text")] Text,
 
         /// <summary>
-        /// Instruction format is based on span tags with different CSS classes to assign semantics to the tagged part of the instruction.
+        /// Instruction format is based on span tags with different CSS classes to assign semantics
+        /// to the tagged part of the instruction.
         /// </summary>
         [Description("html")] HTML,
     }

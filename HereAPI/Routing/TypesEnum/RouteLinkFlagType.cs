@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Defines a list of special characteristics that may apply to a link. 
+    /// Defines a list of special characteristics that may apply to a link.
     /// </summary>
     public enum RouteLinkFlagType
     {
-
         /// <summary>
         /// Link Can Only Be Traversed By Using A Boat Ferry
         /// </summary>
@@ -65,7 +61,5 @@ namespace HereAPI.Routing.TypesEnum
         /// Link Is Part Of A Built-Up Area
         /// </summary>
         [Description("builtUpArea")] BuiltUpArea
-
-
     }
 }

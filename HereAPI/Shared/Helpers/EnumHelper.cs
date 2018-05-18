@@ -1,13 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace HereAPI.Shared.Requests.Helpers
 {
     public class EnumHelper
     {
-        
         public static string GetDescription(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -60,7 +59,6 @@ namespace HereAPI.Shared.Requests.Helpers
             {
                 var a = Nullable.GetUnderlyingType(t);
                 return a;
-
             }
             return t;
         }
@@ -70,8 +68,5 @@ namespace HereAPI.Shared.Requests.Helpers
             Type u = Nullable.GetUnderlyingType(t);
             return (u != null) && u.IsEnum;
         }
-
     }
-
-   
 }

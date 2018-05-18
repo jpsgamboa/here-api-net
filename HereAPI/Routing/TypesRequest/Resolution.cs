@@ -2,7 +2,7 @@
 
 namespace HereAPI.Routing.TypesRequest
 {
-    public class Resolution: IRequestAttribute
+    public class Resolution : IRequestAttribute
     {
         public uint ViewResolution { get; set; }
         public uint? SnapResolution { get; set; }

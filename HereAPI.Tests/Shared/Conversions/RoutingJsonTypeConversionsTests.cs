@@ -12,9 +12,8 @@ using System.Collections.Generic;
 namespace HereAPI.Tests.Shared.Conversions
 {
     [TestFixture]
-    class RoutingJsonTypeConversionsTests
+    internal class RoutingJsonTypeConversionsTests
     {
-
         [Test]
         [TestCase("+123456", "{LinkId: \"+123456\"}", "LinkId")]
         [TestCase("-123456", "{LinkId: \"-123456\"}", "LinkId")]
@@ -32,8 +31,8 @@ namespace HereAPI.Tests.Shared.Conversions
         [TestCase("Fastest", "{WaypointType: \"stopOver\", RoutingType: \"fastest\"}", "RoutingType")]
         public void ConvertEnumType(string expected, string json, string propertyName)
         {
-            var testClassResult = DeserializeJson(json);           
-            Assert.AreEqual(expected, ((Enum) GetProperty(testClassResult, propertyName)).ToString());
+            var testClassResult = DeserializeJson(json);
+            Assert.AreEqual(expected, ((Enum)GetProperty(testClassResult, propertyName)).ToString());
         }
 
         [Test]
@@ -52,7 +51,7 @@ namespace HereAPI.Tests.Shared.Conversions
             var testClassResult = DeserializeJson(json);
             Assert.IsNull(testClassResult.WaypointType);
         }
-        
+
         public TestClass DeserializeJson(string json)
         {
             var settings = GetSettingsFor(new RoutingJsonTypeConversions().GetConversions());
@@ -61,7 +60,7 @@ namespace HereAPI.Tests.Shared.Conversions
 
         public JsonSerializerSettings GetSettingsFor(Dictionary<Type, Func<object, object>> conversions)
         {
-            return new JsonSerializerSettings { Converters = new List<JsonConverter> { new JsonTypesConverter(conversions) } };            
+            return new JsonSerializerSettings { Converters = new List<JsonConverter> { new JsonTypesConverter(conversions) } };
         }
 
         private static object GetProperty(object obj, string propertyName)

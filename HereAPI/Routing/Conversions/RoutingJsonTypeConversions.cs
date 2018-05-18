@@ -13,7 +13,6 @@ namespace HereAPI.Routing.Conversions
 {
     public class RoutingJsonTypeConversions : ITypeConversions
     {
-
         public Dictionary<Type, Func<object, object>> GetConversions()
         {
             return new Dictionary<Type, Func<object, object>>
@@ -69,7 +68,7 @@ namespace HereAPI.Routing.Conversions
             catch
             {
                 return null;
-            }              
+            }
         }
 
         public RouteFeature ConvertRouteFeature(string s)
@@ -86,8 +85,5 @@ namespace HereAPI.Routing.Conversions
                 return null;
             }
         }
-
-
-        
     }
 }

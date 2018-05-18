@@ -4,80 +4,80 @@ using HereAPI.Shared.TypeObjects;
 
 namespace HereAPI.Routing.TypesResponse
 {
-
     /// <summary>
-    /// Waypoints are points (including start and end points) along the route, based on input specified in the route request. 
-    /// They can also be defined as passThrough, such as a case where the road changes names and no stopover action is required.
-    /// If the request does not pass a coordinate when specifying the waypoint, the originalPosition attribute will not be filled.
+    /// Waypoints are points (including start and end points) along the route, based on input
+    /// specified in the route request. They can also be defined as passThrough, such as a case where
+    /// the road changes names and no stopover action is required. If the request does not pass a
+    /// coordinate when specifying the waypoint, the originalPosition attribute will not be filled.
     /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-waypoint.html"/>
     /// </summary>
     public class WayPoint
     {
         /// <summary>
-        /// ID of the link on the navigable network associated with the waypoint. 
-        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-link-id.html#resource-type-link-id"/>
+        /// ID of the link on the navigable network associated with the waypoint. <see href="https://developer.here.com/documentation/routing/topics/resource-type-link-id.html#resource-type-link-id"/>
         /// </summary>
         public LinkId LinkId { get; set; }
 
         /// <summary>
-        /// If this waypoint is a start point, this will be mapped to the beginning of the link. 
-        /// If used as destination point or via point, it will be mapped to the end of the link. 
-        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-coordinate.html#resource-type-coordinate"/>
+        /// If this waypoint is a start point, this will be mapped to the beginning of the link. If
+        /// used as destination point or via point, it will be mapped to the end of the link. <see href="https://developer.here.com/documentation/routing/topics/resource-type-coordinate.html#resource-type-coordinate"/>
         /// </summary>
         public GeoCoordinate MappedPosition { get; set; }
 
         /// <summary>
-        /// Original position as it was specified in the corresponding request. 
-        /// The value will depend on request construction:<para/>
-        /// If using a NavigationWaypointParameterType, the service will set OriginalPosition 
-        /// as the display position(if specified) or as the navigation position selected by the 
-        /// routing engine(if not specified in the request).<para/>
-        /// If using a GeoWaypointParameterType, the service will set the OriginalPosition as the 
-        /// position specified in the request.<para/>
+        /// Original position as it was specified in the corresponding request. The value will depend
+        /// on request construction:
+        /// <para/>
+        /// If using a NavigationWaypointParameterType, the service will set OriginalPosition as the
+        /// display position(if specified) or as the navigation position selected by the routing
+        /// engine(if not specified in the request).
+        /// <para/>
+        /// If using a GeoWaypointParameterType, the service will set the OriginalPosition as the
+        /// position specified in the request.
+        /// <para/>
         /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-coordinate.html#resource-type-coordinate"/>
         /// </summary>
         public GeoCoordinate OriginalPosition { get; set; }
 
         /// <summary>
-        /// Defines the type of the waypoint, either stopOver or passThrough. 
-        /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-enumerations.html#resource-type-enumerations__enum-waypoint-parameter-type"/>
+        /// Defines the type of the waypoint, either stopOver or passThrough. <see href="https://developer.here.com/documentation/routing/topics/resource-type-enumerations.html#resource-type-enumerations__enum-waypoint-parameter-type"/>
         /// </summary>
         public WaypointType? Type { get; set; }
 
         /// <summary>
-        /// Contains the relative position of the mapped location along the link, 
-        /// as the fractional distance between the link's reference node and the 
-        /// non-reference node. Ranges in value from 0 to 1. When no spot value 
-        /// nor display position is given in the request then default value 0.5 is assumed.
+        /// Contains the relative position of the mapped location along the link, as the fractional
+        /// distance between the link's reference node and the non-reference node. Ranges in value
+        /// from 0 to 1. When no spot value nor display position is given in the request then default
+        /// value 0.5 is assumed.
         /// </summary>
         public double Spot { get; set; }
 
         /// <summary>
-        /// Indicates whether the waypoint is on the left or right side of the link, 
-        /// hen heading from the reference node to the non-reference node. 
+        /// Indicates whether the waypoint is on the left or right side of the link, hen heading from
+        /// the reference node to the non-reference node.
         /// </summary>
         public SideOfStreetType SideOfStreet { get; set; }
 
         /// <summary>
-        /// Displays the name of the street to which the request waypoint was mapped. 
+        /// Displays the name of the street to which the request waypoint was mapped.
         /// </summary>
         public string MappedRoadName { get; set; }
 
         /// <summary>
-        /// A label identifying this waypoint, generated by the routing service. 
-        /// Label is either a street name or a public transport stop, depending on the transport mode of the request. 
+        /// A label identifying this waypoint, generated by the routing service. Label is either a
+        /// street name or a public transport stop, depending on the transport mode of the request.
         /// </summary>
         public string Label { get; set; }
 
         /// <summary>
-        /// Used to identify a waypoint point with a custom name. Copied verbatim as specified in the request. 
+        /// Used to identify a waypoint point with a custom name. Copied verbatim as specified in the request.
         /// </summary>
         public string UserLabel { get; set; }
 
         /// <summary>
-        /// Specifies the index of this waypoint, based on the global shape array that is provided at the route level. 
+        /// Specifies the index of this waypoint, based on the global shape array that is provided at
+        /// the route level.
         /// </summary>
         public int ShapeIndex { get; set; }
-
     }
 }

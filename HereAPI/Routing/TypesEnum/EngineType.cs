@@ -3,7 +3,6 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// 
     /// </summary>
     public enum EngineType
     {
@@ -18,7 +17,7 @@ namespace HereAPI.Routing.TypesEnum
         [Description("gasoline")] Gasoline,
 
         /// <summary>
-        /// Electric engine. Does not emit CO2. 
+        /// Electric engine. Does not emit CO2.
         /// </summary>
         [Description("electric")] Electric
     }

@@ -5,9 +5,8 @@ using NUnit.Framework;
 namespace HereAPI.Tests.Routing.TypesRequest
 {
     [TestFixture]
-    class VehycleTypeTests
+    internal class VehycleTypeTests
     {
-
         [Test]
         [TestCase("diesel,5.28", EngineType.Diesel, 5.28f)]
         [TestCase("gasoline,5", EngineType.Gasoline, 5f)]

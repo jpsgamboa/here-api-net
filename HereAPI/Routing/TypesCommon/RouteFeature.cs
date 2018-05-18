@@ -6,7 +6,6 @@ namespace HereAPI.Routing.TypesCommon
 {
     public class RouteFeature : IAttribute
     {
-
         public RouteFeatureType FeatureType { get; set; }
         public RouteFeatureWeightType FeatureWeight { get; set; }
 

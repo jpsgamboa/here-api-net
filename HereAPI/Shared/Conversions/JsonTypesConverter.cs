@@ -1,38 +1,36 @@
-﻿using Newtonsoft.Json;
+﻿using HereAPI.Shared.Requests.Helpers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CSharp;
-using HereAPI.Shared.Requests.Helpers;
-using HereAPI.Shared.TypeObjects;
 
 namespace HereAPI.Shared.Conversions
 {
-    /// <summary>
-    /// Provides a way to convert the JSON response into the desired objects.<para/>
-    /// Example:<para/>
-    ///  - Parse the Shape attribute of the JSON response (a string array) into a <see cref="GeoPolyline"/> object <para/>
-    ///  - Parse enum types (a string in the JSON response) into the appropriate <see cref="Enum"/> object <para/>
-    /// <para/>
-    /// 
-    /// The values are converted using functions defined in classes implementing <see cref="ITypeConversions"/>. <para/>
-    /// The class <see cref="SharedJsonTypeConversions"/> defines conversions for types shared across multiple
-    /// services (such as Routing, Geocoding - both use <see cref="GeoCoordinate"/> for example). </para>
-    /// <para/>
-    /// 
-    /// Each service then implements it's own class implementing <see cref="ITypeConversions"/>.<para/>
-    /// For example, the Routing service has the class <see cref="RoutingJsonTypeConversions"/> which defines conversions 
-    /// specific for the routing service.<para/>
-    /// <para/>
-    /// 
-    /// The <see cref="ITypeConversions"/> interface ensures that the conversion are loaded into a <see cref="Dictionary{Type, Func{object, object}}"/> which
-    /// key is the type of the object to convert (<see cref="Enum"/>, <see cref="GeoCoordinate"/>, etc.) and the value is a <see cref="Func{}"/> that
-    /// points to the function to run.<para/>
-    /// 
-    /// The idea behind separating the convertions between the service was the fear that loading too many 
-    /// conversions into the <see cref="JsonConverter"/> could slow things down.
-    /// 
+    /// <summary> Provides a way to convert the JSON response into the desired objects.<para/> Example:<para/>
+    /// - Parse the Shape attribute of the JSON response (a string array) into a <see
+    ///   cref="GeoPolyline"/> object <para/>
+    /// - Parse enum types (a string in the JSON response) into the appropriate <see cref="Enum"/>
+    ///   object <para/> <para/>
+    ///
+    /// The values are converted using functions defined in classes implementing <see
+    /// cref="ITypeConversions"/>. <para/> The class <see cref="SharedJsonTypeConversions"/> defines
+    /// conversions for types shared across multiple services (such as Routing, Geocoding - both use
+    /// <see cref="GeoCoordinate"/> for example). </para> <para/>
+    ///
+    /// Each service then implements it's own class implementing <see
+    /// cref="ITypeConversions"/>.<para/> For example, the Routing service has the class <see
+    /// cref="RoutingJsonTypeConversions"/> which defines conversions specific for the routing
+    /// service.<para/> <para/>
+    ///
+    /// The <see cref="ITypeConversions"/> interface ensures that the conversion are loaded into a
+    /// <see cref="Dictionary{Type, Func{object, object}}"/> which key is the type of the object to
+    /// convert (<see cref="Enum"/>, <see cref="GeoCoordinate"/>, etc.) and the value is a <see
+    /// cref="Func{}"/> that points to the function to run.<para/>
+    ///
+    /// The idea behind separating the convertions between the service was the fear that loading too
+    /// many conversions into the <see cref="JsonConverter"/> could slow things down.
+    ///
     /// </summary>
     public class JsonTypesConverter : JsonConverter
     {
@@ -66,7 +64,7 @@ namespace HereAPI.Shared.Conversions
                 return _conversions[objectType](items);
             }
 
-            // Case of derived objects such as those derived from Maneuver that must be routed to the 
+            // Case of derived objects such as those derived from Maneuver that must be routed to the
             // desired object using the _type attribute in the json response
             else if (reader.TokenType == JsonToken.StartObject)
             {
@@ -76,9 +74,10 @@ namespace HereAPI.Shared.Conversions
                 return _conversions[objectType](new { s = serializer, t = token });
             }
 
-            // Case of enums. Most of the enum types are nullable by choice (so that they are null when not present
-            // in the JSON response). To deal with the nullability factor, some extra steps have to be taken to 
-            // ensure the conversion works. See the class EnumHelper for more info.
+            // Case of enums. Most of the enum types are nullable by choice (so that they are null
+            // when not present in the JSON response). To deal with the nullability factor, some
+            // extra steps have to be taken to ensure the conversion works. See the class EnumHelper
+            // for more info.
             else if (EnumHelper.IsEnum(objectType))
             {
                 try
@@ -110,10 +109,5 @@ namespace HereAPI.Shared.Conversions
         {
             throw new NotImplementedException();
         }
-
-
-
-
-
     }
 }

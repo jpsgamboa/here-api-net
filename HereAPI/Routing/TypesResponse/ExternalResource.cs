@@ -1,12 +1,10 @@
 ﻿using HereAPI.Routing.TypesEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HereAPI.Routing.TypesResponse
 {
     /// <summary>
-    /// Reference to an external resource (for example, a bitmap). The client is responsible for retrieving the referenced resource.
+    /// Reference to an external resource (for example, a bitmap). The client is responsible for
+    /// retrieving the referenced resource.
     /// </summary>
     public class ExternalResource
     {
@@ -19,6 +17,5 @@ namespace HereAPI.Routing.TypesResponse
         /// Filename of the resource
         /// </summary>
         public string Filename { get; set; }
-
     }
 }

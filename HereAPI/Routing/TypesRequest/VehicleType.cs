@@ -1,7 +1,6 @@
 ﻿using HereAPI.Routing.TypesEnum;
 using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
-using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesRequest
 {
@@ -14,7 +13,10 @@ namespace HereAPI.Routing.TypesRequest
         /// Contains vehicle specific information, which can be used to estimate CO2 emission.
         /// </summary>
         /// <param name="engineType">Type of the engine.</param>
-        /// <param name="averageConsumption">The average fuel consumption, measured in liters per 100km. Affects CO2 emission only in case of combustion engines (diesel and gasoline). </param>
+        /// <param name="averageConsumption">
+        /// The average fuel consumption, measured in liters per 100km. Affects CO2 emission only in
+        /// case of combustion engines (diesel and gasoline).
+        /// </param>
         public VehicleType(EngineType engineType, float averageConsumption)
         {
             Engine = engineType;

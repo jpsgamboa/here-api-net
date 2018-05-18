@@ -1,5 +1,4 @@
 ﻿using HereAPI.Shared.Structure;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HereAPI.Shared.TypeObjects

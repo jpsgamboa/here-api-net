@@ -1,15 +1,11 @@
-﻿using HereAPI.Shared.Requests.Helpers;
-using HereAPI.Shared.TypeObjects;
-using Newtonsoft.Json.Linq;
+﻿using HereAPI.Shared.TypeObjects;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HereAPI.Shared.Conversions
 {
     public class SharedJsonTypeConversions : ITypeConversions
     {
-
         public Dictionary<Type, Func<object, object>> GetConversions()
         {
             return new Dictionary<Type, Func<object, object>>
@@ -67,14 +63,12 @@ namespace HereAPI.Shared.Conversions
             try
             {
                 var parts = s.Replace("\",\"", "|").Split('|');
-                return new KeyValuePair(parts[0], parts[1]);                
+                return new KeyValuePair(parts[0], parts[1]);
             }
             catch
             {
                 return null;
             }
         }
-
-
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Defines identifiers for different incidents. 
+    /// Defines identifiers for different incidents.
     /// </summary>
     public enum IncidentType
     {

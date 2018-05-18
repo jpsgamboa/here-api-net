@@ -6,7 +6,6 @@ namespace HereAPI.Shared.Requests.Helpers
 {
     public class PropertyHelper
     {
-
         public static string GetDescription<T>(Expression<Func<T>> expr)
         {
             try
@@ -15,7 +14,6 @@ namespace HereAPI.Shared.Requests.Helpers
                 object[] attrs = mexpr.Member.GetCustomAttributes(typeof(DescriptionAttribute), false);
                 DescriptionAttribute desc = attrs[0] as DescriptionAttribute;
                 return desc.Description;
-
             }
             catch
             {

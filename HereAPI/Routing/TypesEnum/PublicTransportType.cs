@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Enumeration to identify different action types needed for public transport maneuvers 
+    /// Enumeration to identify different action types needed for public transport maneuvers
     /// </summary>
     public enum PublicTransportType
     {

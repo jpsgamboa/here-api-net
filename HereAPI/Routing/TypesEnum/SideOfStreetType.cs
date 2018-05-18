@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
-
     /// <summary>
-    /// Enumeration type to identify on which side of a link an object is placed. 
+    /// Enumeration type to identify on which side of a link an object is placed.
     /// </summary>
     public enum SideOfStreetType
     {

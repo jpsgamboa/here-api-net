@@ -4,7 +4,8 @@ using System.ComponentModel;
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Sequence of attribute keys of the fields that are included in public transport line elements.<para/>
+    /// Sequence of attribute keys of the fields that are included in public transport line elements.
+    /// <para/>
     /// </summary>
     public enum PublicTransportLineAttributeType
     {
@@ -60,12 +61,11 @@ namespace HereAPI.Routing.TypesEnum
         /// Indicates Whether The System Id Should Be Included In The Public Transport Line.
         /// </summary>
         [Obsolete("Unsupported public transport line attribute", true)]
-        [Description("si")] SystemId, 
+        [Description("si")] SystemId,
 
         /// <summary>
         /// Indicates Whether Stops Should Be Included In The Public Transport Line.
         /// </summary>
         [Description("st")] Stops,
-
     }
 }

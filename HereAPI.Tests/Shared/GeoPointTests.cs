@@ -5,9 +5,8 @@ using System;
 namespace HereAPI.Tests
 {
     [TestFixture]
-    class GeoPointTests
+    internal class GeoPointTests
     {
-
         [Test]
         [TestCase(-90.00001, 0.0)]
         [TestCase(90.00001, 0.0)]
@@ -34,7 +33,6 @@ namespace HereAPI.Tests
             });
         }
 
-
         [Test]
         [TestCase("38.12345,-8.12345", 38.12345, -8.12345)]
         [TestCase("38.12345,-8.12345,50", 38.12345, -8.12345, 50)]
@@ -43,7 +41,5 @@ namespace HereAPI.Tests
             GeoCoordinate gp = new GeoCoordinate(lat, lon, alt);
             Assert.AreEqual(expected, gp.GetAttributeValue());
         }
-
-
     }
 }

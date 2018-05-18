@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
@@ -20,18 +16,18 @@ namespace HereAPI.Shared.Structure
             var errors = new List<string>();
 
             PropertyInfo[] properties = o.GetType().GetProperties();
-            foreach(var pInfo in properties)
+            foreach (var pInfo in properties)
             {
                 var valAttrs = pInfo.GetCustomAttributes(typeof(ValidationAttribute), true);
 
-                foreach(ValidationAttribute vAttr in valAttrs)
+                foreach (ValidationAttribute vAttr in valAttrs)
                 {
                     if (!vAttr.IsValid(pInfo.GetValue(o))) errors.Add(vAttr.ErrorMessage);
                 }
 
                 if (typeof(IAttribute).IsAssignableFrom(pInfo.GetType()))
                 {
-                    errors.AddRange(((IAttribute) pInfo.GetValue(o)).Validate());
+                    errors.AddRange(((IAttribute)pInfo.GetValue(o)).Validate());
                 }
             }
 
@@ -46,7 +42,5 @@ namespace HereAPI.Shared.Structure
             //                        .Where(va => !va.IsValid(pd.GetValue(o))))
             //                        .Select(xx => xx.ErrorMessage).ToArray();
         }
-
     }
-
 }

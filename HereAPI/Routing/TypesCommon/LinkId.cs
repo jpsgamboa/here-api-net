@@ -1,10 +1,6 @@
-﻿using HereAPI.Shared.Requests;
-using HereAPI.Shared.Requests.Helpers;
+﻿using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace HereAPI.Routing.TypesCommon
 {
@@ -21,7 +17,6 @@ namespace HereAPI.Routing.TypesCommon
 
         public int Id { get; set; }
         public LinkDirection Direction { get; set; }
-
 
         public LinkId(int linkID, LinkDirection linkDirection)
         {

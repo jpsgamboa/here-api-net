@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Enumeration type to identify directions at a maneuver. 
+    /// Enumeration type to identify directions at a maneuver.
     /// </summary>
     public enum DirectionType
     {
@@ -21,6 +18,5 @@ namespace HereAPI.Routing.TypesEnum
         [Description("left")] Left,
         [Description("lightLeft")] LightLeft,
         [Description("bearLeft")] BearLeft
-
     }
 }

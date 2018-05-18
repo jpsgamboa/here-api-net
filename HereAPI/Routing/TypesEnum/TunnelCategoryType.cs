@@ -3,7 +3,6 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// 
     /// </summary>
     public enum TunnelCategoryType
     {

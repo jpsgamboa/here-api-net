@@ -111,6 +111,5 @@ namespace HereAPI.Shared.TypeEnums
         [Description("cy")] Welsh,
         [Description("wo-latn")] Wolof_Latin,
         [Description("yo-latn")] Yoruba_Latin,
-
     }
 }

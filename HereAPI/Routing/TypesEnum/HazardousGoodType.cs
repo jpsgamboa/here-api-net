@@ -3,7 +3,7 @@
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Defines names for different types of hazardous materials. 
+    /// Defines names for different types of hazardous materials.
     /// </summary>
     public enum HazardousGoodType
     {
@@ -20,5 +20,4 @@ namespace HereAPI.Routing.TypesEnum
         [Description("other")] Other,
         [Description("allHazardousGoods")] AllhazardousGoods
     }
-
 }

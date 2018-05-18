@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{45BF7D53-2EF6-4DCD-AA8E-CF2B8F42A8B5}</ProjectGuid>
+    <ProjectGuid>{6B82EA9D-3B9A-4565-83D9-7CA20BA694A4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Trials</RootNamespace>
-    <AssemblyName>Trials</AssemblyName>
+    <RootNamespace>Samples</RootNamespace>
+    <AssemblyName>Samples</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,7 +36,6 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="PrivateTransportCalculateRouteRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HereAPI\HereAPI.csproj">
-      <Project>{6c627074-a801-4c16-ac87-bd168e06baa0}</Project>
+      <Project>{6C627074-A801-4C16-AC87-BD168E06BAA0}</Project>
       <Name>HereAPI</Name>
     </ProjectReference>
   </ItemGroup>

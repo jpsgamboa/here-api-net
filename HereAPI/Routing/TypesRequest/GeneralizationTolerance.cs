@@ -4,7 +4,6 @@ namespace HereAPI.Routing.TypesRequest
 {
     public class GeneralizationTolerance : IRequestAttribute
     {
-
         public double LatitudeTolerance { get; set; }
         public double LongitudeTolerance { get; set; }
 

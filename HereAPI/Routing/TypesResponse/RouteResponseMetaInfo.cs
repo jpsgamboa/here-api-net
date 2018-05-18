@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HereAPI.Routing.TypesResponse
+﻿namespace HereAPI.Routing.TypesResponse
 {
     public class RouteResponseMetaInfo
     {
@@ -32,10 +28,9 @@ namespace HereAPI.Routing.TypesResponse
         public string ModuleVersion { get; set; }
 
         /// <summary>
-        /// Required. Gives the version of the schema definition to enable formats 
-        /// other than XML to identify elements without using namespaces.
+        /// Required. Gives the version of the schema definition to enable formats other than XML to
+        /// identify elements without using namespaces.
         /// </summary>
         public string InterfaceVersion { get; set; }
-        
     }
 }

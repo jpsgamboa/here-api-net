@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
-
     /// <summary>
-    /// Defines a list of supported resource type identifiers. 
+    /// Defines a list of supported resource type identifiers.
     /// </summary>
     public enum ResourceType
     {
-
         /// <summary>
         /// Identifier For The Bitmap Representing The Junction View
         /// </summary>
@@ -23,7 +18,8 @@ namespace HereAPI.Routing.TypesEnum
         [Description("signAsReal")] SignAsReal,
 
         /// <summary>
-        /// Identifier For The Bitmap Representing The Direction Arrow At A Junction. Displayed On Top Of The Junction View
+        /// Identifier For The Bitmap Representing The Direction Arrow At A Junction. Displayed On
+        /// Top Of The Junction View
         /// </summary>
         [Description("directionArrow")] DirectionArrow,
 
@@ -43,9 +39,10 @@ namespace HereAPI.Routing.TypesEnum
         [Description("vendorLogo")] VendorLogo,
 
         /// <summary>
-        /// Identifier For The Svg Resource Representing A Template For Displaying Routes (Such As Highway Signs). Clients Will Have To Include The Route Number In The Graphic To Display A Concrete Route Sign
+        /// Identifier For The Svg Resource Representing A Template For Displaying Routes (Such As
+        /// Highway Signs). Clients Will Have To Include The Route Number In The Graphic To Display A
+        /// Concrete Route Sign
         /// </summary>
         [Description("routeTemplate")] RouteTemplate,
-
     }
 }

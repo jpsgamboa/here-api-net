@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace HereAPI.Routing.TypesEnum
 {
     /// <summary>
-    /// Line style used to draw a line. 
+    /// Line style used to draw a line.
     /// </summary>
     public enum LineStyleType
     {

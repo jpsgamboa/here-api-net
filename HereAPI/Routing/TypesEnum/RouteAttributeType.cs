@@ -2,10 +2,10 @@
 
 namespace HereAPI.Routing.TypesEnum
 {
-
     /// <summary>
-    /// Define which attributes are included in the response as part of the 
-    /// data representation of the route.<para/>
+    /// Define which attributes are included in the response as part of the data representation of
+    /// the route.
+    /// <para/>
     /// </summary>
     public enum RouteAttributeType
     {
@@ -55,17 +55,21 @@ namespace HereAPI.Routing.TypesEnum
         [Description("tx")] Tickets,
 
         /// <summary>
-        /// Indicates Whether Labels Shall Be Provided For The Route. Labels Are Useful To Distinguish Between Alternative Routes.
+        /// Indicates Whether Labels Shall Be Provided For The Route. Labels Are Useful To
+        /// Distinguish Between Alternative Routes.
         /// </summary>
         [Description("la")] Labels,
 
         /// <summary>
-        /// Indicates Whether Routeid Shall Be Calculated And Provided For The Route. There Are Cases When Routeid Calculation Is Not Possible (E.G. Publictransport) Or Fails Even Though The Rest Of The Route Is Properly Calculated.
+        /// Indicates Whether Routeid Shall Be Calculated And Provided For The Route. There Are Cases
+        /// When Routeid Calculation Is Not Possible (E.G. Publictransport) Or Fails Even Though The
+        /// Rest Of The Route Is Properly Calculated.
         /// </summary>
         [Description("ri")] RouteId,
 
         /// <summary>
-        /// Indicates Whether Maneuver Groups Should Be Included In The Route. Maneuver Groups Are Useful For Multi Modal Routes.
+        /// Indicates Whether Maneuver Groups Should Be Included In The Route. Maneuver Groups Are
+        /// Useful For Multi Modal Routes.
         /// </summary>
         [Description("gr")] Groups,
 
@@ -78,6 +82,5 @@ namespace HereAPI.Routing.TypesEnum
         /// Indicates Whether Crossed Zones Shall Be Provided For The Route
         /// </summary>
         [Description("zo")] Zones,
-
     }
 }

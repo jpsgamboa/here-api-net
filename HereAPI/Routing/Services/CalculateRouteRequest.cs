@@ -1,38 +1,34 @@
-﻿using System;
-using System.Linq;
-using System.ComponentModel;
-using HereAPI.Routing.TypesRequest;
-using HereAPI.Shared.Requests;
-using HereAPI.Shared.Requests.Helpers;
+﻿using HereAPI.Routing.Services.TypeResponse;
 using HereAPI.Routing.TypesCommon;
-using HereAPI.Shared.TypeObjects;
 using HereAPI.Routing.TypesEnum;
+using HereAPI.Routing.TypesRequest;
+using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.TypeEnums;
+using HereAPI.Shared.TypeObjects;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using static HereAPI.Routing.TypesEnum.EnumTypes;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using HereAPI.Routing.Services.TypeResponse;
 
-namespace HereAPI.Routing.Services.CalculateRoute
+namespace HereAPI.Routing.Services
 {
-
     public class CalculateRouteRequest : RoutingRequest
     {
-
         // #### Required parameters
 
         /// <summary>
-        /// The routing mode determines how the route is calculated. 
+        /// The routing mode determines how the route is calculated.
         /// </summary>
         [Required(ErrorMessage = "RoutingMode is mandatory")]
         public RequestRoutingMode RoutingMode { get; set; }
 
         /// <summary>
-        /// List of waypoints that define a route. 
-        /// The first element marks the start, the last the end point. 
-        /// Waypoints in between are interpreted as via points.
+        /// List of waypoints that define a route. The first element marks the start, the last the
+        /// end point. Waypoints in between are interpreted as via points.
         /// </summary>
         [Required(ErrorMessage = "Waypoints are mandatory")]
         public WaypointParameter[] Waypoints { get; set; }
@@ -41,49 +37,51 @@ namespace HereAPI.Routing.Services.CalculateRoute
 
         // #### Implementing IRequestAttribute
         /// <summary>
-        /// Specifies the resolution of the view and a possible snap resolution in meters per pixel in the response. 
-        /// You must specify a whole, positive integer.<para/>
-        /// If you specify only one value, then this value defines the view resolution only.<para/>
+        /// Specifies the resolution of the view and a possible snap resolution in meters per pixel
+        /// in the response. You must specify a whole, positive integer.
+        /// <para/>
+        /// If you specify only one value, then this value defines the view resolution only.
+        /// <para/>
         /// You can use snap resolution to adjust waypoint links to the resolution of the client display.
         /// </summary>
         public Resolution Resolution { get; set; }
 
         /// <summary>
-        /// Flag to control JSON output. 
+        /// Flag to control JSON output.
         /// </summary>
         public JsonRepresentation JsonAttributes { get; set; }
 
         /// <summary>
-        /// Specifies the desired tolerances for generalizations of the base route geometry. 
-        /// Tolerances are given in degrees of longitude or latitude on a spherical approximation of the Earth. 
-        /// One meter is approximately equal to 0:00001 degrees at typical latitudes.
+        /// Specifies the desired tolerances for generalizations of the base route geometry.
+        /// Tolerances are given in degrees of longitude or latitude on a spherical approximation of
+        /// the Earth. One meter is approximately equal to 0:00001 degrees at typical latitudes.
         /// </summary>
         public GeneralizationTolerance GeneralizationTolerances { get; set; }
 
         /// <summary>
-        /// Specifies type of vehicle engine and average fuel consumption, which can be used to estimate CO2 emission for the route summary 
+        /// Specifies type of vehicle engine and average fuel consumption, which can be used to
+        /// estimate CO2 emission for the route summary
         /// </summary>
         public VehicleType VehicleType { get; set; }
 
         /// <summary>
-        /// If you request information on consumption, you must provide a consumption model. 
-        /// The possible values are default and standard. When you specify the value standard, 
-        /// you must provide additional information in the query parameter customconsumptiondetails
+        /// If you request information on consumption, you must provide a consumption model. The
+        /// possible values are default and standard. When you specify the value standard, you must
+        /// provide additional information in the query parameter customconsumptiondetails
         /// </summary>
         public ConsumptionModel ConsumptionModel { get; set; }
 
         /// <summary>
-        /// Provides vehicle specific information for use in the consumption model. 
-        /// This information can include such things as the amount of energy consumed while travelling at a given speed.
+        /// Provides vehicle specific information for use in the consumption model. This information
+        /// can include such things as the amount of energy consumed while travelling at a given speed.
         /// </summary>
         public ConsumptionModel.CustomConsumptionDetails CustomConsumptionDetails { get; set; }
-
 
         //// #### Not Implementing IRequestAttribute
 
         /// <summary>
-        /// Clients may pass in an arbitrary string to trace request processing through the system. 
-        /// The RequestId is mirrored in the MetaInfo element of the response structure. 
+        /// Clients may pass in an arbitrary string to trace request processing through the system.
+        /// The RequestId is mirrored in the MetaInfo element of the response structure.
         /// </summary>
         [Description("requestId")]
         public string RequestId { get; set; }
@@ -95,22 +93,23 @@ namespace HereAPI.Routing.Services.CalculateRoute
         public GeoBoundingBox[] AvoidAreas { get; set; }
 
         /// <summary>
-        /// Links which the route must not cross. 
+        /// Links which the route must not cross.
         /// </summary>
         [Description("avoidLinks")]
         public LinkId[] AvoidLinks { get; set; }
 
         /// <summary>
-        /// The optional avoid seasonal closures boolean flag can be specified to avoid usage of seasonally closed links
+        /// The optional avoid seasonal closures boolean flag can be specified to avoid usage of
+        /// seasonally closed links
         /// </summary>
         [Description("avoidSeasonalClosures")]
         public bool? AvoidSeasonalClosures { get; set; }
 
         /// <summary>
         /// List of turn types that the route should avoid. Defaults to empty list.
-        /// Note: Currently, truck routing is the only mode that supports the avoidTurns option 
-        /// and only complex intersections can have the turn type difficult. 
-        /// The route always avoids trivial u-turns, also when you don't specify the avoidTurns parameter. 
+        /// Note: Currently, truck routing is the only mode that supports the avoidTurns option and
+        /// only complex intersections can have the turn type difficult. The route always avoids
+        /// trivial u-turns, also when you don't specify the avoidTurns parameter.
         /// </summary>
         [Description("avoidTurns")]
         public TurnType[] AvoidTurns { get; set; }
@@ -122,16 +121,16 @@ namespace HereAPI.Routing.Services.CalculateRoute
         public ulong[] ExcludeZones { get; set; }
 
         /// <summary>
-        /// Countries that must be excluded from route calculation. <para/>
+        /// Countries that must be excluded from route calculation.
+        /// <para/>
         /// Country code according to ISO 3166-1-alpha-3
         /// </summary>
         [Description("excludeCountries")]
         public String[] ExcludeCountries { get; set; }
 
         /// <summary>
-        /// Time when travel is expected to start. 
-        /// Traffic speed and incidents are taken into account when calculating the route. 
-        /// Specify either departure or arrival, not both.
+        /// Time when travel is expected to start. Traffic speed and incidents are taken into account
+        /// when calculating the route. Specify either departure or arrival, not both.
         /// </summary>
         [Description("departure")]
         public DateTime? Departure { get; set; }
@@ -143,174 +142,179 @@ namespace HereAPI.Routing.Services.CalculateRoute
         public DateTime? Arrival { get; set; }
 
         /// <summary>
-        /// Maximum number of alternative routes that will be calculated and returned. 
-        /// Alternative routes can be unavailable, thus they are not guaranteed to be returned. 
-        /// If at least one via point is used in a route request, returning alternative routes is not supported. 
-        /// 0 stands for "no alternative routes", i.e. only best route is returned.
+        /// Maximum number of alternative routes that will be calculated and returned. Alternative
+        /// routes can be unavailable, thus they are not guaranteed to be returned. If at least one
+        /// via point is used in a route request, returning alternative routes is not supported. 0
+        /// stands for "no alternative routes", i.e. only best route is returned.
         /// </summary>
         [Description("alternatives")]
         public uint? Alternatives { get; set; }
 
         /// <summary>
-        /// Defines the measurement system used in instruction text. When imperial is selected, 
-        /// units used are based on the language specified in the request. Defaults to metric when not specified. 
+        /// Defines the measurement system used in instruction text. When imperial is selected, units
+        /// used are based on the language specified in the request. Defaults to metric when not specified.
         /// </summary>
         [Description("metricSystem")]
         public UnitSystemType? UnitSystem { get; set; }
 
         /// <summary>
-        /// If the view bounds are given in the request then only route shape points which fit into these bounds will be returned. 
-        /// The route shape beyond the view bounds is reduced to the points which are referenced by links, legs or maneuvers. 
-        /// A common use case for this is the drag and drop scenario where the client is only interested in a rough visual 
-        /// update of the route in the currently visible bounds.
+        /// If the view bounds are given in the request then only route shape points which fit into
+        /// these bounds will be returned. The route shape beyond the view bounds is reduced to the
+        /// points which are referenced by links, legs or maneuvers. A common use case for this is
+        /// the drag and drop scenario where the client is only interested in a rough visual update
+        /// of the route in the currently visible bounds.
         /// </summary>
         [Description("viewBounds")]
         public GeoBoundingBox ViewBounds { get; set; }
 
         /// <summary>
-        /// Defines the representation format of the maneuver's instruction text. 
+        /// Defines the representation format of the maneuver's instruction text.
         /// </summary>
         [Description("instructionFormat")]
         public InstructionFormatType? InstructionFormat { get; set; }
 
         /// <summary>
-        /// A list of languages for all textual information, the first supported language is used. 
-        /// If there are no matching supported languages the response is an error. Defaults to en-us.
+        /// A list of languages for all textual information, the first supported language is used. If
+        /// there are no matching supported languages the response is an error. Defaults to en-us.
         /// </summary>
         [Description("language")]
         public LanguageCodeType? Language { get; set; }
 
         /// <summary>
-        /// Name of a user-defined function used to wrap the JSON response. 
+        /// Name of a user-defined function used to wrap the JSON response.
         /// </summary>
         [Description("jsonCallback")]
         public string JsonCallback { get; set; }
 
         /// <summary>
-        /// Define which elements are included in the response as part of the data representation of the route.
+        /// Define which elements are included in the response as part of the data representation of
+        /// the route.
         /// </summary>
         [Description("representation")]
         public RouteRepresentationModeType? Representation { get; set; }
 
         /// <summary>
-        /// Define which attributes are included in the response as part of the data representation of the route. 
-        /// Defaults to waypoints, summary, legs and additionally lines if publicTransport or publicTransportTimeTable mode is used.
+        /// Define which attributes are included in the response as part of the data representation
+        /// of the route. Defaults to waypoints, summary, legs and additionally lines if
+        /// publicTransport or publicTransportTimeTable mode is used.
         /// </summary>
         [Description("routeAttributes")]
         public RouteAttributeType[] RouteAttributes { get; set; }
 
         /// <summary>
-        /// Define which attributes are included in the response as part of the data representation of the route legs. 
-        /// Defaults to maneuvers, waypoint, length, travelTime. 
+        /// Define which attributes are included in the response as part of the data representation
+        /// of the route legs. Defaults to maneuvers, waypoint, length, travelTime.
         /// </summary>
         [Description("legAttributes")]
         public RouteLegAttributeType[] LegAttributes { get; set; }
 
         /// <summary>
-        /// Define which attributes are included in the response as part of the data representation of the route maneuvers. 
-        /// Defaults to position, length, travelTime.
+        /// Define which attributes are included in the response as part of the data representation
+        /// of the route maneuvers. Defaults to position, length, travelTime.
         /// </summary>
         [Description("maneuverAttributes")]
         public ManeuverAttributeType[] ManeuverAttributes { get; set; }
 
         /// <summary>
-        /// Define which attributes are included in the response as part of the data representation of the route links. Defaults to shape, speedLimit. 
+        /// Define which attributes are included in the response as part of the data representation
+        /// of the route links. Defaults to shape, speedLimit.
         /// </summary>
         [Description("linkAttributes")]
         public RouteLinkAttributeType[] LinkAttributes { get; set; }
 
         /// <summary>
-        /// Sequence of attribute keys of the fields that are included in public transport line elements. 
-        /// If not specified, defaults to lineForeground, lineBackground.
+        /// Sequence of attribute keys of the fields that are included in public transport line
+        /// elements. If not specified, defaults to lineForeground, lineBackground.
         /// </summary>
         [Description("lineAttributes")]
         public PublicTransportLineAttributeType[] LineAttributes { get; set; }
 
         /// <summary>
-        /// Restricts number of changes in a public transport route to a given value. 
-        /// The parameter does not filter resulting alternatives. Instead, it affects 
-        /// route calculation so that only routes containing at most the given number of changes are considered. 
-        /// The provided value must be between 0 and 10.
+        /// Restricts number of changes in a public transport route to a given value. The parameter
+        /// does not filter resulting alternatives. Instead, it affects route calculation so that
+        /// only routes containing at most the given number of changes are considered. The provided
+        /// value must be between 0 and 10.
         /// </summary>
         [Description("maxNumberOfChanges")]
         public uint? MaxNumberOfChanges { get; set; }
 
         /// <summary>
-        /// Public transport types that shall not be included in the response route. 
+        /// Public transport types that shall not be included in the response route.
         /// </summary>
         [Description("avoidTransportTypes")]
         public PublicTransportType[] AvoidTransportTypes { get; set; }
 
         /// <summary>
-        /// Allows to prefer or avoid public transport routes with longer walking distances. 
-        /// A value > 1.0 means a slower walking speed and will prefer routes with less walking distance. 
+        /// Allows to prefer or avoid public transport routes with longer walking distances. A value
+        /// &gt; 1.0 means a slower walking speed and will prefer routes with less walking distance.
         /// The provided value must be between 0.01 and 100.
         /// </summary>
-        [Range(0.01, 100, ErrorMessage ="WalkTimeMultiplier must be between 0.01 and 100")]
+        [Range(0.01, 100, ErrorMessage = "WalkTimeMultiplier must be between 0.01 and 100")]
         [Description("walkTimeMultiplier")]
         public float? WalkTimeMultiplier { get; set; }
 
         /// <summary>
-        /// Specifies speed which will be used by a service as a walking speed for pedestrian routing (meters per second). 
-        /// This parameter affects pedestrian, publicTransport and publicTransportTimetable modes. 
-        /// The provided value must be between 0.5 and 2.
+        /// Specifies speed which will be used by a service as a walking speed for pedestrian routing
+        /// (meters per second). This parameter affects pedestrian, publicTransport and
+        /// publicTransportTimetable modes. The provided value must be between 0.5 and 2.
         /// </summary>
         [Range(0.5, 2, ErrorMessage = "WalkSpeed must be between 0.5 and 2")]
         [Description("walkSpeed")]
         public float? WalkSpeed { get; set; }
 
         /// <summary>
-        /// Allows the user to specify a maximum distance to the start and end stations of a public transit route. 
-        /// Only valid for publicTransport and publicTransportTimetable routes. 
-        /// The provided value must be between 0 and 6000.
+        /// Allows the user to specify a maximum distance to the start and end stations of a public
+        /// transit route. Only valid for publicTransport and publicTransportTimetable routes. The
+        /// provided value must be between 0 and 6000.
         /// </summary>
         [Range(0, 6000, ErrorMessage = "WalkRadius must be between 0 and 6000")]
         [Description("walkRadius")]
         public float? WalkRadius { get; set; }
 
         /// <summary>
-        /// Enables the change maneuver in the route response, which indicates a public transit line change. 
-        /// In the absence of this maneuver, each line change is represented with a pair of subsequent enter and leave maneuvers. 
-        /// We recommend enabling combineChange behavior wherever possible, to simplify client-side development.
+        /// Enables the change maneuver in the route response, which indicates a public transit line
+        /// change. In the absence of this maneuver, each line change is represented with a pair of
+        /// subsequent enter and leave maneuvers. We recommend enabling combineChange behavior
+        /// wherever possible, to simplify client-side development.
         /// </summary>
         [Description("combineChange")]
         public bool? CombineChange { get; set; }
 
-        /// <summary>
-        /// Truck routing only, specifies the vehicle type. Defaults to truck. <para/>
-        /// Note: Relevant for restrictions that apply exclusively to tractors with semi-trailers (observed in North America). <para/>
-        /// Such restrictions are taken into account only in case of the truckType set to tractorTruck and the trailers count greater than 0 
-        /// (for example &truckType=tractorTruck&trailersCount=1). <para/>
-        /// The truck type is irrelevant in case of restrictions common for all types of trucks. 
-        /// </summary>
+        /// <summary> Truck routing only, specifies the vehicle type. Defaults to truck. <para/>
+        /// Note: Relevant for restrictions that apply exclusively to tractors with semi-trailers
+        ///       (observed in North America). <para/> Such restrictions are taken into account only
+        /// in case of the truckType set to tractorTruck and the trailers count greater than 0 (for
+        /// example &truckType=tractorTruck&trailersCount=1). <para/> The truck type is irrelevant in
+        /// case of restrictions common for all types of trucks. </summary>
         [Description("truckType")]
         public TruckType? TruckType { get; set; }
 
         /// <summary>
-        /// Truck routing only, specifies number of trailers pulled by a vehicle. 
-        /// The provided value must be between 0 and 4. Defaults to 0. 
+        /// Truck routing only, specifies number of trailers pulled by a vehicle. The provided value
+        /// must be between 0 and 4. Defaults to 0.
         /// </summary>
         [Range(0, 4, ErrorMessage = "TrailersCount must be between 0 and 4")]
         [Description("trailersCount")]
         public uint? TrailersCount { get; set; }
 
         /// <summary>
-        /// Truck routing only, list of hazardous materials in the vehicle. 
-        /// Please refer to the enumeration type HazardousGoodTypeType for available values. 
+        /// Truck routing only, list of hazardous materials in the vehicle. Please refer to the
+        /// enumeration type HazardousGoodTypeType for available values.
         /// </summary>
         [Description("shippedHazardousGoods")]
         public HazardousGoodType[] ShippedHazardousGoods { get; set; }
 
         /// <summary>
-        /// Truck routing only, vehicle weight including trailers and shipped goods, in tons. 
-        /// The provided value must be between 0 and 1000. 
+        /// Truck routing only, vehicle weight including trailers and shipped goods, in tons. The
+        /// provided value must be between 0 and 1000.
         /// </summary>
         [Range(0, 1000, ErrorMessage = "LimitedWeight must be between 0 and 1000")]
         [Description("limitedWeight")]
         public float? LimitedWeight { get; set; }
 
         /// <summary>
-        /// Truck routing only, vehicle weight per axle in tons. The provided value must be between 0 and 1000.
+        /// Truck routing only, vehicle weight per axle in tons. The provided value must be between 0
+        /// and 1000.
         /// </summary>
         [Range(0, 1000, ErrorMessage = "WeightPerAxle must be between 0 and 1000")]
         [Description("weightPerAxle")]
@@ -338,37 +342,41 @@ namespace HereAPI.Routing.Services.CalculateRoute
         public float? Length { get; set; }
 
         /// <summary>
-        /// Truck routing only, specifies the tunnel category to restrict certain route links. 
-        /// The route will pass only through tunnels of a less strict category.
+        /// Truck routing only, specifies the tunnel category to restrict certain route links. The
+        /// route will pass only through tunnels of a less strict category.
         /// </summary>
         [Description("tunnelCategory")]
         public TunnelCategoryType? TunnelCategory { get; set; }
 
         /// <summary>
-        /// Truck routing only, specifies the penalty type on violated truck restrictions. 
-        /// Defaults to strict. Refer to the enumeration type TruckRestrictionPenaltyType for details on available values. 
-        /// Note that the route computed with the penalty type soft will use links with a violated truck restriction if there is no alternative to avoid them. 
-        /// The route violating truck restrictions is then indicated with dedicated route and maneuver notes in the response
+        /// Truck routing only, specifies the penalty type on violated truck restrictions. Defaults
+        /// to strict. Refer to the enumeration type TruckRestrictionPenaltyType for details on
+        /// available values. Note that the route computed with the penalty type soft will use links
+        /// with a violated truck restriction if there is no alternative to avoid them. The route
+        /// violating truck restrictions is then indicated with dedicated route and maneuver notes in
+        /// the response
         /// </summary>
         [Description("truckRestrictionPenalty")]
         public TruckRestrictionPenaltyType? TruckRestrictionPenalty { get; set; }
 
         /// <summary>
-        /// If set to true, all shapes inside routing response will consist of 3 values instead of 2. Third value will be elevation. 
-        /// If there are no elevation data available for given shape point, elevation will be interpolated from surrounding points. 
-        /// In case there is no elevation data available for any of the shape points, elevation will be 0.0. If jsonattributes=32, elevation cannot be returned.
+        /// If set to true, all shapes inside routing response will consist of 3 values instead of 2.
+        /// Third value will be elevation. If there are no elevation data available for given shape
+        /// point, elevation will be interpolated from surrounding points. In case there is no
+        /// elevation data available for any of the shape points, elevation will be 0.0. If
+        /// jsonattributes=32, elevation cannot be returned.
         /// </summary>
         [Description("returnElevation")]
         public bool? ReturnElevation { get; set; }
 
         /// <summary>
-        /// Use the calculateroute resource to return a route between two waypoints. 
-        /// The required parameters for this resource are app_id and app_code, two or more waypoints
-        /// (waypoint0 and waypoint1, to waypointN) and mode (specifying how to calculate the route, 
-        /// and for what mode of transport). For some modes departure or arrival (if applicable) is required. 
-        /// This includes publicTransportTimeTable, publicTransport and all modes with enabled traffic. 
-        /// Other parameters can be left unspecified.
-        /// 
+        /// Use the calculateroute resource to return a route between two waypoints. The required
+        /// parameters for this resource are app_id and app_code, two or more waypoints (waypoint0
+        /// and waypoint1, to waypointN) and mode (specifying how to calculate the route, and for
+        /// what mode of transport). For some modes departure or arrival (if applicable) is required.
+        /// This includes publicTransportTimeTable, publicTransport and all modes with enabled
+        /// traffic. Other parameters can be left unspecified.
+        ///
         /// <see href="https://developer.here.com/documentation/routing/topics/resource-calculate-route.html">API</see>
         /// </summary>
         public CalculateRouteRequest() : base("route", "routing/7.2", "calculateroute") { }
@@ -428,7 +436,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (AvoidTurns != null) AddAttribute(PropertyHelper.GetDescription(() => AvoidTurns), string.Join(",", AvoidTurns.Select(at => EnumHelper.GetDescription(at))));
             if (ExcludeZones != null) AddAttribute(PropertyHelper.GetDescription(() => ExcludeZones), string.Join(",", ExcludeZones));
             if (ExcludeCountries != null) AddAttribute(PropertyHelper.GetDescription(() => ExcludeCountries), string.Join(",", ExcludeCountries));
-            if (Departure != null) AddAttribute(PropertyHelper.GetDescription(() => Departure), ((DateTime) Departure).ToString("s"));
+            if (Departure != null) AddAttribute(PropertyHelper.GetDescription(() => Departure), ((DateTime)Departure).ToString("s"));
             if (Arrival != null) AddAttribute(PropertyHelper.GetDescription(() => Arrival), ((DateTime)Arrival).ToString("s"));
             if (Alternatives != null) AddAttribute(PropertyHelper.GetDescription(() => Alternatives), Alternatives.ToString());
             if (UnitSystem != null) AddAttribute(PropertyHelper.GetDescription(() => UnitSystem), EnumHelper.GetDescription(UnitSystem));
@@ -465,7 +473,6 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (TruckRestrictionPenalty != null) AddAttribute(PropertyHelper.GetDescription(() => TruckRestrictionPenalty), EnumHelper.GetDescription(TruckRestrictionPenalty));
 
             if (ReturnElevation != null) AddAttribute(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
-
         }
 
         public Task<CalculateRouteResponse> GetAsync()
