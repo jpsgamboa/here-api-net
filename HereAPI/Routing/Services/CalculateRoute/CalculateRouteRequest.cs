@@ -11,6 +11,8 @@ using HereAPI.Shared.TypeEnums;
 using static HereAPI.Routing.TypesEnum.EnumTypes;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
@@ -23,6 +25,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// <summary>
         /// The routing mode determines how the route is calculated. 
         /// </summary>
+        [Required(ErrorMessage = "RoutingMode is mandatory")]
         public RequestRoutingMode RoutingMode { get; set; }
 
         /// <summary>
@@ -30,11 +33,12 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// The first element marks the start, the last the end point. 
         /// Waypoints in between are interpreted as via points.
         /// </summary>
+        [Required(ErrorMessage = "Waypoints are mandatory")]
         public WaypointParameter[] Waypoints { get; set; }
 
         // #### Optional parameters
 
-        // #### Implementing IUrlParameter
+        // #### Implementing IRequestAttribute
         /// <summary>
         /// Specifies the resolution of the view and a possible snap resolution in meters per pixel in the response. 
         /// You must specify a whole, positive integer.<para/>
@@ -74,7 +78,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         public ConsumptionModel.CustomConsumptionDetails CustomConsumptionDetails { get; set; }
 
 
-        //// #### Not Implementing IUrlParameter
+        //// #### Not Implementing IRequestAttribute
 
         /// <summary>
         /// Clients may pass in an arbitrary string to trace request processing through the system. 
@@ -241,6 +245,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// A value > 1.0 means a slower walking speed and will prefer routes with less walking distance. 
         /// The provided value must be between 0.01 and 100.
         /// </summary>
+        [Range(0.01, 100, ErrorMessage ="WalkTimeMultiplier must be between 0.01 and 100")]
         [Description("walkTimeMultiplier")]
         public float? WalkTimeMultiplier { get; set; }
 
@@ -249,6 +254,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// This parameter affects pedestrian, publicTransport and publicTransportTimetable modes. 
         /// The provided value must be between 0.5 and 2.
         /// </summary>
+        [Range(0.5, 2, ErrorMessage = "WalkSpeed must be between 0.5 and 2")]
         [Description("walkSpeed")]
         public float? WalkSpeed { get; set; }
 
@@ -257,6 +263,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// Only valid for publicTransport and publicTransportTimetable routes. 
         /// The provided value must be between 0 and 6000.
         /// </summary>
+        [Range(0, 6000, ErrorMessage = "WalkRadius must be between 0 and 6000")]
         [Description("walkRadius")]
         public float? WalkRadius { get; set; }
 
@@ -275,7 +282,6 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// (for example &truckType=tractorTruck&trailersCount=1). <para/>
         /// The truck type is irrelevant in case of restrictions common for all types of trucks. 
         /// </summary>
-        [RequiredIf()]
         [Description("truckType")]
         public TruckType? TruckType { get; set; }
 
@@ -283,6 +289,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// Truck routing only, specifies number of trailers pulled by a vehicle. 
         /// The provided value must be between 0 and 4. Defaults to 0. 
         /// </summary>
+        [Range(0, 4, ErrorMessage = "TrailersCount must be between 0 and 4")]
         [Description("trailersCount")]
         public uint? TrailersCount { get; set; }
 
@@ -297,30 +304,35 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// Truck routing only, vehicle weight including trailers and shipped goods, in tons. 
         /// The provided value must be between 0 and 1000. 
         /// </summary>
+        [Range(0, 1000, ErrorMessage = "LimitedWeight must be between 0 and 1000")]
         [Description("limitedWeight")]
         public float? LimitedWeight { get; set; }
 
         /// <summary>
         /// Truck routing only, vehicle weight per axle in tons. The provided value must be between 0 and 1000.
         /// </summary>
+        [Range(0, 1000, ErrorMessage = "WeightPerAxle must be between 0 and 1000")]
         [Description("weightPerAxle")]
         public float? WeightPerAxle { get; set; }
 
         /// <summary>
         /// Truck routing only, vehicle height in meters. The provided value must be between 0 and 50.
         /// </summary>
+        [Range(0, 50, ErrorMessage = "Height must be between 0 and 50")]
         [Description("height")]
         public float? Height { get; set; }
 
         /// <summary>
         /// Truck routing only, vehicle width in meters. The provided value must be between 0 and 50.
         /// </summary>
+        [Range(0, 50, ErrorMessage = "Width must be between 0 and 50")]
         [Description("width")]
         public float? Width { get; set; }
 
         /// <summary>
         /// Truck routing only, vehicle length in meters. The provided value must be between 0 and 300.
         /// </summary>
+        [Range(0, 300, ErrorMessage = "Length must be between 0 and 300")]
         [Description("length")]
         public float? Length { get; set; }
 
@@ -360,65 +372,52 @@ namespace HereAPI.Routing.Services.CalculateRoute
         /// </summary>
         public CalculateRouteRequest() : base("route", "routing/7.2", "calculateroute") { }
 
-        protected override void ValidateRequestAttributes()
+        public override string[] ValidateConditionalAttributes()
         {
-            if (RoutingMode == null) throw new ArgumentException("RoutingMode is mandatory.");
+            var errors = new List<string>();
 
-            if (Waypoints == null) throw new ArgumentException("Waypoints are mandatory.");
+            if (AvoidTurns != null && RoutingMode.Mode != TransportModeType.Truck)
+                errors.Add("Currently, truck routing is the only mode that supports the avoidTurns option.");
 
-            if (AvoidTurns != null && RoutingMode.Mode !=TransportModeType.Truck)
-                throw new ArgumentException("Currently, truck routing is the only mode that supports the avoidTurns option.");
-
-            if (Departure != null && Arrival != null) throw new ArgumentException("Specify either departure or arrival, not both.");
+            if (Departure != null && Arrival != null) errors.Add("Specify either departure or arrival, not both.");
 
             if (ConsumptionModel != null && ConsumptionModel.Model == ConsumptionModel.ConsumptionModelType.Standard)
-                if (CustomConsumptionDetails == null) throw new ArgumentException("When you specify the value standard, you must provide additional information with CustomConsumptionDetails");
+                if (CustomConsumptionDetails == null) errors.Add("When you specify the value standard, you must provide additional information with CustomConsumptionDetails");
 
             if (RoutingMode.Mode != TransportModeType.PublicTransport && RoutingMode.Mode != TransportModeType.PublicTransportTimeTable && LineAttributes != null)
-                throw new ArgumentException("Public Transport Line Attributes are only available for Public Transport modes.");
+                errors.Add("Public Transport Line Attributes are only available for Public Transport modes.");
 
-            if (MaxNumberOfChanges != null && MaxNumberOfChanges > 10) throw new ArgumentException("Max Number of Changes should be an int between 0 and 10");
-
-            if (WalkTimeMultiplier != null && (WalkTimeMultiplier < 0.01 || WalkTimeMultiplier > 100)) throw new ArgumentException("Walk Time Multiplier should be a float between 0.01 and 100");
-            if (WalkSpeed != null && (WalkSpeed < 0.5 || WalkSpeed > 2)) throw new ArgumentException("Walk Speed should be a float between 0.5 and 2");
-            if (WalkRadius != null && (WalkRadius < 0 || WalkRadius > 6000)) throw new ArgumentException("Walk Radius should be a float between 0 and 6000");
+            if (MaxNumberOfChanges != null && MaxNumberOfChanges > 10) errors.Add("Max Number of Changes should be an int between 0 and 10");
 
             if (RoutingMode.Mode != TransportModeType.Truck)
             {
-                if (TruckType != null) throw new ArgumentException("TruckType attribute is only available for Truck routing mode");
-                if (TrailersCount != null) throw new ArgumentException("TrailersCount attribute is only available for Truck routing mode");
-                if (ShippedHazardousGoods != null) throw new ArgumentException("ShippedHazardousGoods attribute is only available for Truck routing mode");
-                if (LimitedWeight != null) throw new ArgumentException("LimitedWeight attribute is only available for Truck routing mode");
-                if (WeightPerAxle != null) throw new ArgumentException("WeightPerAxle attribute is only available for Truck routing mode");
-                if (Height != null) throw new ArgumentException("Height attribute is only available for Truck routing mode");
-                if (Width != null) throw new ArgumentException("Width attribute is only available for Truck routing mode");
-                if (Length != null) throw new ArgumentException("Length attribute is only available for Truck routing mode");
-                if (TunnelCategory != null) throw new ArgumentException("TunnelCategory attribute is only available for Truck routing mode");
-                if (TruckRestrictionPenalty != null) throw new ArgumentException("TruckRestrictionPenalty attribute is only available for Truck routing mode");
+                if (TruckType != null) errors.Add("TruckType attribute is only available for Truck routing mode");
+                if (TrailersCount != null) errors.Add("TrailersCount attribute is only available for Truck routing mode");
+                if (ShippedHazardousGoods != null) errors.Add("ShippedHazardousGoods attribute is only available for Truck routing mode");
+                if (LimitedWeight != null) errors.Add("LimitedWeight attribute is only available for Truck routing mode");
+                if (WeightPerAxle != null) errors.Add("WeightPerAxle attribute is only available for Truck routing mode");
+                if (Height != null) errors.Add("Height attribute is only available for Truck routing mode");
+                if (Width != null) errors.Add("Width attribute is only available for Truck routing mode");
+                if (Length != null) errors.Add("Length attribute is only available for Truck routing mode");
+                if (TunnelCategory != null) errors.Add("TunnelCategory attribute is only available for Truck routing mode");
+                if (TruckRestrictionPenalty != null) errors.Add("TruckRestrictionPenalty attribute is only available for Truck routing mode");
             }
-
-            if (TrailersCount != null && (TrailersCount > 4)) throw new ArgumentException("TrailersCount attribute should be an int between 0 and 4");
-            if (LimitedWeight != null && (LimitedWeight < 0 || LimitedWeight > 1000)) throw new ArgumentException("LimitedWeight attribute should be a float between 0 and 1000");
-            if (WeightPerAxle != null && (WeightPerAxle < 0 || WeightPerAxle > 1000)) throw new ArgumentException("WeightPerAxle attribute should be a float between 0 and 1000");
-            if (Height != null && (Height < 0 || Height > 50)) throw new ArgumentException("Height attribute should be a float between 0 and 50");
-            if (Width != null && (Width < 0 || Width > 50)) throw new ArgumentException("Width attribute should be a float between 0 and 50");
-            if (Length != null && (Length < 0 || Length > 300)) throw new ArgumentException("Length attribute should be a float between 0 and 300");
-            
+            return errors.ToArray();
         }
 
         protected override void AddSpecifiedAttributes()
         {
-            //Add IUrlType parameters
-            AddIRequestAttribute(RoutingMode);
-            foreach (var wp in Waypoints) { AddIRequestAttribute(wp); }
-            if (Resolution != null) AddIRequestAttribute(Resolution);
-            if (JsonAttributes != null) AddIRequestAttribute(JsonAttributes);
-            if (GeneralizationTolerances != null) AddIRequestAttribute(GeneralizationTolerances);
-            if (VehicleType != null) AddIRequestAttribute(VehicleType);
-            if (ConsumptionModel != null) AddIRequestAttribute(ConsumptionModel);
-            if (CustomConsumptionDetails != null) AddIRequestAttribute(CustomConsumptionDetails);
+            //Add IRequestAttribute types
+            AddAttribute(RoutingMode);
+            foreach (var wp in Waypoints) { AddAttribute(wp); }
+            if (Resolution != null) AddAttribute(Resolution);
+            if (JsonAttributes != null) AddAttribute(JsonAttributes);
+            if (GeneralizationTolerances != null) AddAttribute(GeneralizationTolerances);
+            if (VehicleType != null) AddAttribute(VehicleType);
+            if (ConsumptionModel != null) AddAttribute(ConsumptionModel);
+            if (CustomConsumptionDetails != null) AddAttribute(CustomConsumptionDetails);
 
-            AddIRequestAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections));
+            AddAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections));
 
             //Other parameters
             if (RequestId != null) AddAttribute(PropertyHelper.GetDescription(() => RequestId), RequestId);
@@ -467,12 +466,15 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (ReturnElevation != null) AddAttribute(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
 
         }
-        
-        public void GetAsync()
-        {
 
+        public new Task<CalculateRouteResponse> GetAsync<CalculateRouteResponse>()
+        {
+            return base.GetAsync<CalculateRouteResponse>();
         }
 
-
+        public new CalculateRouteResponse Get<CalculateRouteResponse>()
+        {
+            return base.Get<CalculateRouteResponse>();
+        }
     }
 }

@@ -22,5 +22,10 @@ namespace HereAPI.Routing.TypesRequest
         {
             return $"{ViewResolution}{(SnapResolution != null ? $",{SnapResolution}" : "")}";
         }
+
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

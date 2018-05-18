@@ -23,5 +23,10 @@ namespace HereAPI.Routing.TypesRequest
         {
             return $"{LatitudeTolerance.ToString(HereAPI.Culture)},{LongitudeTolerance.ToString(HereAPI.Culture)}";
         }
+
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

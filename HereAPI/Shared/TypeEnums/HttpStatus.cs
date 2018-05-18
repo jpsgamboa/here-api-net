@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HereAPI.Shared.Requests
+namespace HereAPI.Shared.TypeEnums
 {
     public enum HttpStatus
     {

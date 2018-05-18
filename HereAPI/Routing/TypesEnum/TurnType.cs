@@ -9,6 +9,9 @@ namespace HereAPI.Routing.TypesEnum
         /// </summary>
         public enum TurnType
         {
+            /// <summary>
+            /// A potentially difficult sharp turn of turning radius that might be too short for certain vehicles. 
+            /// </summary>
             [Description("difficult")] Difficult,
         }
 

@@ -25,5 +25,9 @@ namespace HereAPI.Routing.TypesCommon
             return $"{EnumHelper.GetDescription(FeatureType)}:{EnumHelper.GetDescription(FeatureWeight)}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

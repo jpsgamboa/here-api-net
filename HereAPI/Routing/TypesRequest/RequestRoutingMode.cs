@@ -4,6 +4,7 @@ using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HereAPI.Routing.TypesRequest
@@ -37,11 +38,6 @@ namespace HereAPI.Routing.TypesRequest
             Traffic = trafficMode;
             Features = routeFeatures;
 
-            if (Mode == TransportModeType.Truck || Mode == TransportModeType.PublicTransport || Mode == TransportModeType.PublicTransportTimeTable)
-            {
-                if (Type == RoutingType.Shortest) throw new Exception("When calculating Public Transport and Truck routes, always use fastest mode");
-            }
-
         }
 
         public string GetAttributeValue()
@@ -57,5 +53,15 @@ namespace HereAPI.Routing.TypesRequest
             return "mode";
         }
 
+        public string[] Validate()
+        {
+            var errors = new List<string>();
+            if (Mode == TransportModeType.Truck || Mode == TransportModeType.PublicTransport || Mode == TransportModeType.PublicTransportTimeTable)
+            {
+                if (Type == RoutingType.Shortest) errors.Add("When calculating Public Transport and Truck routes, always use fastest mode");
+            }
+            errors.AddRange(AttributeValidator.Validate(this));
+            return errors.ToArray();
+        }
     }
 }

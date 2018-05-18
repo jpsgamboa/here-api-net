@@ -1,19 +1,21 @@
 ﻿using HereAPI.Shared.Structure;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HereAPI.Shared.TypeObjects
 {
     public class GeoCoordinate : IAttribute
     {
+        [Range(-90, 90, ErrorMessage = "Latitude must be between -90 and 90")]
         public double Latitude { get; set; }
+
+        [Range(-90, 90, ErrorMessage = "Longitude must be between -180 and 180")]
         public double Longitude { get; set; }
+
         public double? Altitude { get; set; }
 
         public GeoCoordinate(double latitude, double longitude, double? altitude = null)
         {
-            if (latitude < -90 || latitude > 90) throw new ArgumentOutOfRangeException("Latitude must be between -90 and 90");
-            if (longitude < -180 || longitude > 180) throw new ArgumentOutOfRangeException("Longitude must be between -90 and 90");
-
             Latitude = latitude;
             Longitude = longitude;
             Altitude = altitude;
@@ -24,5 +26,9 @@ namespace HereAPI.Shared.TypeObjects
             return $"{Latitude.ToString(HereAPI.Culture)},{Longitude.ToString(HereAPI.Culture)}{(Altitude != null ? $",{Altitude.Value.ToString(HereAPI.Culture)}" : "")}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

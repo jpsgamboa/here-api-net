@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using HereAPI.Shared.Requests.Helpers;
 using HereAPI.Shared.Structure;
@@ -37,6 +38,11 @@ namespace HereAPI.Routing.TypesRequest
         public string GetAttributeValue()
         {
             return EnumHelper.GetDescription(Model);
+        }
+
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
         }
 
         public enum ConsumptionModelType
@@ -101,16 +107,21 @@ namespace HereAPI.Routing.TypesRequest
                     $"{(Deceleration != null ? "" : $";deceleration,{Deceleration.Value.ToString(HereAPI.Culture)}")}";
             }
 
+            public string[] Validate()
+            {
+                return AttributeValidator.Validate(this);
+            }
+
             public class SpeedConsumptionPair : IAttribute
             {
+                [Range(0, 255, ErrorMessage = "The speed must be an integer in the following interval: [0,255].")]
                 public int Speed { get; }
+
+                [Range(0, float.MaxValue, ErrorMessage = "Consumption is a positive float value.")]
                 public float Consumption { get; }
 
                 public SpeedConsumptionPair(int speed, float consumption)
                 {
-                    if (speed < 0 || speed > 255) throw new ArgumentOutOfRangeException("The speed must be an integer in the following interval: [0,255].");
-                    if (consumption <= 0) throw new ArgumentOutOfRangeException("Consumption is a positive float value.");
-
                     Speed = speed;
                     Consumption = consumption;
                 }
@@ -120,6 +131,10 @@ namespace HereAPI.Routing.TypesRequest
                     return $"{Speed},{Consumption.ToString(HereAPI.Culture)}";
                 }
 
+                public string[] Validate()
+                {
+                    return AttributeValidator.Validate(this);
+                }
             }
         }
     }

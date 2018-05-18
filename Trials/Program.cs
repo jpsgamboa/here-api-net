@@ -39,13 +39,20 @@ namespace Trials
                     new GeoWaypointParameter(1, new GeoCoordinate(38.857363, -9.165800))
                 },
                 Departure = new DateTime(2018,05,15,19,00,00),
+                Arrival = new DateTime(2018, 05, 15, 19, 00, 00),
                 RouteAttributes = new RouteAttributeType[] { RouteAttributeType.Shape, RouteAttributeType.Legs, RouteAttributeType.Incidents, RouteAttributeType.Groups},
                 LegAttributes = new RouteLegAttributeType[] {RouteLegAttributeType.Links},
                 ManeuverAttributes = new ManeuverAttributeType[] {ManeuverAttributeType.Time, ManeuverAttributeType.TrafficTime, ManeuverAttributeType.BaseTime, ManeuverAttributeType.Notes},
                 
             };
 
-            Console.WriteLine(cr.GetCompiledUrl());
+            try
+            {
+                Console.WriteLine(cr.URL);
+            }
+            catch (Exception e){
+                Console.WriteLine(e.Message);
+            }
 
             Console.ReadKey();
         }

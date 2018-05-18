@@ -29,6 +29,12 @@ namespace HereAPI.Routing.TypesRequest
 
         public abstract string GetAttributeValue();
 
+        public virtual string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
+
+
         public class GeoWaypointParameter : WaypointParameter
         {
 
@@ -66,6 +72,11 @@ namespace HereAPI.Routing.TypesRequest
                     $"{(TransitRadius != null ? $"{TransitRadius}" : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
                     $"{(Heading != null ? $"{Heading}" : "")}";
+            }
+
+            public override string[] Validate()
+            {
+                return AttributeValidator.Validate(this);
             }
 
         }
@@ -116,6 +127,12 @@ namespace HereAPI.Routing.TypesRequest
                     $"{(StreetName != null ? $"{StreetName}" : "")}";
             }
 
+
+            public override string[] Validate()
+            {
+                return AttributeValidator.Validate(this);
+            }
+
         }
 
         public class NavigationWaypointParameterWithLinkPositions : WaypointParameter
@@ -160,6 +177,12 @@ namespace HereAPI.Routing.TypesRequest
                     $"{(DisplayPosition != null ? DisplayPosition.GetAttributeValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
                     $"{LinkId.GetAttributeValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPI.Culture)}" : "0.5")}";
+            }
+
+
+            public override string[] Validate()
+            {
+                return AttributeValidator.Validate(this);
             }
         }
 

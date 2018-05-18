@@ -34,5 +34,9 @@ namespace HereAPI.Routing.TypesCommon
             return $"{EnumHelper.GetDescription(Direction)}{Id}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

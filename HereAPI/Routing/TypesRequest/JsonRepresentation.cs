@@ -33,6 +33,11 @@ namespace HereAPI.Routing.TypesRequest
             return $"{JsonAttributesSum}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
+
         public enum JsonAttribute
         {
             /// <summary>

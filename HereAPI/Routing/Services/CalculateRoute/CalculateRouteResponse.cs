@@ -9,7 +9,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
     /// The Route element may appear more than once in the response if multiple routes are available between the start and end points. 
     /// <see href="https://developer.here.com/documentation/routing/topics/resource-type-calculate-route.html"/>
     /// </summary>
-    class CalculateRouteResponse
+    public class CalculateRouteResponse
     {
         /// <summary>
         /// Provides details about the request itself, such as the time at which it was processed, 

@@ -31,5 +31,9 @@ namespace HereAPI.Routing.TypesRequest
             return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption.ToString(HereAPI.Culture)}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }

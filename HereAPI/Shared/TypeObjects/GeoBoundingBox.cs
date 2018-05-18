@@ -18,5 +18,9 @@ namespace HereAPI.Shared.TypeObjects
             return $"{TopLeft.GetAttributeValue()},{BottomRight.GetAttributeValue()}";
         }
 
+        public string[] Validate()
+        {
+            return AttributeValidator.Validate(this);
+        }
     }
 }
