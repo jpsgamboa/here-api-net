@@ -3,6 +3,7 @@ using HereAPI.Routing.TypesEnum;
 using HereAPI.Routing.TypesResponse;
 using HereAPI.Shared.Conversions;
 using HereAPI.Shared.Requests.Helpers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -19,27 +20,30 @@ namespace HereAPI.Routing.Conversions
                         {
                             { typeof(LinkId), (s) => ConvertLinkId((string) s) },
                             { typeof(RouteFeature), (s) => ConvertRouteFeature((string) s) },
-                            { typeof(Maneuver), (t) => ConvertAbstractObject((JToken) t) },
-                            { typeof(Link), (t) => ConvertAbstractObject((JToken) t) },
-                            { typeof(RouteSummary), (t) => ConvertAbstractObject((JToken) t) },
+                            { typeof(Maneuver), (d) => ConvertAbstractObject((dynamic) d) },
+                            { typeof(Link), (d) => ConvertAbstractObject((dynamic) d) },
+                            { typeof(RouteSummary), (d) => ConvertAbstractObject((dynamic) d) },
                         };
         }
 
-        // TODO Must test this...
-        public object ConvertAbstractObject(JToken token)
+        // TODO Add test for this...
+        public object ConvertAbstractObject(dynamic d)
         {
+            JToken token = d.t;
+            JsonSerializer serializer = d.s;
+
             try
             {
                 string _type = token.Value<string>("_type");
 
-                if (_type == "PublicTransportManeuverType") return token.ToObject<PublicTransportManeuver>();
-                if (_type == "PrivateTransportManeuverType") return token.ToObject<PrivateTransportManeuver>();
+                if (_type == "PublicTransportManeuverType") return token.ToObject<PublicTransportManeuver>(serializer);
+                if (_type == "PrivateTransportManeuverType") return token.ToObject<PrivateTransportManeuver>(serializer);
 
-                if (_type == "PublicTransportLinkType") return token.ToObject<PublicTransportLink>();
-                if (_type == "PrivateTransportLinkType") return token.ToObject<PrivateTransportLink>();
+                if (_type == "PublicTransportLinkType") return token.ToObject<PublicTransportLink>(serializer);
+                if (_type == "PrivateTransportLinkType") return token.ToObject<PrivateTransportLink>(serializer);
 
-                if (_type == "RouteSummaryType") return token.ToObject<RouteSummary>();
-                if (_type == "PublicTransportRouteSummaryType") return token.ToObject<PublicTransportRouteSummary>();
+                if (_type == "RouteSummaryType") return token.ToObject<PrivateTransportRouteSummary>(serializer);
+                if (_type == "PublicTransportRouteSummaryType") return token.ToObject<PublicTransportRouteSummary>(serializer);
 
                 return null;
             }

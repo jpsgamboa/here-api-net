@@ -14,22 +14,23 @@ namespace HereAPI.Shared.Conversions
         {
             return new Dictionary<Type, Func<object, object>>
                         {
-                            { typeof(Enum), (s) => ConvertEnumType<Enum>((string) s) },
+                            //{ typeof(Enum), (s) => ConvertEnumType<Enum>((string) s) },
                             { typeof(GeoPolyline), (s) => ConvertShape((string[]) s) },
+                            { typeof(KeyValuePair), (s) => ConvertKeyValuePair((string) s) },
                         };
         }
 
-        public T ConvertEnumType<T>(string s)
-        {
-            try
-            {
-                return EnumHelper.GetValue<T>(s);
-            }
-            catch
-            {
-                return default(T);
-            }
-        }
+        //public T ConvertEnumType<T>(string s)
+        //{
+        //    try
+        //    {
+        //        return EnumHelper.GetValue<T>(s);
+        //    }
+        //    catch
+        //    {
+        //        return default(T);
+        //    }
+        //}
 
         public GeoPolyline ConvertShape(string[] s)
         {

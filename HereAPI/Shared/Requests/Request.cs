@@ -45,10 +45,22 @@ namespace HereAPI.Shared.Requests
             return result;
         }
 
+
         protected T Get<T>()
         {
-            return GetAsync<T>().GetAwaiter().GetResult();
+
+            var uri = new Uri(URL);
+            var json = HereAPI.Instance.HttpClient.GetStringAsync(uri).GetAwaiter().GetResult();
+            var result = JsonConvert.DeserializeObject<T>(json, JsonSettings);
+            return result;
+
+            //return GetAsync<T>().GetAwaiter().GetResult();
         }
+
+        //protected T Get<T>()
+        //{
+        //    return GetAsync<T>().GetAwaiter().GetResult();
+        //}
 
     }
 }

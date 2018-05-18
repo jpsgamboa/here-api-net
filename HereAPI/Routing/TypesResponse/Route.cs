@@ -82,7 +82,7 @@ namespace HereAPI.Routing.TypesResponse
         /// <summary>
         /// Maneuvers organized into sections based on TransportModeType. It provides the user grouped itinerary summary and brief route instructions. 
         /// </summary>
-        public ManeuverGroup ManueverGroup { get; set; }
+        public ManeuverGroup[] ManueverGroups { get; set; }
 
         /// <summary>
         /// An incident describes a temporary event on a route. It typically refers to a real world incident (accident, road construction, etc.) spanning on one or several subsequent links. 

@@ -5,6 +5,20 @@ using System.Net.Http;
 
 namespace HereAPI
 {
+
+    /// <summary>
+    /// Singleton class to register and save the api <see cref="AppCode"/> and <see cref="AppId"/>
+    /// and keep then available for services to use during the session.<para/>
+    /// <para/>
+    /// 
+    /// Here provides trial keys which can only be used the Custumer Integration environment. Therefore,
+    /// an option is provided to chose on which environment to run: <see cref="RunInProdEnv"/> <para/>
+    /// 
+    /// Usage:<para/>
+    /// HereAPI.Register(app_id, app_code)
+    /// 
+    /// 
+    /// </summary>
     public class HereAPI : IDisposable
     {
         [Description("app_id")]

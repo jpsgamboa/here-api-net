@@ -13,6 +13,7 @@ using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using HereAPI.Routing.Services.TypeResponse;
 
 namespace HereAPI.Routing.Services.CalculateRoute
 {
@@ -417,7 +418,7 @@ namespace HereAPI.Routing.Services.CalculateRoute
             if (ConsumptionModel != null) AddAttribute(ConsumptionModel);
             if (CustomConsumptionDetails != null) AddAttribute(CustomConsumptionDetails);
 
-            AddAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections));
+            AddAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections, JsonAttribute.SupressJsonResponseObjectWrapper));
 
             //Other parameters
             if (RequestId != null) AddAttribute(PropertyHelper.GetDescription(() => RequestId), RequestId);
@@ -467,12 +468,12 @@ namespace HereAPI.Routing.Services.CalculateRoute
 
         }
 
-        public new Task<CalculateRouteResponse> GetAsync<CalculateRouteResponse>()
+        public Task<CalculateRouteResponse> GetAsync()
         {
             return base.GetAsync<CalculateRouteResponse>();
         }
 
-        public new CalculateRouteResponse Get<CalculateRouteResponse>()
+        public CalculateRouteResponse Get()
         {
             return base.Get<CalculateRouteResponse>();
         }

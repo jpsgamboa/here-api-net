@@ -8,7 +8,7 @@ namespace HereAPI.Routing.TypesResponse
     /// <summary>
     /// This type provides summary information for the entire route. This type of information includes travel time, distance, and descriptions of the overall route path.
     /// </summary>
-    public class RouteSummary
+    public abstract class RouteSummary
     {
 
         /// <summary>
@@ -32,20 +32,29 @@ namespace HereAPI.Routing.TypesResponse
         public RouteLinkFlagType[] Flags { get; set; }
 
         /// <summary>
-        /// Total travel time in seconds optionally considering traffic depending on the request parameters. 
-        /// </summary>
-        public double TravelTime { get; set; }
-
-        /// <summary>
         /// Textual description of route summary. 
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// Total travel time in seconds optionally considering traffic depending on the request parameters. 
+        /// </summary>
+        public double TravelTime { get; set; }
 
         /// <summary>
         /// Estimation of the carbon dioxyde emmision for the given Route. The value depends on the VehicleType request parameter which specifies the average fuel consumption per 100 km and the type of combustion engine (diesel or gasoline). Unit is kilograms with precision to three decimal places.
         /// </summary>
         public double Co2Emission { get; set; }
 
+    }
+
+
+    /// <summary>
+    /// This type provides summary information for the private transport route. This type is derived from RouteSummaryType.
+    /// </summary>
+    public class PrivateTransportRouteSummary : RouteSummary
+    {
+        //This class is only necessary because newtonsoft JSON gets into an infinite loop when trying to deserialize into RouteSummary
     }
 
     /// <summary>
