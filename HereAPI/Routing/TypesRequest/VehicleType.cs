@@ -30,7 +30,7 @@ namespace HereAPI.Routing.TypesRequest
 
         public string GetAttributeValue()
         {
-            return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption.ToString(HereAPI.Culture)}";
+            return $"{EnumHelper.GetDescription(Engine)},{AverageConsumption.ToString(HereAPISession.Culture)}";
         }
 
         public string[] Validate()

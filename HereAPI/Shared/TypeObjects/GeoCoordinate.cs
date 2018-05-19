@@ -22,7 +22,7 @@ namespace HereAPI.Shared.TypeObjects
 
         public string GetAttributeValue()
         {
-            return $"{Latitude.ToString(HereAPI.Culture)},{Longitude.ToString(HereAPI.Culture)}{(Altitude != null ? $",{Altitude.Value.ToString(HereAPI.Culture)}" : "")}";
+            return $"{Latitude.ToString(HereAPISession.Culture)},{Longitude.ToString(HereAPISession.Culture)}{(Altitude != null ? $",{Altitude.Value.ToString(HereAPISession.Culture)}" : "")}";
         }
 
         public string[] Validate()

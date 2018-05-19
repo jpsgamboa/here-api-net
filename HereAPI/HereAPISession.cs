@@ -17,7 +17,7 @@ namespace HereAPI
     /// <para/>
     /// HereAPI.Register(app_id, app_code)
     /// </summary>
-    public class HereAPI : IDisposable
+    public class HereAPISession : IDisposable
     {
         [Description("app_id")]
         public string AppId { get; set; } = "bC4fb9WQfCCZfkxspD4z";
@@ -33,20 +33,20 @@ namespace HereAPI
 
         public static void Register(string app_id, string app_code, bool runInProductionEnvironment)
         {
-            instance = new HereAPI();
+            instance = new HereAPISession();
             instance.AppCode = app_code;
             instance.AppId = app_id;
             instance.RunInProdEnv = runInProductionEnvironment;
         }
 
-        private static HereAPI instance;
+        private static HereAPISession instance;
 
-        private HereAPI()
+        private HereAPISession()
         {
             HttpClient = new HttpClient();
         }
 
-        public static HereAPI Instance
+        public static HereAPISession Instance
         {
             get
             {

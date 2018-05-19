@@ -45,7 +45,7 @@ namespace HereAPI.Shared.Requests
         protected async Task<T> GetAsync<T>()
         {
             var uri = new Uri(URL);
-            var json = await HereAPI.Instance.HttpClient.GetStringAsync(uri).ConfigureAwait(false);
+            var json = await HereAPISession.Instance.HttpClient.GetStringAsync(uri).ConfigureAwait(false);
             var result = JsonConvert.DeserializeObject<T>(json, JsonSettings);
             return result;
         }

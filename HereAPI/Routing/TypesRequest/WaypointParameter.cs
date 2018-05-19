@@ -215,7 +215,7 @@ namespace HereAPI.Routing.TypesRequest
                     $"{(Type != null ? "!" : "")}" +
                     $"{(DisplayPosition != null ? DisplayPosition.GetAttributeValue() : "")};" +
                     $"{(UserLabel != null ? $"{UserLabel}" : "")};" +
-                    $"{LinkId.GetAttributeValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPI.Culture)}" : "0.5")}";
+                    $"{LinkId.GetAttributeValue()},{(Spot != float.NaN ? $"{Spot.Value.ToString(HereAPISession.Culture)}" : "0.5")}";
             }
 
             public override string[] Validate()

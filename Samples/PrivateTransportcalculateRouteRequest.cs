@@ -20,7 +20,7 @@ namespace Samples
 
         static void Main(string[] args)
         {
-            HereAPI.HereAPI.Register(appId, appCode, true);
+            HereAPI.HereAPISession.Register(appId, appCode, true);
 
             CalculateRouteRequest request = new CalculateRouteRequest()
             {

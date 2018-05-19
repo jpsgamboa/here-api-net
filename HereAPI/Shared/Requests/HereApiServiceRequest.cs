@@ -53,10 +53,10 @@ namespace HereAPI.Shared.Requests
         {
             Validation = new HereApiRequestValidation(this);
 
-            BaseUrl = $"https://{service}{(HereAPI.Instance.RunInProdEnv ? "" : ".cit")}.api.here.com/{path}/{resource}.json?";
+            BaseUrl = $"https://{service}{(HereAPISession.Instance.RunInProdEnv ? "" : ".cit")}.api.here.com/{path}/{resource}.json?";
 
-            AddAttribute(PropertyHelper.GetDescription(() => HereAPI.Instance.AppId), HereAPI.Instance.AppId);
-            AddAttribute(PropertyHelper.GetDescription(() => HereAPI.Instance.AppCode), HereAPI.Instance.AppCode);
+            AddAttribute(PropertyHelper.GetDescription(() => HereAPISession.Instance.AppId), HereAPISession.Instance.AppId);
+            AddAttribute(PropertyHelper.GetDescription(() => HereAPISession.Instance.AppCode), HereAPISession.Instance.AppCode);
         }
 
         protected void AddAttribute(string attribute, string value)

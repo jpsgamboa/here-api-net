@@ -124,12 +124,12 @@ namespace HereAPI.Routing.TypesRequest
             public string GetAttributeValue()
             {
                 return $"speed,{String.Join(",", SpeedConsumptionPairs.Select(s => s.GetAttributeValue()).ToArray())}" +
-                    $";ascent,{Ascent.ToString(HereAPI.Culture)}" +
-                    $";descent,{Descent.ToString(HereAPI.Culture)}" +
-                    $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty.Value.ToString(HereAPI.Culture)}")}" +
-                    $"{(AuxiliaryConsumption != null ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption.Value.ToString(HereAPI.Culture)}")}" +
-                    $"{(Acceleration != null ? "" : $";acceleration,{Acceleration.Value.ToString(HereAPI.Culture)}")}" +
-                    $"{(Deceleration != null ? "" : $";deceleration,{Deceleration.Value.ToString(HereAPI.Culture)}")}";
+                    $";ascent,{Ascent.ToString(HereAPISession.Culture)}" +
+                    $";descent,{Descent.ToString(HereAPISession.Culture)}" +
+                    $"{(TimePenalty != null ? "" : $";timePenalty,{TimePenalty.Value.ToString(HereAPISession.Culture)}")}" +
+                    $"{(AuxiliaryConsumption != null ? "" : $";auxiliaryConsumption,{AuxiliaryConsumption.Value.ToString(HereAPISession.Culture)}")}" +
+                    $"{(Acceleration != null ? "" : $";acceleration,{Acceleration.Value.ToString(HereAPISession.Culture)}")}" +
+                    $"{(Deceleration != null ? "" : $";deceleration,{Deceleration.Value.ToString(HereAPISession.Culture)}")}";
             }
 
             public string[] Validate()
@@ -153,7 +153,7 @@ namespace HereAPI.Routing.TypesRequest
 
                 public string GetAttributeValue()
                 {
-                    return $"{Speed},{Consumption.ToString(HereAPI.Culture)}";
+                    return $"{Speed},{Consumption.ToString(HereAPISession.Culture)}";
                 }
 
                 public string[] Validate()

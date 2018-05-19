@@ -20,7 +20,7 @@ namespace HereAPI.Routing.TypesRequest
 
         public string GetAttributeValue()
         {
-            return $"{LatitudeTolerance.ToString(HereAPI.Culture)},{LongitudeTolerance.ToString(HereAPI.Culture)}";
+            return $"{LatitudeTolerance.ToString(HereAPISession.Culture)},{LongitudeTolerance.ToString(HereAPISession.Culture)}";
         }
 
         public string[] Validate()
