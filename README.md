@@ -19,7 +19,7 @@ If you wish to explore the API, use the [API Explorer](https://developer.here.co
 # Usage:
 
 Calculate a Route:
-```
+```c#
 HereAPI.HereAPI.Register(appId, appCode, true);
 
             CalculateRouteRequest request = new CalculateRouteRequest()
