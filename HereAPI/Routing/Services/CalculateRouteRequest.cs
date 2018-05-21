@@ -18,6 +18,9 @@ namespace HereAPI.Routing.Services
 {
     public class CalculateRouteRequest : RoutingRequest
     {
+
+        #region Attributes
+
         // #### Required parameters
 
         /// <summary>
@@ -369,6 +372,11 @@ namespace HereAPI.Routing.Services
         [Description("returnElevation")]
         public bool? ReturnElevation { get; set; }
 
+
+        #endregion
+
+        #region Constructor
+
         /// <summary>
         /// Use the calculateroute resource to return a route between two waypoints. The required
         /// parameters for this resource are app_id and app_code, two or more waypoints (waypoint0
@@ -380,6 +388,8 @@ namespace HereAPI.Routing.Services
         /// <see href="https://developer.here.com/documentation/routing/topics/resource-calculate-route.html">API</see>
         /// </summary>
         public CalculateRouteRequest() : base("route", "routing/7.2", "calculateroute") { }
+
+        #endregion
 
         public override string[] ValidateConditionalAttributes()
         {
@@ -475,6 +485,8 @@ namespace HereAPI.Routing.Services
             if (ReturnElevation != null) AddAttribute(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
         }
 
+        #region Requests
+
         public Task<CalculateRouteResponse> GetAsync()
         {
             return base.GetAsync<CalculateRouteResponse>();
@@ -484,5 +496,7 @@ namespace HereAPI.Routing.Services
         {
             return base.Get<CalculateRouteResponse>();
         }
+
+        #endregion
     }
 }
