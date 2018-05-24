@@ -101,7 +101,7 @@ namespace HereAPI.Routing.TypesResponse
         /// <para/>
         /// 999: indicates that there is no speed restriction for link
         /// <para/>
-        /// 998: 
+        /// 998:
         /// <para/>
         /// -  United States: marked on ramps as from/toward reference speed limit
         /// <para/>

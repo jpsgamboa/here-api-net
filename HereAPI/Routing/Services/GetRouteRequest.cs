@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 
@@ -17,7 +16,6 @@ namespace HereAPI.Routing.Services
 {
     public class GetRouteRequest : RoutingRequest
     {
-
         #region Attributes
 
         // #### Implementing IRequestAttribute
@@ -28,9 +26,10 @@ namespace HereAPI.Routing.Services
         /// </summary>
         public WaypointParameter[] Waypoints { get; set; }
 
-
         /// <summary>
-        /// The routing mode determines how the route is calculated. When used in a getroute request, the type and mode of transport must be the same as in the original request(feature is ignored), whilst traffic mode can be changed.
+        /// The routing mode determines how the route is calculated. When used in a getroute request,
+        /// the type and mode of transport must be the same as in the original request(feature is
+        /// ignored), whilst traffic mode can be changed.
         /// </summary>
         public RequestRoutingMode RoutingMode { get; set; }
 
@@ -41,22 +40,19 @@ namespace HereAPI.Routing.Services
         /// </summary>
         public GeneralizationTolerance GeneralizationTolerances { get; set; }
 
-
         /// <summary>
         /// Flag to control JSON output.
         /// </summary>
         public JsonRepresentation JsonAttributes { get; set; }
-
 
         //// #### Not Implementing IRequestAttribute
 
         /// <summary>
         /// Clients may pass in an arbitrary string to trace request processing through the system.
         /// The RequestId is mirrored in the MetaInfo element of the response structure.
-        /// </summary>        
+        /// </summary>
         [Description("requestId")]
         public string RequestId { get; set; }
-
 
         /// <summary>
         /// Route identifier for which the detailed route information is being requested.
@@ -65,8 +61,6 @@ namespace HereAPI.Routing.Services
         [Description("routeId")]
         public string RouteId { get; set; }
 
-
-
         /// <summary>
         /// Time when travel is expected to start. Traffic speed and incidents are taken into account
         /// when calculating the route. Specify either departure or arrival, not both.
@@ -74,15 +68,12 @@ namespace HereAPI.Routing.Services
         [Description("departure")]
         public DateTime? Departure { get; set; }
 
-
-
         /// <summary>
         /// Defines the measurement system used in instruction text. When imperial is selected, units
         /// used are based on the language specified in the request. Defaults to metric when not specified.
         /// </summary>
         [Description("metricSystem")]
         public UnitSystemType? UnitSystem { get; set; }
-
 
         /// <summary>
         /// If the view bounds are given in the request then only route shape points which fit into
@@ -93,7 +84,6 @@ namespace HereAPI.Routing.Services
         /// </summary>
         [Description("viewBounds")]
         public GeoBoundingBox ViewBounds { get; set; }
-
 
         /// <summary>
         /// Defines the representation format of the maneuver's instruction text.
@@ -121,8 +111,6 @@ namespace HereAPI.Routing.Services
         [Description("representation")]
         public RouteRepresentationModeType? Representation { get; set; }
 
-
-
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation
         /// of the route. Defaults to waypoints, summary, legs and additionally lines if
@@ -131,14 +119,12 @@ namespace HereAPI.Routing.Services
         [Description("routeAttributes")]
         public RouteAttributeType[] RouteAttributes { get; set; }
 
-
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation
         /// of the route maneuvers. Defaults to position, length, travelTime.
         /// </summary>
         [Description("maneuverAttributes")]
         public ManeuverAttributeType[] ManeuverAttributes { get; set; }
-
 
         /// <summary>
         /// Define which attributes are included in the response as part of the data representation
@@ -164,20 +150,21 @@ namespace HereAPI.Routing.Services
         [Description("returnElevation")]
         public bool? ReturnElevation { get; set; }
 
-
-        #endregion
+        #endregion Attributes
 
         #region Constructor
 
         /// <summary>
-        /// Use the getroute resource to request a previously calculated route by providing the RouteId. As currently calculation of RouteId for Public Transport is not possible, getroute cannot be used for Public Transport.
+        /// Use the getroute resource to request a previously calculated route by providing the
+        /// RouteId. As currently calculation of RouteId for Public Transport is not possible,
+        /// getroute cannot be used for Public Transport.
         /// </summary>
-        /// <param name="service"></param>
-        /// <param name="path"></param>
+        /// <param name="service"> </param>
+        /// <param name="path">    </param>
         /// <param name="resource"></param>
         public GetRouteRequest() : base("route", "routing/7.2", "getroute") { }
 
-        #endregion
+        #endregion Constructor
 
         public override string[] ValidateConditionalAttributes()
         {
@@ -200,7 +187,6 @@ namespace HereAPI.Routing.Services
 
             AddAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections, JsonAttribute.SupressJsonResponseObjectWrapper));
 
-
             if (RequestId != null) AddAttribute(PropertyHelper.GetDescription(() => RequestId), RequestId);
             if (Departure != null) AddAttribute(PropertyHelper.GetDescription(() => Departure), ((DateTime)Departure).ToString("s"));
             if (UnitSystem != null) AddAttribute(PropertyHelper.GetDescription(() => UnitSystem), EnumHelper.GetDescription(UnitSystem));
@@ -214,9 +200,7 @@ namespace HereAPI.Routing.Services
             if (ManeuverAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => ManeuverAttributes), string.Join(",", ManeuverAttributes.Select(ma => EnumHelper.GetDescription(ma))));
             if (LinkAttributes != null) AddAttribute(PropertyHelper.GetDescription(() => LinkAttributes), string.Join(",", LinkAttributes.Select(la => EnumHelper.GetDescription(la))));
             if (ReturnElevation != null) AddAttribute(PropertyHelper.GetDescription(() => ReturnElevation), ReturnElevation.ToString().ToLower());
-
         }
-
 
         #region Requests
 
@@ -230,7 +214,6 @@ namespace HereAPI.Routing.Services
             return base.Get<GetRouteResponse>();
         }
 
-        #endregion
-
+        #endregion Requests
     }
 }

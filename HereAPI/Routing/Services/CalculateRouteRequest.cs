@@ -18,7 +18,6 @@ namespace HereAPI.Routing.Services
 {
     public class CalculateRouteRequest : RoutingRequest
     {
-
         #region Attributes
 
         // #### Required parameters
@@ -372,8 +371,7 @@ namespace HereAPI.Routing.Services
         [Description("returnElevation")]
         public bool? ReturnElevation { get; set; }
 
-
-        #endregion
+        #endregion Attributes
 
         #region Constructor
 
@@ -389,7 +387,7 @@ namespace HereAPI.Routing.Services
         /// </summary>
         public CalculateRouteRequest() : base("route", "routing/7.2", "calculateroute") { }
 
-        #endregion
+        #endregion Constructor
 
         public override string[] ValidateConditionalAttributes()
         {
@@ -497,6 +495,6 @@ namespace HereAPI.Routing.Services
             return base.Get<CalculateRouteResponse>();
         }
 
-        #endregion
+        #endregion Requests
     }
 }

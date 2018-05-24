@@ -27,9 +27,9 @@ namespace HereAPI.Routing.TypesRequest
         /// <para/>
         /// https://developer.here.com/documentation/routing/topics/resource-param-type-routing-mode.html
         /// </summary>
-        /// <param name="routingType"></param>
+        /// <param name="routingType">  </param>
         /// <param name="transportMode"></param>
-        /// <param name="trafficMode"></param>
+        /// <param name="trafficMode">  </param>
         /// <param name="routeFeatures"></param>
         public RequestRoutingMode(RoutingType routingType, TransportModeType mode, TrafficModeType? trafficMode = null, params RouteFeature[] routeFeatures)
         {

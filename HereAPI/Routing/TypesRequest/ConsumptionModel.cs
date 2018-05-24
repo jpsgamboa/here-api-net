@@ -71,29 +71,29 @@ namespace HereAPI.Routing.TypesRequest
             /// linearly interpolated from this table. Speed is in kilometers per hour.The speed must
             /// be an integer in the following interval: [0,255]. Consumption is a positive double value.
             /// </param>
-            /// <param name="ascent">
+            /// <param name="ascent">               
             /// Height dependent multiplier. This parameter indicates how many units of energy are
             /// consumed by increasing the altitude by 1 meter. Value must be non negative.
             /// </param>
-            /// <param name="descent">
+            /// <param name="descent">              
             /// Height dependent multiplier. This parameter indicates how many units of energy are
             /// gained by decreasing the altitude by 1 meter. Value must be non negative.
             /// </param>
-            /// <param name="timePenalty">
+            /// <param name="timePenalty">          
             /// Energy is consumed also when turning and/or waiting at junctions. This parameter
             /// indicates how many units of energy are consumed by waiting 1 second. Value must be
             /// non negative.
             /// </param>
-            /// <param name="auxiliaryConsumption">
+            /// <param name="auxiliaryConsumption"> 
             /// Additional energy such as for air conditioning, a radio, or other features can also
             /// be consumed when driving. This parameter indicates the units of additional energy
             /// consumed per second. Value must be non-negative.
             /// </param>
-            /// <param name="acceleration">
+            /// <param name="acceleration">         
             /// Additional energy consumed for acceleration. This parameter indicates the units of
             /// additional energy consumed per 1 (km/h)^2 of speed change. Value must be non-negative.
             /// </param>
-            /// <param name="deceleration">
+            /// <param name="deceleration">         
             /// Additional energy gained from deceleration. This parameter indicates the units of
             /// additional energy gained per 1 (km/h)^2 of speed change. Value must be non-negative.
             /// </param>

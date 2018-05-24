@@ -11,7 +11,7 @@ namespace HereAPI.Routing.TypesCommon
 
         /// <summary>
         /// </summary>
-        /// <param name="routeFeatureType">Type of the route feature.</param>
+        /// <param name="routeFeatureType">  Type of the route feature.</param>
         /// <param name="routeFeatureWeight">The route feature weight.</param>
         public RouteFeature(RouteFeatureType routeFeatureType, RouteFeatureWeightType routeFeatureWeight)
         {

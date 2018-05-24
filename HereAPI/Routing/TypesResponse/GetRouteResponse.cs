@@ -32,6 +32,5 @@ namespace HereAPI.Routing.Services.TypeResponse
         /// example, if the request specifies British English(en-uk), and this is unavailable, the
         /// service returns the response using American English instead(en-us). </summary> <see href'="https://developer.here.com/documentation/routing/topics/resource-param-type-languages.html#languages"/>
         public LanguageCodeType? Language { get; set; }
-
     }
 }

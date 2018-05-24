@@ -32,7 +32,9 @@ namespace HereAPI.Shared.Requests
             }
         }
 
-        public Request() { }
+        public Request()
+        {
+        }
 
         /// <summary>
         /// Each subclass of Request must provide their own Json Type Converters

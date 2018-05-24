@@ -1,47 +1,40 @@
-﻿using HereAPI.Routing.TypesCommon;
-using HereAPI.Routing.TypesEnum;
+﻿using HereAPI.Routing.TypesEnum;
 using HereAPI.Routing.TypesRequest;
 using HereAPI.Routing.TypesResponse;
 using HereAPI.Shared.Requests.Helpers;
-using HereAPI.Shared.TypeEnums;
-using HereAPI.Shared.TypeObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xunit;
-using static HereAPI.Routing.TypesEnum.EnumTypes;
 using static HereAPI.Routing.TypesRequest.JsonRepresentation;
 
 namespace HereAPI.Routing.Services
 {
     public class CalculateIsolineRequest : RoutingRequest
     {
-
-
         #region Attributes
 
         // #### Required parameters
 
         /// <summary>
-        /// The routing mode determines how the route is calculated.
-        /// Types supported in isoline request: fastest, shortest. 
-        /// TransportModes supported in isoline request: car, truck (only with type fastest), pedestrian. 
+        /// The routing mode determines how the route is calculated. Types supported in isoline
+        /// request: fastest, shortest. TransportModes supported in isoline request: car, truck (only
+        /// with type fastest), pedestrian.
         /// </summary>
         [Required(ErrorMessage = "RoutingMode is mandatory")]
         public RequestRoutingMode RoutingMode { get; set; }
 
         /// <summary>
-        /// Center of the isoline request. Isoline will cover all roads which can be reached from this point within given range. It cannot be used in combination with destination parameter.
+        /// Center of the isoline request. Isoline will cover all roads which can be reached from
+        /// this point within given range. It cannot be used in combination with destination parameter.
         /// </summary>
         public WaypointParameter Start { get; set; }
 
-
         /// <summary>
-        /// Center of the isoline request. Isoline will cover all roads from which this point can be reached within given range. It cannot be used in combination with start parameter.
+        /// Center of the isoline request. Isoline will cover all roads from which this point can be
+        /// reached within given range. It cannot be used in combination with start parameter.
         /// </summary>
         public WaypointParameter Destination { get; set; }
 
@@ -53,16 +46,15 @@ namespace HereAPI.Routing.Services
         public int[] Ranges { get; set; }
 
         /// <summary>
-        /// Specifies type of range. Possible values are distance, time, consumption. For distance the unit is meters. For time the unit is seconds. For consumption it is defined by consumption model
+        /// Specifies type of range. Possible values are distance, time, consumption. For distance
+        /// the unit is meters. For time the unit is seconds. For consumption it is defined by
+        /// consumption model
         /// </summary>
         [Required(ErrorMessage = "RangeType is mandatory")]
         [Description("rangeType")]
         public RangeType RangeType { get; set; }
 
-
-
         // #### Optional parameters
-
 
         /// <summary>
         /// Clients may pass in an arbitrary string to trace request processing through the system.
@@ -86,26 +78,32 @@ namespace HereAPI.Routing.Services
         public DateTime? Arrival { get; set; }
 
         /// <summary>
-        /// If set to true the isoline service will always return single polygon, instead of creating a separate polygon for each ferry separated island. Default value is false. 
+        /// If set to true the isoline service will always return single polygon, instead of creating
+        /// a separate polygon for each ferry separated island. Default value is false.
         /// </summary>
         [Description("singleComponent")]
         public bool? SingleComponent { get; set; }
 
         /// <summary>
-        /// Allows to specify level of detail needed for the isoline polygon. Unit is meters per pixel. Higher resolution may cause increased response time from the service. 
+        /// Allows to specify level of detail needed for the isoline polygon. Unit is meters per
+        /// pixel. Higher resolution may cause increased response time from the service.
         /// </summary>
         [Description("resolution")]
         public int? Resolution { get; set; }
 
-
         /// <summary>
-        /// Allows to limit amount of points in the returned isoline. If isoline consists of multiple components, sum of points from all components is considered. Each component will have at least 2 points, so it is possible that more points than maxpoints value will be returned. This is in case when 2 * number of components is higher than maxpoints. Enlarging number of maxpoints may cause increased response time from the service. 
+        /// Allows to limit amount of points in the returned isoline. If isoline consists of multiple
+        /// components, sum of points from all components is considered. Each component will have at
+        /// least 2 points, so it is possible that more points than maxpoints value will be returned.
+        /// This is in case when 2 * number of components is higher than maxpoints. Enlarging number
+        /// of maxpoints may cause increased response time from the service.
         /// </summary>
         [Description("maxPoints")]
         public int? MaxPoints { get; set; }
 
         /// <summary>
-        /// Allows to reduce the quality of the isoline in favor of the response time. Allowed values are 1, 2, 3. Default value is 1 and it is the best quality. 
+        /// Allows to reduce the quality of the isoline in favor of the response time. Allowed values
+        /// are 1, 2, 3. Default value is 1 and it is the best quality.
         /// </summary>
         [Description("quality")]
         public int? Quality { get; set; }
@@ -121,7 +119,6 @@ namespace HereAPI.Routing.Services
         [Description("jsonCallback")]
         public string JsonCallback { get; set; }
 
-
         /// <summary>
         /// If you request information on consumption, you must provide a consumption model. The
         /// possible values are default and standard. When you specify the value standard, you must
@@ -135,7 +132,6 @@ namespace HereAPI.Routing.Services
         /// </summary>
         public ConsumptionModel.CustomConsumptionDetails CustomConsumptionDetails { get; set; }
 
-        
         /// <summary> Truck routing only, specifies the vehicle type. Defaults to truck. <para/>
         /// Note: Relevant for restrictions that apply exclusively to tractors with semi-trailers
         ///       (observed in North America). <para/> Such restrictions are taken into account only
@@ -204,18 +200,20 @@ namespace HereAPI.Routing.Services
         [Description("tunnelCategory")]
         public TunnelCategoryType? TunnelCategory { get; set; }
 
-
-        #endregion
+        #endregion Attributes
 
         #region Constructor
 
         /// <summary>
-        ///Use the calculateisoline resource to request a polyline that connects the end points of all routes leaving from one defined center with either a specified length or a specified travel time. The required parameters for this resource are app_id, app_code, start or destination, range, rangetype and mode (specifying how to calculate the route, and for what mode of transport). Other parameters can be left unspecified.
-        /// <see href="https://developer.here.com/documentation/routing/topics/resource-calculate-route.html">API</see>
+        /// Use the calculateisoline resource to request a polyline that connects the end points of
+        /// all routes leaving from one defined center with either a specified length or a specified
+        /// travel time. The required parameters for this resource are app_id, app_code, start or
+        /// destination, range, rangetype and mode (specifying how to calculate the route, and for
+        /// what mode of transport). Other parameters can be left unspecified. <see href="https://developer.here.com/documentation/routing/topics/resource-calculate-route.html">API</see>
         /// </summary>
         public CalculateIsolineRequest() : base("route", "routing/7.2", "calculateisoline") { }
 
-        #endregion
+        #endregion Constructor
 
         public override string[] ValidateConditionalAttributes()
         {
@@ -236,7 +234,7 @@ namespace HereAPI.Routing.Services
 
             if (Departure != null && Start == null) errors.Add("Departure needs to be specified along with Start mode.");
             if (Arrival != null && Destination == null) errors.Add("Arrival needs to be specified along with Destination mode.");
-     
+
             if (ConsumptionModel != null && ConsumptionModel.Model == ConsumptionModel.ConsumptionModelType.Standard)
                 if (CustomConsumptionDetails == null) errors.Add("When you specify the value standard, you must provide additional information with CustomConsumptionDetails");
 
@@ -270,7 +268,6 @@ namespace HereAPI.Routing.Services
             else
                 AddAttribute(new JsonRepresentation(JsonAttribute.Include_TypeElement, JsonAttribute.UsePluralNamingForCollections, JsonAttribute.SupressJsonResponseObjectWrapper));
 
-
             if (ConsumptionModel != null) AddAttribute(ConsumptionModel);
             if (CustomConsumptionDetails != null) AddAttribute(CustomConsumptionDetails);
 
@@ -280,7 +277,6 @@ namespace HereAPI.Routing.Services
             if (Resolution != null) AddAttribute(PropertyHelper.GetDescription(() => Resolution), Resolution.ToString());
             if (MaxPoints != null) AddAttribute(PropertyHelper.GetDescription(() => MaxPoints), MaxPoints.ToString());
             if (Quality != null) AddAttribute(PropertyHelper.GetDescription(() => Quality), Quality.ToString());
-
 
             if (Departure != null) AddAttribute(PropertyHelper.GetDescription(() => Departure), ((DateTime)Departure).ToString("s"));
             if (Arrival != null) AddAttribute(PropertyHelper.GetDescription(() => Arrival), ((DateTime)Arrival).ToString("s"));
@@ -313,7 +309,6 @@ namespace HereAPI.Routing.Services
             return base.Get<CalculateIsolineResponse>();
         }
 
-        #endregion
-
+        #endregion Requests
     }
 }

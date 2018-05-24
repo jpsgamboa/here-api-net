@@ -102,8 +102,8 @@ namespace HereAPI.Shared.Conversions
         /// <summary>
         /// Not implemente since no JSON is written
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
+        /// <param name="writer">    </param>
+        /// <param name="value">     </param>
         /// <param name="serializer"></param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

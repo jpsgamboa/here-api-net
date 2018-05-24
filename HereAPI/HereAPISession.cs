@@ -13,7 +13,7 @@ namespace HereAPI
     /// Here provides trial keys which can only be used the Custumer Integration environment.
     /// Therefore, an option is provided to chose on which environment to run: <see cref="RunInProdEnv"/>
     /// <para/>
-    /// Usage: 
+    /// Usage:
     /// <para/>
     /// HereAPI.Register(app_id, app_code)
     /// </summary>

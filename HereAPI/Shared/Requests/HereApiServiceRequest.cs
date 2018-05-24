@@ -44,8 +44,8 @@ namespace HereAPI.Shared.Requests
         /// integration test (cit) server. "route", "routing/7.2", "calculateroute" See each
         /// service's Guide page on the API website to get the parameters.
         /// </summary>
-        /// <param name="service">The service API. Example: route, places, geocoder</param>
-        /// <param name="path">
+        /// <param name="service"> The service API. Example: route, places, geocoder</param>
+        /// <param name="path">    
         /// The path, including the API version. Example: routing/7.2, places/v1, 6.2
         /// </param>
         /// <param name="resource">The</param>

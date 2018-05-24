@@ -49,18 +49,18 @@ namespace HereAPI.Routing.TypesRequest
             /// <para/>
             /// https://developer.here.com/documentation/routing/topics/resource-param-type-waypoint.html
             /// </summary>
-            /// <param name="geoPoint"></param>
-            /// <param name="waypointType"></param>
+            /// <param name="geoPoint">        </param>
+            /// <param name="waypointType">    </param>
             /// <param name="stopOverDuration">
             /// Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough.
             /// </param>
-            /// <param name="transitRadius">
+            /// <param name="transitRadius">   
             /// Matching Links are selected within the specified TransitRadius, in meters. For
             /// example to drive past a city without necessarily going into the city center you can
             /// specify the coordinates of the center and a TransitRadius of 5000m.
             /// </param>
-            /// <param name="userLabel">Custom label identifying this waypoint.</param>
-            /// <param name="heading">
+            /// <param name="userLabel">       Custom label identifying this waypoint.</param>
+            /// <param name="heading">         
             /// Heading in degrees starting at true north and continuing clockwise around the
             /// compass. North is 0 degrees, East is 90 degrees, South is 180 degrees, and West is
             /// 270 degrees.
@@ -116,9 +116,9 @@ namespace HereAPI.Routing.TypesRequest
             /// <para/>
             /// waypoint0= street![Type[, StopOverDuration]!][DisplayPosition[;UserLabel]]!StreetPosition
             /// </summary>
-            /// <param name="streetPosition">WGS-84 degrees between -90 and 90. Altitude in meters.</param>
-            /// <param name="streetName"></param>
-            /// <param name="waypointType">
+            /// <param name="streetPosition">  WGS-84 degrees between -90 and 90. Altitude in meters.</param>
+            /// <param name="streetName">      </param>
+            /// <param name="waypointType">    
             /// 180 degree turns are allowed for stopOver but not for passThrough. Waypoints defined
             /// through a drag-n-drop action should be marked as pass-through. PassThrough waypoints
             /// will not appear in the list of maneuvers.
@@ -126,11 +126,11 @@ namespace HereAPI.Routing.TypesRequest
             /// <param name="stopOverDuration">
             /// Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough.
             /// </param>
-            /// <param name="displayPosition">
+            /// <param name="displayPosition"> 
             /// Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and
             /// 180. Altitude in meters.
             /// </param>
-            /// <param name="userLabel">Custom label identifying this waypoint.</param>
+            /// <param name="userLabel">       Custom label identifying this waypoint.</param>
             public NavigationWaypointParameterWithStreetPositions(uint waypointIndex, GeoCoordinate streetPosition, string streetName = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoCoordinate displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {
@@ -179,14 +179,14 @@ namespace HereAPI.Routing.TypesRequest
             /// <para/>
             /// waypoint0= link[!Type[, StopOverDuration]][![DisplayPosition][; UserLabel]]!LinkPosition
             /// </summary>
-            /// <param name="linkId"></param>
-            /// <param name="linkDirection">
+            /// <param name="linkId">          </param>
+            /// <param name="linkDirection">   
             /// Id of the link position with mandatory direction prefix (+,-,*) and optional relative
             /// position of the location along the link with a value between 0 and 1. When no spot
             /// value nor display position is given in the request then default value 0.5 is assumed.
             /// </param>
-            /// <param name="spot"></param>
-            /// <param name="waypointType">
+            /// <param name="spot">            </param>
+            /// <param name="waypointType">    
             /// 180 degree turns are allowed for stopOver but not for passThrough. Waypoints defined
             /// through a drag-n-drop action should be marked as pass-through. PassThrough waypoints
             /// will not appear in the list of maneuvers.
@@ -194,11 +194,11 @@ namespace HereAPI.Routing.TypesRequest
             /// <param name="stopOverDuration">
             /// Stopover delay in seconds. Impacts time-aware calculations. Ignored for passThrough.
             /// </param>
-            /// <param name="displayPosition">
+            /// <param name="displayPosition"> 
             /// Latitude WGS-84 degrees between -90 and 90. Longitude WGS-84 degrees between -180 and
             /// 180. Altitude in meters.
             /// </param>
-            /// <param name="userLabel">Custom label identifying this waypoint.</param>
+            /// <param name="userLabel">       Custom label identifying this waypoint.</param>
             public NavigationWaypointParameterWithLinkPositions(uint waypointIndex, LinkId linkId, float? spot = null, WaypointType? waypointType = null, uint? stopOverDuration = null, GeoCoordinate displayPosition = null, string userLabel = null)
                 : base(waypointIndex, waypointType, stopOverDuration, userLabel)
             {

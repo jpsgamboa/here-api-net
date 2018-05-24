@@ -5,25 +5,19 @@ using HereAPI.Routing.TypesRequest;
 using HereAPI.Routing.TypesResponse;
 using HereAPI.Shared.TypeObjects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static HereAPI.Routing.TypesRequest.WaypointParameter;
 
 namespace Samples
 {
-    class PrivateTransportCalculateRouteRequest
+    internal class PrivateTransportCalculateRouteRequest
     {
         //Codes from Here Maps
-        //public static string appId   =   "bC4fb9WQfCCZfkxspD4z";
-        //public static string appCode = "K2Cpd_EKDzrZb1tz0zdpeQ";
+        public static string appId = "bC4fb9WQfCCZfkxspD4z";
 
-        //My codes
-        public static string appId = "ZKWRYPOpslvd4FvTz6uw";
-        public static string appCode = "Jy3FG7wDmJ5ZdfLQqfMqkQ";
+        public static string appCode = "K2Cpd_EKDzrZb1tz0zdpeQ";
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             HereAPI.HereAPISession.Register(appId, appCode, true);
 
@@ -35,11 +29,9 @@ namespace Samples
 
             CalculateIsolineResponse isoline = CalculateIsolineSample();
             Console.WriteLine(isoline.Isoline.Components[0].Shape.Coordinates.Count());
-            
 
             Console.ReadKey();
         }
-
 
         private static CalculateRouteResponse CalculateRouteSample()
         {
@@ -79,7 +71,6 @@ namespace Samples
             return grr;
         }
 
-
         private static CalculateIsolineResponse CalculateIsolineSample()
         {
             CalculateIsolineRequest ci = new CalculateIsolineRequest()
@@ -94,6 +85,5 @@ namespace Samples
             CalculateIsolineResponse cir = ci.Get();
             return cir;
         }
-
     }
 }
