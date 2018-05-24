@@ -5,8 +5,8 @@
 
 [Routing Service](https://developer.here.com/documentation/routing/topics/resources.html):
 - [x] [Calculate Route](https://developer.here.com/documentation/routing/topics/resource-calculate-route.html)
-- [ ] [Get Route](https://developer.here.com/documentation/routing/topics/resource-get-route.html#resource-get-route)
-- [ ] [Calculate Isoline](https://developer.here.com/documentation/routing/topics/resource-calculate-isoline.html#resource-calculate-isoline)
+- [x] [Get Route](https://developer.here.com/documentation/routing/topics/resource-get-route.html#resource-get-route)
+- [x] [Calculate Isoline](https://developer.here.com/documentation/routing/topics/resource-calculate-isoline.html#resource-calculate-isoline)
 - [ ] [Calculate Matrix](https://developer.here.com/documentation/routing/topics/resource-calculate-matrix.html)
 
 # Before trying it out:
